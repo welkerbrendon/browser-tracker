@@ -1,0 +1,32 @@
+.custom-navbar {
+    visibility: visible;
+    background-color: deepskyblue;
+    overflow: hidden;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+img.custom-navbar {
+    width: 62px;
+    height: 62px;
+}
+
+button.custom-navbar {
+    float: right;
+    font-size: 120%;
+    background-color: inherit;
+    padding: 20px 30px;
+    background-color: inherit;
+    border: none;
+    outline: none;
+}
+
+a.custom-navbar {
+    color: black;
+    text-decoration: none;
+}
+
+a.custom-logo {
+    padding-left: 30px;
+    padding-top: 2px;
+}

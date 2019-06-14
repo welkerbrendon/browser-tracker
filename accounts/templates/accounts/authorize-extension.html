@@ -1,0 +1,12 @@
+{% extends "main/navbar.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Sign In</legend>
+            {{ form|crispy }}
+        </fieldset>
+        <input type="submit" value="Sign In">
+    </form>
+{% endblock content %}

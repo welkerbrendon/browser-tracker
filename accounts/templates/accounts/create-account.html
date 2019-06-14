@@ -1,0 +1,15 @@
+{% extends "main/navbar.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+<title>Create New Account</title>
+{% endblock %}
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <fieldset>
+        <legend>Create Account</legend>
+        {{ form|crispy }}
+    </fieldset>
+    <button type="submit">Create Account</button>
+</form>
+{% endblock content %}
