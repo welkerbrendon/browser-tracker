@@ -13,7 +13,7 @@ def get_activity(user_id, data):
                                      end_time=data.get("end_time"),
                                      day=today)
     count = query_set.count()
-    print("DEBUG: query_set count from get_activity: " + count)
+    print("DEBUG: query_set count from get_activity: " + str(count))
     return None if query_set.count() == 0 else query_set[0]
 
 def create_new_activity(user_id, data):

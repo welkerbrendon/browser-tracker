@@ -18,8 +18,8 @@ def site_activity(request):
         if token:
             user = Token.objects.get(key=token)
             if user.user_id:
-                activity = controllers.get_activity(user.user_id, data)
                 print("DEBUG: Checking if activity already exists.")
+                activity = controllers.get_activity(user.user_id, data)
                 if activity:
                     print("DEBUG Activity already exists.")
                     if controllers.create_page_visits(activity, data.get('extensions')):
@@ -30,7 +30,8 @@ def site_activity(request):
                              "activity":
                                  {"existed" : True, "added": False},
                              "page_visits":
-                                 {"error": False}}).status_code = 200
+                                 {"error": False}})
+                        response.status_code = 200
                         return response
                     else:
                         print("DEBUG: Page_visits failed to create.")
@@ -40,7 +41,8 @@ def site_activity(request):
                              "activity":
                                  {"existed": True, "added": False},
                              "page_visits":
-                                 {"error": True}}).status_code = 200
+                                 {"error": True}})
+                        response.status_code = 200
                         return response
                 else:
                     print("DEBUG: Activity did not already exist.")
@@ -56,7 +58,8 @@ def site_activity(request):
                                  "activity":
                                      {"existed": False, "added": True},
                                  "page_visits":
-                                     {"error": False}}).status_code = 201
+                                     {"error": False}})
+                            response.status_code = 201
                             return response
                         else:
                             print("DEBUG Page_visit not created successfully.")
@@ -66,7 +69,8 @@ def site_activity(request):
                                  "activity":
                                      {"existed": False, "added": True},
                                  "page_visits":
-                                     {"error": True}}).status_code = 201
+                                     {"error": True}})
+                            response.status_code = 201
                             return response
                     else:
                         print("DEBUG: Activity failed to create.")
@@ -76,7 +80,8 @@ def site_activity(request):
                              "activity":
                                  {"existed": False, "added": False},
                              "page_visits":
-                                 {"error": True}}).status_code = 500
+                                 {"error": True}})
+                        response.status_code = 500
                         return response
             else:
                 print("DEBUG: Unauthorized request.")
@@ -86,7 +91,8 @@ def site_activity(request):
                      "activity":
                          {"existed": True, "added": False},
                      "page_visits":
-                         {"error": True}}).status_code = 401
+                         {"error": True}})
+                response.status_code = 401
                 return response
         else:
             print("DEBUG: No token in request.")
@@ -96,7 +102,8 @@ def site_activity(request):
                  "activity":
                      {"existed": True, "added": False},
                  "page_visits":
-                     {"error": True}}).status_code = 401
+                     {"error": True}})
+            response.status_code = 401
             return response
 
 # Create your views here.

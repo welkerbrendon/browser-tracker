@@ -36,8 +36,8 @@ def extensionAuthentication(request):
         if username and password:
             data = {'username': username, 'password': password}
             print("making post request")
-            return redirect("https://gajdbphcphelbmmcmbmokangbcleabcc.chromiumapp.org/provider_cb#authToken=" +
-                            requests.post("https://daily-habbit-tracker.herokuapp.com/accounts/api-token-auth/", data).json().get("token"))
+            authToken = requests.post("https://daily-habbit-tracker.herokuapp.com/accounts/api-token-auth/", data).json().get("token")
+            return redirect("https://gajdbphcphelbmmcmbmokangbcleabcc.chromiumapp.org/provider_cb#authToken=" + authToken)
         else:
             print("ERROR: Missing username and password")
             return render(request, 'accounts/sign-in.html', {'form': form})
@@ -47,7 +47,7 @@ def tokenAuthentication(request):
     data = json.loads(request.body.decode('utf-8'))
     token = data.get('token')
     if token:
-        user = Token.objects.get(key=token)
+        user = None if Token.objects.filter(key=token).count() == 0 else Token.objects.get(key=token)
         if user:
             return JsonResponse({'valid': True})
         else:
