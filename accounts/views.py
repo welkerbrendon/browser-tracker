@@ -28,7 +28,7 @@ def extensionAuthentication(request):
         print("Get request")
         return render(request, "accounts/sign-in.html", {'form': form})
     elif request.method == "POST":
-        print("Post request recieved")
+        print("Post request received")
         username = request.POST.get("username", None)
         password = request.POST.get("password", None)
         print("username: " + username)
@@ -37,20 +37,16 @@ def extensionAuthentication(request):
             data = {'username': username, 'password': password}
             print("making post request")
             return redirect("https://gajdbphcphelbmmcmbmokangbcleabcc.chromiumapp.org/provider_cb#authToken=" +
-                            requests.post("http://localhost:8000/accounts/api-token-auth/", data).json().get("token"))
+                            requests.post("https://daily-habbit-tracker.herokuapp.com/accounts/api-token-auth/", data).json().get("token"))
         else:
             logger.error("Missing username and password")
             return render(request, 'accounts/sign-in.html', {'form': form})
 
 @csrf_exempt
 def tokenAuthentication(request):
-    print("tokenAuthentication 1")
     data = json.loads(request.body.decode('utf-8'))
-    print("tokenAuthentication 2")
     token = data.get('token')
-    print("tokenAuthentication 3")
     if token:
-        print("tokenAuthentication 4")
         user = Token.objects.get(key=token)
         if user:
             return JsonResponse({'valid': True})
