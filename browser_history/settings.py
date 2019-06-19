@@ -88,7 +88,10 @@ REST_FRAMEWORK = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = ("https://gajdbphcphelbmmcmbmokangbcleabcc.chromiumapp.org",)
+CORS_ORIGIN_WHITELIST = (
+    "https://gajdbphcphelbmmcmbmokangbcleabcc.chromiumapp.org",
+    "chrome-extension://gajdbphcphelbmmcmbmokangbcleabcc",
+)
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
