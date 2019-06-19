@@ -19,8 +19,11 @@ def site_activity(request):
             user = Token.objects.get(key=token)
             if user.user_id:
                 activity = controllers.get_activity(user.user_id, data)
+                print("DEBUG: Checking if activity already exists.")
                 if activity:
+                    print("DEBUG Activity already exists.")
                     if controllers.create_page_visits(activity, data.get('extensions')):
+                        print("DEBUG: Page_visits created.")
                         response = JsonResponse(
                             {"authorized": True,
                              "token_received": True,
@@ -30,6 +33,7 @@ def site_activity(request):
                                  {"error": False}}).status_code = 200
                         return response
                     else:
+                        print("DEBUG: Page_visits failed to create.")
                         response = JsonResponse(
                             {"authorized": True,
                              "token_received": True,
@@ -39,9 +43,13 @@ def site_activity(request):
                                  {"error": True}}).status_code = 200
                         return response
                 else:
+                    print("DEBUG: Activity did not already exist.")
                     activity = controllers.create_new_activity(user.user_id, data)
+                    print("DEBUG: Checking if creation was successful.")
                     if activity:
+                        print("DEBUG: Activity created successfully.")
                         if controllers.create_page_visits(activity, data.get('extensions')):
+                            print("DEBUG: Page_visit also created successfully.")
                             response = JsonResponse(
                                 {"authorized": True,
                                  "token_received": True,
@@ -51,6 +59,7 @@ def site_activity(request):
                                      {"error": False}}).status_code = 201
                             return response
                         else:
+                            print("DEBUG Page_visit not created successfully.")
                             response = JsonResponse(
                                 {"authorized": True,
                                  "token_received": True,
@@ -60,6 +69,7 @@ def site_activity(request):
                                      {"error": True}}).status_code = 201
                             return response
                     else:
+                        print("DEBUG: Activity failed to create.")
                         response = JsonResponse(
                             {"authorized": True,
                              "token_received": True,
@@ -69,6 +79,7 @@ def site_activity(request):
                                  {"error": True}}).status_code = 500
                         return response
             else:
+                print("DEBUG: Unauthorized request.")
                 response = JsonResponse(
                     {"authorized": False,
                      "token_received": True,
@@ -78,6 +89,7 @@ def site_activity(request):
                          {"error": True}}).status_code = 401
                 return response
         else:
+            print("DEBUG: No token in request.")
             response = JsonResponse(
                 {"authorized": False,
                  "token_received": False,
