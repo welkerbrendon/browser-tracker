@@ -44,9 +44,13 @@ def extensionAuthentication(request):
 
 @csrf_exempt
 def tokenAuthentication(request):
+    logger.debug("tokenAuthentication 1")
     data = json.loads(request.body.decode('utf-8'))
+    logger.debug("tokenAuthentication 2")
     token = data.get('token')
+    logger.debug("tokenAuthentication 3")
     if token:
+        logger.debug("tokenAuthentication 4")
         user = Token.objects.get(key=token)
         if user:
             return JsonResponse({'valid': True})
