@@ -5,12 +5,14 @@ from datetime import datetime
 def get_activity(user_id, data):
     site = Site.objects.filter(id=get_site_id(data.get('url')))[0]
     user = User.objects.filter(id=user_id)[0]
-
+    today = datetime.today().strftime('%Y-%m-%d')
+    print("DEBUG: Today is " + today)
     query_set = Activities.objects.filter(user_id=user.id,
                                      site_id=site.id,
                                      start_time=data.get('start_time'),
                                      end_time=data.get("end_time"),
-                                     day=datetime.today().strftime('%Y-%m-%d'))
+                                     day=today)
+    print("DEBUG: query_set count from get_activity: " + query_set.count())
     return None if query_set.count() == 0 else query_set[0]
 
 def create_new_activity(user_id, data):
@@ -18,6 +20,7 @@ def create_new_activity(user_id, data):
     user = User.objects.filter(id=user_id)[0]
 
     Activities(user=user, site=site, start_time=data.get('start_time'), end_time=data.get("end_time")).save()
+    print("Created activity, checking if creation was succesful.")
     return Activities.objects.filter(user_id=user.id,
                                   site_id=site.id,
                                   start_time=data.get('start_time'))[0]
