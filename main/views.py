@@ -19,15 +19,24 @@ def site_activity(request):
         if token:
             user = Token.objects.get(key=token)
             if user.user_id:
-                if controllers.check_already_exists(user.user_id, data):
+                activity = controllers.get_activity(user.user_id, data)
+                if activity:
                     response.status_code = 200
-                    response.write("Already been added.")
-                elif controllers.create_new_activity(user.user_id, data):
-                    response.status_code = 201
-                    response.write("Successfully added activity.")
+                    if controllers.create_page_visits(activity, data.get('extensions')):
+                        response.write("Already been added.")
+                    else:
+                        response.write("Activity already been added. Error in adding extensions.")
                 else:
-                    response.status_code = 500
-                    response.write("Unable to add activity to databse.")
+                    activity = controllers.create_new_activity(user.user_id, data)
+                    if activity:
+                        response.status_code = 201
+                        if controllers.create_page_visits(activity, data.get('extensions')):
+                            response.write("Successfully added activity and page extensions.")
+                        else:
+                            response.write("Successfully added activity but not page extensions.")
+                    else:
+                        response.status_code = 500
+                        response.write("Unable to add activity to databse.")
             else:
                 response.status_code = 401
                 response.write("Received unauthorized token")

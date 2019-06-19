@@ -1,14 +1,14 @@
-from .models import Activities, Site
+from .models import Activities, Site, PageVisited
 from django.contrib.auth.models import User
-import datetime
 
-def check_already_exists(user_id, data):
+def get_activity(user_id, data):
     site = Site.objects.filter(id=get_site_id(data.get('url')))[0]
     user = User.objects.filter(id=user_id)[0]
 
-    return Activities.objects.filter(user_id=user.id,
+    query_set = Activities.objects.filter(user_id=user.id,
                                      site_id=site.id,
-                                     start_time=data.get('start_time')).count() >= 1
+                                     start_time=data.get('start_time'))
+    return None if query_set.count() == 0 else query_set[0]
 
 def create_new_activity(user_id, data):
     site = Site.objects.filter(id=get_site_id(data.get('url')))[0]
@@ -17,7 +17,7 @@ def create_new_activity(user_id, data):
     Activities(user=user, site=site, start_time=data.get('start_time')).save()
     return Activities.objects.filter(user_id=user.id,
                                   site_id=site.id,
-                                  start_time=data.get('start_time')).count() == 1
+                                  start_time=data.get('start_time'))[0]
 
 def get_site_id(url):
     result = Site.objects.filter(url=url)
@@ -28,3 +28,13 @@ def get_site_id(url):
         return Site.objects.filter(url=url)[0].id
     else:
         return -1
+
+def create_page_visits(activity, extension_list):
+    success = True
+    for extension in extension_list:
+        if PageVisited.objects.filter(activity=activity, page_extension=extension) == 0:
+            PageVisited(activity=activity, page_extension=extension).save()
+            if not PageVisited.objects.filter(activity=activity, page_extension=extension).count():
+                success = False
+
+    return success
