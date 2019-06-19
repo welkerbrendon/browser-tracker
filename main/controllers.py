@@ -1,5 +1,6 @@
 from .models import Activities, Site, PageVisited
 from django.contrib.auth.models import User
+from datetime import datetime
 
 def get_activity(user_id, data):
     site = Site.objects.filter(id=get_site_id(data.get('url')))[0]
@@ -7,7 +8,9 @@ def get_activity(user_id, data):
 
     query_set = Activities.objects.filter(user_id=user.id,
                                      site_id=site.id,
-                                     start_time=data.get('start_time'))
+                                     start_time=data.get('start_time'),
+                                     end_time=data.get("end_time"),
+                                     day=datetime.today().strftime('%Y-%m-%d'))
     return None if query_set.count() == 0 else query_set[0]
 
 def create_new_activity(user_id, data):

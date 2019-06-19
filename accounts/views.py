@@ -39,7 +39,7 @@ def extensionAuthentication(request):
             return redirect("https://gajdbphcphelbmmcmbmokangbcleabcc.chromiumapp.org/provider_cb#authToken=" +
                             requests.post("https://daily-habbit-tracker.herokuapp.com/accounts/api-token-auth/", data).json().get("token"))
         else:
-            logger.error("Missing username and password")
+            print("ERROR: Missing username and password")
             return render(request, 'accounts/sign-in.html', {'form': form})
 
 @csrf_exempt

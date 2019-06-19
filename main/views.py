@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
-from django.http import HttpResponse
+from django.http import JsonResponse
 from . import controllers
 import json
 
@@ -13,7 +13,7 @@ def home(request):
 @csrf_exempt
 def site_activity(request):
     if request.method == 'POST':
-        response = HttpResponse()
+        response = None
         data = json.loads(request.body.decode('utf-8'))
         token = data.get('token')
         if token:
@@ -21,28 +21,65 @@ def site_activity(request):
             if user.user_id:
                 activity = controllers.get_activity(user.user_id, data)
                 if activity:
-                    response.status_code = 200
                     if controllers.create_page_visits(activity, data.get('extensions')):
-                        response.write("Already been added.")
+                        response = JsonResponse(
+                            {"authorized": True,
+                             "token_received": True,
+                             "activity":
+                                 {"existed" : True, "added": False},
+                             "page_visits":
+                                 {"error": False}}).status_code = 200
                     else:
-                        response.write("Activity already been added. Error in adding extensions.")
+                        response = JsonResponse(
+                            {"authorized": True,
+                             "token_received": True,
+                             "activity":
+                                 {"existed": True, "added": False},
+                             "page_visits":
+                                 {"error": True}}).status_code = 200
                 else:
                     activity = controllers.create_new_activity(user.user_id, data)
                     if activity:
-                        response.status_code = 201
                         if controllers.create_page_visits(activity, data.get('extensions')):
-                            response.write("Successfully added activity and page extensions.")
+                            response = JsonResponse(
+                                {"authorized": True,
+                                 "token_received": True,
+                                 "activity":
+                                     {"existed": False, "added": True},
+                                 "page_visits":
+                                     {"error": False}}).status_code = 201
                         else:
-                            response.write("Successfully added activity but not page extensions.")
+                            response = JsonResponse(
+                                {"authorized": True,
+                                 "token_received": True,
+                                 "activity":
+                                     {"existed": False, "added": True},
+                                 "page_visits":
+                                     {"error": True}}).status_code = 201
                     else:
-                        response.status_code = 500
-                        response.write("Unable to add activity to databse.")
+                        response = JsonResponse(
+                            {"authorized": True,
+                             "token_received": True,
+                             "activity":
+                                 {"existed": False, "added": False},
+                             "page_visits":
+                                 {"error": True}}).status_code = 500
             else:
-                response.status_code = 401
-                response.write("Received unauthorized token")
+                response = JsonResponse(
+                    {"authorized": False,
+                     "token_received": True,
+                     "activity":
+                         {"existed": True, "added": False},
+                     "page_visits":
+                         {"error": True}}).status_code = 401
         else:
-            response.status_code = 400
-            response.write("No token received in request")
+            response = JsonResponse(
+                {"authorized": False,
+                 "token_received": False,
+                 "activity":
+                     {"existed": True, "added": False},
+                 "page_visits":
+                     {"error": True}}).status_code = 401
 
         return response
 
