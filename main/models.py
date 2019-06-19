@@ -34,7 +34,7 @@ class Activities(models.Model):
     site = models.ForeignKey(Site, on_delete=models.SET_NULL, null=True)
     day = models.DateField(auto_now_add=True)
     start_time = models.TimeField()
-    end_time = models.TimeField(auto_now_add=True)
+    end_time = models.TimeField()
     productive = models.BooleanField(null=True)
     notes = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
