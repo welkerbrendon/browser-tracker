@@ -13,7 +13,6 @@ def home(request):
 @csrf_exempt
 def site_activity(request):
     if request.method == 'POST':
-        response = None
         data = json.loads(request.body.decode('utf-8'))
         token = data.get('token')
         if token:
@@ -29,6 +28,7 @@ def site_activity(request):
                                  {"existed" : True, "added": False},
                              "page_visits":
                                  {"error": False}}).status_code = 200
+                        return response
                     else:
                         response = JsonResponse(
                             {"authorized": True,
@@ -37,6 +37,7 @@ def site_activity(request):
                                  {"existed": True, "added": False},
                              "page_visits":
                                  {"error": True}}).status_code = 200
+                        return response
                 else:
                     activity = controllers.create_new_activity(user.user_id, data)
                     if activity:
@@ -48,6 +49,7 @@ def site_activity(request):
                                      {"existed": False, "added": True},
                                  "page_visits":
                                      {"error": False}}).status_code = 201
+                            return response
                         else:
                             response = JsonResponse(
                                 {"authorized": True,
@@ -56,6 +58,7 @@ def site_activity(request):
                                      {"existed": False, "added": True},
                                  "page_visits":
                                      {"error": True}}).status_code = 201
+                            return response
                     else:
                         response = JsonResponse(
                             {"authorized": True,
@@ -64,6 +67,7 @@ def site_activity(request):
                                  {"existed": False, "added": False},
                              "page_visits":
                                  {"error": True}}).status_code = 500
+                        return response
             else:
                 response = JsonResponse(
                     {"authorized": False,
@@ -72,6 +76,7 @@ def site_activity(request):
                          {"existed": True, "added": False},
                      "page_visits":
                          {"error": True}}).status_code = 401
+                return response
         else:
             response = JsonResponse(
                 {"authorized": False,
@@ -80,7 +85,6 @@ def site_activity(request):
                      {"existed": True, "added": False},
                  "page_visits":
                      {"error": True}}).status_code = 401
-
-        return response
+            return response
 
 # Create your views here.
