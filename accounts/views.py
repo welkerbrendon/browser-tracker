@@ -25,17 +25,17 @@ def register(request):
 def extensionAuthentication(request):
     form = AuthenticationForm()
     if request.method == "GET":
-        logger.debug("Get request")
+        print("Get request")
         return render(request, "accounts/sign-in.html", {'form': form})
     elif request.method == "POST":
-        logger.debug("Post request recieved")
+        print("Post request recieved")
         username = request.POST.get("username", None)
         password = request.POST.get("password", None)
-        logger.debug("username: " + username)
-        logger.debug("password: " + password)
+        print("username: " + username)
+        print("password: " + password)
         if username and password:
             data = {'username': username, 'password': password}
-            logger.debug("making post request")
+            print("making post request")
             return redirect("https://gajdbphcphelbmmcmbmokangbcleabcc.chromiumapp.org/provider_cb#authToken=" +
                             requests.post("http://localhost:8000/accounts/api-token-auth/", data).json().get("token"))
         else:
@@ -44,13 +44,13 @@ def extensionAuthentication(request):
 
 @csrf_exempt
 def tokenAuthentication(request):
-    logger.debug("tokenAuthentication 1")
+    print("tokenAuthentication 1")
     data = json.loads(request.body.decode('utf-8'))
-    logger.debug("tokenAuthentication 2")
+    print("tokenAuthentication 2")
     token = data.get('token')
-    logger.debug("tokenAuthentication 3")
+    print("tokenAuthentication 3")
     if token:
-        logger.debug("tokenAuthentication 4")
+        print("tokenAuthentication 4")
         user = Token.objects.get(key=token)
         if user:
             return JsonResponse({'valid': True})
