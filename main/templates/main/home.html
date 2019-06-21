@@ -1,21 +1,27 @@
 {% extends "main/navbar.html" %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'main/css/display-table.css' %}">
+{% endblock %}
 {% block title %}
-<title>Home Page</title>
+    <title>Home Page</title>
 {% endblock %}
 {% block content %}
-<h1>Home Page</h1>
-<table>
-    <tr>
-        <th>Start Time</th>
-        <th>End Time</th>
-        <th>Website</th>
-    </tr>
-    {% for activity in activities %}
-    <tr>
-        <td>{{ activity.start_time }}</td>
-        <td>{{ activity.end_time }}</td>
-        <td>{{ activity.site.url }}</td>
-    </tr>
-    {% endfor %}
-</table>
+    <h1>Home Page</h1>
+    <h3>{{ activity.day }}</h3>
+    <table border="1">
+        <tr>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Website</th>
+            <th>Productive</th>
+        </tr>
+        {% for activity in activities %}
+        <tr>
+            <td>{{ activity.start_time }}</td>
+            <td>{{ activity.end_time }}</td>
+            <td>{{ activity.site.url }}</td>
+            <td>{{ activity.productive }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 {% endblock %}
