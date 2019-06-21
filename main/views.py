@@ -3,12 +3,29 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 from django.http import JsonResponse
+from datetime import datetime, timedelta
 from . import controllers
 import json
 
+
 @login_required
-def home(request):
-    return render(request, "main/home.html")
+def home(request, date=None):
+    if not date:
+        activities = None
+        i = 0
+        date = datetime.today().date()
+        while not activities:
+            date = date - timedelta(days=i)
+            activities = controllers.get_activities(request.user, date)
+            i += 1
+        data = {
+            "activities": activities
+        }
+    else:
+        data = {
+            "activities": controllers.get_activities(request.user, date)
+        }
+    return render(request, "main/home.html", data)
 
 @csrf_exempt
 def site_activity(request):

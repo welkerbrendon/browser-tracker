@@ -45,3 +45,8 @@ def create_page_visits(activity, extension_list):
                 success = False
 
     return success
+
+def get_activities(user, date):
+    data = Activities.objects.select_related('site').filter(user=user, day=date)
+    print("DEBUG: Activities for " + str(date) + ": " + str(data))
+    return data
