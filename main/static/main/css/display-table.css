@@ -4,9 +4,9 @@ table {
 }
 
 th.start-time, th.end-time, th.productive {
-    width: 15%;
+    width: 10%;
 }
 
 th.website {
-    width: 20%;
+    width: 30%;
 }
