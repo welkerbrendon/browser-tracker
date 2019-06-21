@@ -19,7 +19,8 @@ def home(request, date=None):
             activities = controllers.get_activities(request.user, date)
             i += 1
         data = {
-            "activities": activities
+            "activities": activities,
+            "date": date
         }
     else:
         data = {
