@@ -20,11 +20,12 @@ def create_new_activity(user_id, data):
     site = Site.objects.filter(id=get_site_id(data.get('url')))[0]
     user = User.objects.filter(id=user_id)[0]
 
-    Activities(user=user, site=site, start_time=data.get('start_time'), end_time=data.get("end_time")).save()
+    Activities(user=user, site=site, start_time=data.get('start_time'), end_time=data.get("end_time"), day=data.get('day')).save()
     print("DEBUG: Created activity, checking if creation was succesful.")
     return Activities.objects.filter(user_id=user.id,
                                   site_id=site.id,
-                                  start_time=data.get('start_time'))[0]
+                                  start_time=data.get('start_time'),
+                                  day=data.get('day'))[0]
 
 def get_site_id(url):
     result = Site.objects.filter(url=url)

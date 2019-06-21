@@ -32,7 +32,7 @@ class Activities(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     activity_type = models.ForeignKey(ActivityType, on_delete=models.SET_NULL, null=True)
     site = models.ForeignKey(Site, on_delete=models.SET_NULL, null=True)
-    day = models.DateField(auto_now_add=True)
+    day = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
     productive = models.BooleanField(null=True)
