@@ -17,7 +17,11 @@
             <td>{{ activity.start_time }}</td>
             <td>{{ activity.end_time }}</td>
             <td>{{ activity.site.url }}</td>
-            <td>{{ activity.productive }}</td>
+            {% if activity.productive %}
+                <td>{{ activity.productive }}</td>
+            {% else %}
+                <td>Unknown</td>
+            {% endif %}
         </tr>
         {% endfor %}
     </table>
