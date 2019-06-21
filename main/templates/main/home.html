@@ -7,10 +7,11 @@
     <h3>{{ activity.day }}</h3>
     <table border="1">
         <tr>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>Website</th>
-            <th>Productive</th>
+            <th class="start-time">Start Time</th>
+            <th class="end-time">End Time</th>
+            <th class="website">Website</th>
+            <th class="productive">Productive</th>
+            <th class="notes">Notes</th>
         </tr>
         {% for activity in activities %}
         <tr>
@@ -21,6 +22,9 @@
                 <td>{{ activity.productive }}</td>
             {% else %}
                 <td>Unknown</td>
+            {% endif %}
+            {% if activity.notes %}
+                <td>{{ activity.notes }}</td>
             {% endif %}
         </tr>
         {% endfor %}

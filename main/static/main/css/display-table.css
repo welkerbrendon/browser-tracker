@@ -2,3 +2,11 @@ table {
     width: 90%;
     table-layout: fixed;
 }
+
+th.start-time, th.end-time, th.productive {
+    width: 15%;
+}
+
+th.website {
+    width: 20%;
+}
