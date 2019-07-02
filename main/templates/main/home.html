@@ -37,9 +37,9 @@
                         <td><textarea rows="4" name="notes"></textarea></td>
                     {% endif %}
                 </tr>
+            {% endfor %}
         </table>
     </form>
-            {% endfor %}
         {% else %}
             {% for activity in activities %}
             <tr>
@@ -57,8 +57,8 @@
                     <td></td>
                 {% endif %}
             </tr>
-        </table>
             {% endfor %}
+    </table>
         {% endif %}
     <button onclick="editRequest()">Edit Data</button>
 {% endblock %}
