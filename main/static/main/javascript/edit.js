@@ -1,14 +1,14 @@
 const monthLookup = {
-    "January": "0",
-    "February": "1",
-    "March": "2",
-    "April": "3",
-    "May": "4",
-    "June": "5",
-    "July": "6",
-    "August": "7",
-    "September": "8",
-    "October": "9",
+    "January": "00",
+    "February": "01",
+    "March": "02",
+    "April": "03",
+    "May": "04",
+    "June": "05",
+    "July": "06",
+    "August": "07",
+    "September": "08",
+    "October": "09",
     "November": "10",
     "December": "11"
 }
@@ -22,6 +22,7 @@ function editRequest() {
 function getDayFromHeader() {
     var day = document.getElementById("date").innerHTML.split(" ");
     day[1].replace(",", "");
+    day[1] = parseInt(day[1]) < 10 ? "0" + day[1] : day[1];
     const date = day[2] + "-" + monthLookup[day[0]] + "-" + day[1];
 
     return date;
@@ -36,7 +37,7 @@ function changeDate() {
     var inputElement = document.createElement("input");
     inputElement.setAttribute("type", "date");
     inputElement.setAttribute("id", "date");
-    inputElement.setAttribute("value", getDayFromHeader());
+    inputElement.value = getDayFromHeader();
 
     var submitButton = document.createElement("input");
     submitButton.setAttribute("type", "submit");
