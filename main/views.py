@@ -30,7 +30,8 @@ def home(request):
     else:
         data = {
             "activities": controllers.get_activities(request.user, date),
-            "edit": edit
+            "edit": edit,
+            "date": date
         }
     return render(request, "main/home.html", data)
 
