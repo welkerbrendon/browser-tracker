@@ -12,7 +12,7 @@
     </form>
     {% if edit %}
     <form method="POST">
-        <input type="hidden" name="csrfmiddlewaretoken" value="{% csrf_token %}">
+        {% csrf_token %}
         {% endif %}
     <table border="1">
         <tr>
@@ -25,8 +25,20 @@
         {% if edit %}
             {% for activity in activities %}
                 <tr>
-                    <td><input type="time" name="start_time" value="{{ activity.start_time }}"></td>
-                    <td><input type="time" name="end_time" value="{{ activity.end_time }}"></td>
+                    <td>
+                        <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="start-time" value="{{ activity.start_time.split()[0] }}">
+                        <select id="am/pm" name="start-time-am/pm" value="{{ activity.start_time.split()[1] }}">
+                            <option value='a.m.'>AM</option>
+                            <option value='p.m.'>PM</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="end-time" value="{{ activity.end_time.split()[0] }}">
+                        <select id="am/pm" name="end-time-am/pm" value="{{ activity.end_time.split()[1] }}">
+                            <option value='a.m.'>AM</option>
+                            <option value='p.m.'>PM</option>
+                        </select>
+                    </td>
                     <td>{{ activity.site.url }}</td>
                     <td>
                         <select id="productive" name="productive" value="{{ activity.productive }}">
