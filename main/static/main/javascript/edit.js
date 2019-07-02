@@ -14,7 +14,7 @@ const monthLookup = {
 }
 
 function editRequest() {
-    $.get("/main/edit?date=" + getDayFromHeader(), function (result, textStatus) {
+    $.get("/main/?date=" + getDayFromHeader(), function (result, textStatus) {
         console.log(`result of edit request: ${textStatus} : ${JSON.stringify(result)}`);
     });
 }
