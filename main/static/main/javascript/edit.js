@@ -22,7 +22,7 @@ function setUp() {
 function fixDateValues() {
     var dateElements = document.getElementsByName("date");
     for (var i = 0; i < dateElements.length; i++) {
-        dateElements.value = formatDay(dateElements.value);
+        dateElements.value = formatDay(dateElements[i].value);
     }
 }
 
