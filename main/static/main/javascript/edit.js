@@ -28,9 +28,6 @@ function getDayFromHeader() {
 }
 
 function changeDate() {
-    var h3Element = document.getElementById("date-header");
-    h3Element.innerHTML = "";
-
     var form = document.createElement("form");
     form.setAttribute("method", "GET");
 
@@ -47,6 +44,9 @@ function changeDate() {
     form.appendChild(text);
     form.appendChild(inputElement);
     form.appendChild(submitButton);
+
+    var h3Element = document.getElementById("date-header");
+    h3Element.innerHTML = "";
     
     h3Element.appendChild(form);
 }
