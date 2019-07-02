@@ -27,14 +27,14 @@
                 <tr>
                     <td name="start_time_td" value="{{ activity.start_time }}">
                         <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="start-time" value="">
-                        <select id="am/pm" name="" value="">
+                        <select id="am/pm" name="start_time_am_pm" value="">
                             <option value='a.m.'>AM</option>
                             <option value='p.m.'>PM</option>
                         </select>
                     </td>
                     <td name="end_time_td" value="{{ activity.end_time }}">
                         <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="end-time" value="">
-                        <select id="am/pm" name="" value="">
+                        <select id="am/pm" name="end_time_am_pm" value="">
                             <option value='a.m.'>AM</option>
                             <option value='p.m.'>PM</option>
                         </select>
