@@ -1,24 +1,30 @@
 const monthLookup = {
-    "January": "00",
-    "February": "01",
-    "March": "02",
-    "April": "03",
-    "May": "04",
-    "June": "05",
-    "July": "06",
-    "August": "07",
-    "September": "08",
-    "October": "09",
-    "November": "10",
-    "December": "11"
+    "January": "01",
+    "February": "02",
+    "March": "03",
+    "April": "04",
+    "May": "05",
+    "June": "06",
+    "July": "07",
+    "August": "08",
+    "September": "09",
+    "October": "10",
+    "November": "11",
+    "December": "12"
 }
 
 function getDayFromHeader() {
-    var day = document.getElementById("date").innerHTML.split(" ");
-    day[1] = parseInt(day[1]) < 10 ? "0" + day[1][0] : day[1][0] + day[1][1];
-    const date = day[2] + "-" + monthLookup[day[0]] + "-" + day[1];
+    var day = document.getElementById("date").innerHTML;
+    if (day.includes("-")) {
+        return day;
+    }
+    else {
+        day = day.split(" ");
+        day[1] = parseInt(day[1]) < 10 ? "0" + day[1][0] : day[1][0] + day[1][1];
+        const date = day[2] + "-" + monthLookup[day[0]] + "-" + day[1];
 
-    return date;
+        return date;
+    }
 }
 
 function changeDate() {
