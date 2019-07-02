@@ -1,3 +1,5 @@
+window.onload = setUp;
+
 const monthLookup = {
     "January": "01",
     "February": "02",
@@ -13,8 +15,14 @@ const monthLookup = {
     "December": "12"
 }
 
-function getDayFromHeader() {
-    var day = document.getElementById("date").innerHTML;
+function fixDateValues() {
+    var dateElements = document.getElementsByName("date");
+    for (var i = 0; i < dateElements.length; i++) {
+        dateElements.value = formatDay(dateElements.value);
+    }
+}
+
+function formatDay(day) {
     if (day.includes("-")) {
         return day;
     }
@@ -37,7 +45,7 @@ function changeDate() {
     inputElement.setAttribute("type", "date");
     inputElement.setAttribute("id", "date");
     inputElement.setAttribute("name", "date");
-    inputElement.value = getDayFromHeader();
+    inputElement.value = formatDay(document.getElementById("date").innerHTML);
 
     var submitButton = document.createElement("input");
     submitButton.setAttribute("type", "submit");
