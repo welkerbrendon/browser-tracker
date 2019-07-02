@@ -31,7 +31,7 @@ def home(request):
         data = {
             "activities": controllers.get_activities(request.user, date),
             "edit": edit,
-            "date": datetime.strptime(date, "%Y-%m-%d")
+            "date": datetime.strptime(date, "%Y-%m-%d").date()
         }
     return render(request, "main/home.html", data)
 
