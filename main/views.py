@@ -9,7 +9,9 @@ import json
 
 
 @login_required
-def home(request, date=None, edit=None):
+def home(request):
+    date = request.GET.get("date", None)
+    edit = request.GET.get("edit", None)
     if not date:
         activities = None
         i = 0
