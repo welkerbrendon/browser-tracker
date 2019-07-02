@@ -9,7 +9,7 @@ import json
 
 
 @login_required
-def home(request, date=None, edit=False):
+def home(request, date=None, edit=None):
     if not date:
         activities = None
         i = 0

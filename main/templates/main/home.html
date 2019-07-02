@@ -10,7 +10,7 @@
         <input type="hidden" name="edit" value="True">
         <input type="submit" value="Edit Data">
     </form>
-    {% if edit == True %}
+    {% if edit %}
     <form method="POST">
         <input type="hidden" name="csrfmiddlewaretoken" value="{% csrf_token %}">
         {% endif %}
@@ -22,7 +22,7 @@
             <th class="productive">Productive</th>
             <th class="notes">Notes</th>
         </tr>
-        {% if edit == True %}
+        {% if edit %}
             {% for activity in activities %}
                 <tr>
                     <td><input type="time" name="start_time" value="{{ activity.start_time }}"></td>
@@ -65,7 +65,7 @@
     </table>
         {% endif %}
     <form method="GET">
-        <input type="hidden" value="{{ date }}">
+        <input type="hidden" name="date" value="{{ date }}">
         <input type="hidden" name="edit" value="True">
         <input type="submit" value="Edit Data">
     </form>
