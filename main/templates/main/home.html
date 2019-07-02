@@ -26,7 +26,6 @@
             {% for activity in activities %}
                 <tr>
                     <td name="start_time_td" value="{{ activity.start_time }}">
-                        <input type="hidden">
                         <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="start-time" value="">
                         <select id="am/pm" name="" value="">
                             <option value='a.m.'>AM</option>
