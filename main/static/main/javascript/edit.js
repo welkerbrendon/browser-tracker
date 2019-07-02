@@ -17,6 +17,24 @@ const monthLookup = {
 
 function setUp() {
     fixDateValues();
+    if (document.getElementsByName("start_time_td").length > 0) {
+        formatDefaultTimeValues();
+    }
+}
+
+function formatDefaultTimeValues() {
+    var startTimeTdElements = document.getElementsByName("start_time_td");
+    var endTimeTdElements = document.getElementsByName("end_time_td");
+
+    for (var i = 0; i < startTimeTdElements.length && i < endTimeTdElements.length; i++) {
+        var startTime = startTimeTdElements[i].value.split(" ");
+        startTimeTdElements.children[0].value = startTime[0];
+        startTimeTdElements.children[1].value = startTime[1];
+
+        var endTime = endTimeTdElements[i].value.split(" ");
+        endTimeTdElements.children[0].value = startTIme[0];
+        endTimeTdElements.children[1].value = startTime[1];
+    }
 }
 
 function fixDateValues() {
