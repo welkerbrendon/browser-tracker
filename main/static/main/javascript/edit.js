@@ -38,7 +38,7 @@ function formatDefaultTimeValues() {
 }
 
 function fixDateValues() {
-getAttribute("value")    var dateElements = document.getElementsByName("date");
+    var dateElements = document.getElementsByName("date");
     for (var i = 0; i < dateElements.length; i++) {
         dateElements[i].value = formatDay(dateElements[i].value);
     }
