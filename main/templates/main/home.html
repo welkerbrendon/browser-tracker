@@ -5,7 +5,10 @@
 {% block content %}
     <h1>Home Page</h1>
     <h3 id="date-header"><span id="date">{{ date }}</span> <button onclick="changeDate()">Change Date</button></h3>
-    <button onclick="editRequest()">Edit Data</button>
+    <form method="GET">
+        <input type="hidden" value="{{ date }}">
+        <input type="submit">Edit Data</input>
+    </form>
     {% if edit == True %}
     <form method="POST">
         <input type="hidden" name="csrfmiddlewaretoken" value="{% csrf_token %}">
@@ -60,5 +63,8 @@
             {% endfor %}
     </table>
         {% endif %}
-    <button onclick="editRequest()">Edit Data</button>
+    <form method="GET">
+        <input type="hidden" value="{{ date }}">
+        <input type="submit">Edit Data</input>
+    </form>
 {% endblock %}
