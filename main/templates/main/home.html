@@ -11,10 +11,10 @@
         <input type="hidden" name="edit" value="True">
         <input type="submit" value="Edit Data">
     </form>
-<!--    {% if edit %}-->
-<!--    <form method="POST">-->
-<!--        {% csrf_token %}-->
-<!--        {% endif %}-->
+    {% if edit %}
+    <form method="POST">
+        {% csrf_token %}
+        {% endif %}
     <table border="1">
         <tr>
             <th class="start-time">Start Time</th>
@@ -23,37 +23,37 @@
             <th class="productive">Productive</th>
             <th class="notes">Notes</th>
         </tr>
-<!--        {% if edit %}-->
-<!--            {% for activity in activities %}-->
-<!--                <tr>-->
-<!--                    <td>-->
-<!--                        <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="start-time" value="{{ activity.start_time }}">-->
-<!--                        <select id="am/pm" name="start-time-am/pm" value="{{ activity.start_time_am/pm }}">-->
-<!--                            <option value='a.m.'>AM</option>-->
-<!--                            <option value='p.m.'>PM</option>-->
-<!--                        </select>-->
-<!--                    </td>-->
-<!--                    <td>-->
-<!--                        <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="end-time" value="{{ activity.end_time }}">-->
-<!--                        <select id="am/pm" name="end-time-am/pm" value="{{ activity.end_time_am/pm }}">-->
-<!--                            <option value='a.m.'>AM</option>-->
-<!--                            <option value='p.m.'>PM</option>-->
-<!--                        </select>-->
-<!--                    </td>-->
-<!--                    <td>{{ activity.site.url }}</td>-->
-<!--                    <td>-->
-<!--                        <select id="productive" name="productive" value="{{ activity.productive }}">-->
-<!--                            <option value='' selected disabled hidden>&#45;&#45;True or False&#45;&#45;</option>-->
-<!--                            <option value="true">True</option>-->
-<!--                            <option value="false">False</option>-->
-<!--                        </select>-->
-<!--                    </td>-->
-<!--                    <td><textarea rows="4" name="notes">{{ activity.notes|default:"" }}</textarea></td>-->
-<!--                </tr>-->
-<!--            {% endfor %}-->
-<!--        </table>-->
-<!--    </form>-->
-<!--        {% else %}-->
+        {% if edit %}
+            {% for activity in activities %}
+                <tr>
+                    <td>
+                        <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="start-time" value="{{ activity.start_time }}">
+                        <select id="am/pm" name="start-time-am/pm" value="{{ activity.start_time_am_pm }}">
+                            <option value='a.m.'>AM</option>
+                            <option value='p.m.'>PM</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="end-time" value="{{ activity.end_time }}">
+                        <select id="am/pm" name="end-time-am/pm" value="{{ activity.end_time_am_pm }}">
+                            <option value='a.m.'>AM</option>
+                            <option value='p.m.'>PM</option>
+                        </select>
+                    </td>
+                    <td>{{ activity.site.url }}</td>
+                    <td>
+                        <select id="productive" name="productive" value="{{ activity.productive }}">
+                            <option value='' selected disabled hidden>--True or False--</option>
+                            <option value="true">True</option>
+                            <option value="false">False</option>
+                        </select>
+                    </td>
+                    <td><textarea rows="4" name="notes">{{ activity.notes|default:"" }}</textarea></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </form>
+        {% else %}
             {% for activity in activities %}
             <tr>
                 <td>{{ activity.start_time }}</td>
@@ -64,7 +64,7 @@
             </tr>
             {% endfor %}
     </table>
-<!--        {% endif %}-->
+        {% endif %}
     <form method="GET">
         <input type="hidden" name="date" value="{{ date }}">
         <input type="hidden" name="edit" value="True">
