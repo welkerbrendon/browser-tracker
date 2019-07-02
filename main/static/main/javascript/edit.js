@@ -36,7 +36,7 @@ function changeDate() {
     var inputElement = document.createElement("input");
     inputElement.setAttribute("type", "date");
     inputElement.setAttribute("id", "date");
-    inputElement.value = getDayFromHeader();
+    inputElement.setAttribute("value", getDayFromHeader());
 
     var submitButton = document.createElement("input");
     submitButton.setAttribute("type", "submit");
