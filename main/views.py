@@ -28,8 +28,14 @@ def home(request):
             "edit": edit
         }
     else:
+        activities = controllers.get_activities(request.user, date)
+        for activity in activities:
+            activity["start_time_am/pm"] = activity.start_time.split()[1]
+            activity.start_time = activity.start_time.split()[0]
+            activity["end_time_am/pm"] = activity.end_time.split()[1]
+            activity.end_time = activity.end_time.split()[1]
         data = {
-            "activities": controllers.get_activities(request.user, date),
+            "activities": activities,
             "edit": edit,
             "date": datetime.strptime(date, "%Y-%m-%d").date()
         }

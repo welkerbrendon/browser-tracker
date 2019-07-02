@@ -26,15 +26,15 @@
             {% for activity in activities %}
                 <tr>
                     <td>
-                        <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="start-time" value="{% str(activity.start_time).split()[0] %}">
-                        <select id="am/pm" name="start-time-am/pm" value="{% str(activity.start_time).split()[1] %}">
+                        <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="start-time" value="{{ activity.start_time }}">
+                        <select id="am/pm" name="start-time-am/pm" value="{{ activity.start_time_am/pm }}">
                             <option value='a.m.'>AM</option>
                             <option value='p.m.'>PM</option>
                         </select>
                     </td>
                     <td>
-                        <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="end-time" value="{% str(activity.end_time).split()[0] %}">
-                        <select id="am/pm" name="end-time-am/pm" value="{% str(activity.end_time).split()[1] %}">
+                        <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="end-time" value="{{ activity.end_time }}">
+                        <select id="am/pm" name="end-time-am/pm" value="{{ activity.end_time_am/pm }}">
                             <option value='a.m.'>AM</option>
                             <option value='p.m.'>PM</option>
                         </select>
@@ -47,11 +47,7 @@
                             <option value="false">False</option>
                         </select>
                     </td>
-                    {% if activity.notes %}
-                        <td><textarea rows="4" name="notes">{{ activity.notes }}</textarea></td>
-                    {% else %}
-                        <td><textarea rows="4" name="notes"></textarea></td>
-                    {% endif %}
+                    <td><textarea rows="4" name="notes">{{ activity.notes|default:"" }}</textarea></td>
                 </tr>
             {% endfor %}
         </table>
@@ -62,16 +58,8 @@
                 <td>{{ activity.start_time }}</td>
                 <td>{{ activity.end_time }}</td>
                 <td>{{ activity.site.url }}</td>
-                {% if activity.productive %}
-                    <td>{{ activity.productive }}</td>
-                {% else %}
-                    <td>Unknown</td>
-                {% endif %}
-                {% if activity.notes %}
-                    <td>{{ activity.notes }}</td>
-                {% else %}
-                    <td></td>
-                {% endif %}
+                <td>{{ activity.productive|default:"Unknown" }}</td>
+                <td>{{ activity.notes|default:"" }}</td>
             </tr>
             {% endfor %}
     </table>
