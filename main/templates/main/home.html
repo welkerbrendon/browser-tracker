@@ -5,7 +5,6 @@
 {% block content %}
     <h1>Home Page</h1>
     <h3 id="date-header"><span id="date">{{ date }}</span> <button onclick="changeDate()">Change Date</button></h3>
-    <h4>{{ edit }}</h4>
     <form method="GET">
         <input type="hidden" name="date" value="{{ date }}">
         <input type="hidden" name="edit" value="True">
