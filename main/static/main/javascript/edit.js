@@ -28,17 +28,17 @@ function formatDefaultTimeValues() {
 
     for (var i = 0; i < startTimeTdElements.length && i < endTimeTdElements.length; i++) {
         var startTime = startTimeTdElements[i].getAttribute("value").split(" ");
-        startTimeTdElements.children[0].value = startTime[0];
-        startTimeTdElements.children[1].value = startTime[1];
+        startTimeTdElements[i].children[0].value = startTime[0];
+        startTimeTdElements[i].children[1].value = startTime[1];
 
         var endTime = endTimeTdElements[i].getAttribute("value").split(" ");
-        endTimeTdElements.children[0].value = startTIme[0];
-        endTimeTdElements.children[1].value = startTime[1];
+        endTimeTdElements[i].children[0].value = startTIme[0];
+        endTimeTdElements[i].children[1].value = startTime[1];
     }
 }
 
 function fixDateValues() {
-    var dateElements = document.getElementsByName("date");
+getAttribute("value")    var dateElements = document.getElementsByName("date");
     for (var i = 0; i < dateElements.length; i++) {
         dateElements[i].value = formatDay(dateElements[i].value);
     }
