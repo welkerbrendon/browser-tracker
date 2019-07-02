@@ -4,7 +4,8 @@
 {% endblock %}
 {% block content %}
     <h1>Home Page</h1>
-    <h3>{{ date }}</h3>
+    <h3 id="date-header"><span id="date">{{ date }}</span> <button onclick="changeDate()">Change Date</button></h3>
+    <button onclick="editRequest()">Edit Data</button>
     <table border="1">
         <tr>
             <th class="start-time">Start Time</th>
@@ -31,4 +32,5 @@
         </tr>
         {% endfor %}
     </table>
+    <button onclick="editRequest()">Edit Data</button>
 {% endblock %}

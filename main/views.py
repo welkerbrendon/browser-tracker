@@ -9,7 +9,7 @@ import json
 
 
 @login_required
-def home(request, date=None):
+def home(request, date=None, edit=False):
     if not date:
         activities = None
         i = 0
@@ -22,13 +22,15 @@ def home(request, date=None):
             i += 1
         data = {
             "activities": activities,
-            "date": date
+            "date": date,
+            "edit": edit
         }
     else:
         data = {
             "activities": controllers.get_activities(request.user, date)
         }
     return render(request, "main/home.html", data)
+
 
 @csrf_exempt
 def site_activity(request):
