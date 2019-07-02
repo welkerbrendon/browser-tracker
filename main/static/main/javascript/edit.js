@@ -13,12 +13,6 @@ const monthLookup = {
     "December": "11"
 }
 
-function editRequest() {
-    $.get("/main/?date=" + getDayFromHeader(), function (result, textStatus) {
-        console.log(`result of edit request: ${textStatus} : ${JSON.stringify(result)}`);
-    });
-}
-
 function getDayFromHeader() {
     var day = document.getElementById("date").innerHTML.split(" ");
     day[1] = parseInt(day[1]) < 10 ? "0" + day[1][0] : day[1][0] + day[1][1];
@@ -36,6 +30,7 @@ function changeDate() {
     var inputElement = document.createElement("input");
     inputElement.setAttribute("type", "date");
     inputElement.setAttribute("id", "date");
+    inputElement.setAttribute("name", "date");
     inputElement.value = getDayFromHeader();
 
     var submitButton = document.createElement("input");
