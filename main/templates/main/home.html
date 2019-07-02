@@ -5,12 +5,13 @@
 {% block content %}
     <h1>Home Page</h1>
     <h3 id="date-header"><span id="date">{{ date }}</span> <button onclick="changeDate()">Change Date</button></h3>
+    <h4>Edit: {{ edit }}</h4>
     <form method="GET">
         <input type="hidden" name="date" value="{{ date }}">
         <input type="hidden" name="edit" value="True">
         <input type="submit" value="Edit Data">
     </form>
-    {% if edit %}
+    {% if edit == "True" %}
     <form method="POST">
         <input type="hidden" name="csrfmiddlewaretoken" value="{% csrf_token %}">
         {% endif %}
@@ -22,7 +23,7 @@
             <th class="productive">Productive</th>
             <th class="notes">Notes</th>
         </tr>
-        {% if edit %}
+        {% if edit == "True" %}
             {% for activity in activities %}
                 <tr>
                     <td><input type="time" name="start_time" value="{{ activity.start_time }}"></td>
