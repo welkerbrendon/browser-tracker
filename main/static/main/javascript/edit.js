@@ -27,11 +27,11 @@ function formatDefaultTimeValues() {
     var endTimeTdElements = document.getElementsByName("end_time_td");
 
     for (var i = 0; i < startTimeTdElements.length && i < endTimeTdElements.length; i++) {
-        var startTime = startTimeTdElements[i].value.split(" ");
+        var startTime = startTimeTdElements[i].getAttribute("value").split(" ");
         startTimeTdElements.children[0].value = startTime[0];
         startTimeTdElements.children[1].value = startTime[1];
 
-        var endTime = endTimeTdElements[i].value.split(" ");
+        var endTime = endTimeTdElements[i].getAttribute("value").split(" ");
         endTimeTdElements.children[0].value = startTIme[0];
         endTimeTdElements.children[1].value = startTime[1];
     }
