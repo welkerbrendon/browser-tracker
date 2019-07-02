@@ -15,6 +15,10 @@ const monthLookup = {
     "December": "12"
 }
 
+function setUp() {
+    fixDateValues();
+}
+
 function fixDateValues() {
     var dateElements = document.getElementsByName("date");
     for (var i = 0; i < dateElements.length; i++) {
