@@ -92,10 +92,10 @@ function changeDate() {
 }
 
 function setMaxDate(element) {
-    element.max = document.getElementById("end_date").value;
+    document.getElementById("start_date").max = element.value;
 }
 
 function setMinDate(element) {
-    element.min = document.getElementById("start_date").value;
+    document.getElementById("end_date").min = element.value;
 
 }
