@@ -32,8 +32,8 @@ function formatDefaultTimeValues() {
         startTimeTdElements[i].children[1].value = startTime[1];
 
         var endTime = endTimeTdElements[i].getAttribute("value").split(" ");
-        endTimeTdElements[i].children[0].value = startTIme[0];
-        endTimeTdElements[i].children[1].value = startTime[1];
+        endTimeTdElements[i].children[0].value = endTime[0];
+        endTimeTdElements[i].children[1].value = endTime[1];
     }
 }
 
