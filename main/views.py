@@ -14,7 +14,9 @@ def home(request, date=None):
         activities = None
         i = 0
         date = datetime.today().date()
-        while not activities or i < 30:
+        while not activities:
+            if i > 365:
+                break
             date = (datetime.today().date()) - timedelta(days=i)
             activities = controllers.get_activities(request.user, date)
             i += 1
