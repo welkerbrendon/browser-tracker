@@ -80,6 +80,7 @@ function changeDate() {
 
     form.appendChild(text);
     form.appendChild(inputElement);
+    form.appendChild(secondInput);
     form.appendChild(submitButton);
 
     buttonElement = document.createElement("button");
