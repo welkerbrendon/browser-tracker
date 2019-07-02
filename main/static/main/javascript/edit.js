@@ -21,8 +21,7 @@ function editRequest() {
 
 function getDayFromHeader() {
     var day = document.getElementById("date").innerHTML.split(" ");
-    day[1].replace(",", "");
-    day[1] = parseInt(day[1]) < 10 ? "0" + day[1] : day[1];
+    day[1] = parseInt(day[1]) < 10 ? "0" + day[1][0] : day[1][0] + day[1][1];
     const date = day[2] + "-" + monthLookup[day[0]] + "-" + day[1];
 
     return date;
