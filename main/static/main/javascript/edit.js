@@ -67,13 +67,13 @@ function changeDate() {
     inputElement.setAttribute("type", "date");
     inputElement.setAttribute("id", "start_date");
     inputElement.setAttribute("name", "start_date");
-    inputElement.setAttribute("onchange", "setMaxDate(this)");
+    inputElement.setAttribute("onchange", "setMinDate(this)");
     inputElement.value = formatDay(document.getElementById("date").innerHTML);
 
     var secondInput = inputElement.cloneNode(true);
     secondInput.setAttribute("name", "end_date");
     secondInput.setAttribute("id", "end_date");
-    secondInput.setAttribute("onchange", "setMinDate(this)");
+    secondInput.setAttribute("onchange", "setMaxDate(this)");
 
     var submitButton = document.createElement("input");
     submitButton.setAttribute("type", "submit");
