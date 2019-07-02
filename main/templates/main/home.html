@@ -3,13 +3,15 @@
     <title>Home Page</title>
 {% endblock %}
 {% block content %}
-    <h1>Home Page</h1>
+    <h1>Habit Tracker</h1>
     <h3 id="date-header"><span id="date">{{ date }}</span> <button onclick="changeDate()">Change Date</button></h3>
+    {% if not edit %}
     <form method="GET">
         <input type="hidden" name="date" value="{{ date }}">
         <input type="hidden" name="edit" value="True">
         <input type="submit" value="Edit Data">
     </form>
+    {% endif %}
     {% if edit %}
     <form method="POST">
         {% csrf_token %}
@@ -18,13 +20,14 @@
         <tr>
             <th class="start-time">Start Time</th>
             <th class="end-time">End Time</th>
-            <th class="website">Website</th>
+            <th class="website">Activity</th>
             <th class="productive">Productive</th>
             <th class="notes">Notes</th>
         </tr>
         {% if edit %}
             {% for activity in activities %}
                 <tr>
+                    <input type="hiden" value="{{ activity.id }}" name="id">
                     <td name="start_time_td" value="{{ activity.start_time }}">
                         <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="start-time" value="">
                         <select id="am/pm" name="start_time_am_pm" value="">
@@ -47,10 +50,11 @@
                             <option value="false">False</option>
                         </select>
                     </td>
-                    <td><textarea rows="4" name="notes">{{ activity.notes|default:"" }}</textarea></td>
+                    <td><textarea rows="4" cols="75" name="notes" style="width:99%; height:100%;">{{ activity.notes|default:"" }}</textarea></td>
                 </tr>
             {% endfor %}
         </table>
+        <input type="submit">
     </form>
         {% else %}
             {% for activity in activities %}
@@ -64,9 +68,11 @@
             {% endfor %}
     </table>
         {% endif %}
+    {% if not edit %}
     <form method="GET">
         <input type="hidden" name="date" value="{{ date }}">
         <input type="hidden" name="edit" value="True">
         <input type="submit" value="Edit Data">
     </form>
+    {% endif %}
 {% endblock %}

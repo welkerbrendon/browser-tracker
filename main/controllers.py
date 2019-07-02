@@ -51,3 +51,30 @@ def get_activities(user, date):
     data = Activities.objects.select_related('site').filter(user=user, day=date).order_by("start_time")
     print("DEBUG: Activities for " + str(date) + ": " + str(data))
     return data
+
+def edit_site_activities(user, data):
+    startTimeList = formatTime(data.start_time)
+    endTimeList = formatTime(data.end_time)
+    productiveList = data.productive
+    notesList = data.notes
+    idList = data.id
+    for i in range(len(idList)):
+        activity = Activities.objects.get(id=idList[i])
+        activity.start_time = startTimeList[i]
+        activity.end_time = endTimeList[i]
+        activity.productive = productiveList[i]
+        activity.notes = notesList[i]
+        activity.save()
+
+
+def formatTime(time_values):
+    new_list = []
+    for time in time_values:
+        split_time = time.split()
+        hour_minutes = split_time[0].split(":")
+        if split_time[1] == "p.m." and int(hour_minutes[0]) != 12:
+            military_time = str(int(hour_minutes[0]) + 12) + hour_minutes[1]
+            new_list.append(military_time)
+        else:
+            new_list.append(split_time[0])
+    return new_list

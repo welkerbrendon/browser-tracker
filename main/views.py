@@ -10,8 +10,16 @@ import json
 
 @login_required
 def home(request):
-    date = request.GET.get("date", None)
-    edit = request.GET.get("edit", None)
+    date = None
+    if request.method == "POST":
+        controllers.edit_site_activities(request.user, request.POST)
+        date = request.POST.get("date", None)
+        edit = True
+
+    else :
+        date = request.GET.get("date", None)
+        edit = request.GET.get("edit", None)
+
     if not date:
         activities = None
         i = 0
@@ -35,6 +43,8 @@ def home(request):
         }
     return render(request, "main/home.html", data)
 
+def activities(request):
+    return
 
 @csrf_exempt
 def site_activity(request):
