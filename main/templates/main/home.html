@@ -6,6 +6,10 @@
     <h1>Home Page</h1>
     <h3 id="date-header"><span id="date">{{ date }}</span> <button onclick="changeDate()">Change Date</button></h3>
     <button onclick="editRequest()">Edit Data</button>
+    {% if edit == True %}
+    <form method="POST">
+        <input type="hidden" name="csrfmiddlewaretoken" value="{% csrf_token %}">
+        {% endif %}
     <table border="1">
         <tr>
             <th class="start-time">Start Time</th>
@@ -14,23 +18,47 @@
             <th class="productive">Productive</th>
             <th class="notes">Notes</th>
         </tr>
-        {% for activity in activities %}
-        <tr>
-            <td>{{ activity.start_time }}</td>
-            <td>{{ activity.end_time }}</td>
-            <td>{{ activity.site.url }}</td>
-            {% if activity.productive %}
-                <td>{{ activity.productive }}</td>
-            {% else %}
-                <td>Unknown</td>
-            {% endif %}
-            {% if activity.notes %}
-                <td>{{ activity.notes }}</td>
-            {% else %}
-                <td></td>
-            {% endif %}
-        </tr>
-        {% endfor %}
-    </table>
+        {% if edit == True %}
+            {% for activity in activities %}
+                <tr>
+                    <td><input type="time" name="start_time" value="{{ activity.start_time }}"></td>
+                    <td><input type="time" name="end_time" value="{{ activity.end_time }}"></td>
+                    <td>{{ activity.site.url }}</td>
+                    <td>
+                        <select id="productive" name="productive" value="{{ activity.productive }}">
+                            <option value='' selected disabled hidden>--True or False--</option>
+                            <option value="true">True</option>
+                            <option value="false">False</option>
+                        </select>
+                    </td>
+                    {% if activity.notes %}
+                        <td><textarea rows="4" name="notes">{{ activity.notes }}</textarea></td>
+                    {% else %}
+                        <td><textarea rows="4" name="notes"></textarea></td>
+                    {% endif %}
+                </tr>
+        </table>
+    </form>
+            {% endfor %}
+        {% else %}
+            {% for activity in activities %}
+            <tr>
+                <td>{{ activity.start_time }}</td>
+                <td>{{ activity.end_time }}</td>
+                <td>{{ activity.site.url }}</td>
+                {% if activity.productive %}
+                    <td>{{ activity.productive }}</td>
+                {% else %}
+                    <td>Unknown</td>
+                {% endif %}
+                {% if activity.notes %}
+                    <td>{{ activity.notes }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+            </tr>
+        </table>
+            {% endfor %}
+        {% endif %}
     <button onclick="editRequest()">Edit Data</button>
 {% endblock %}
