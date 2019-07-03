@@ -1,11 +1,11 @@
-from .models import Activities, Site, SiteVisit, Extension
+from .models import Activity, Site, SiteVisit, Extension
 from datetime import datetime
 
 
 def get_activity(user, data):
     today = datetime.today().strftime('%Y-%m-%d')
     print("DEBUG: Today is " + today)
-    query_set = Activities.objects.filter(user=user,
+    query_set = Activity.objects.filter(user=user,
                                      start_time=data.get('start_time'),
                                      end_time=data.get("end_time"),
                                      day=today)
@@ -18,12 +18,10 @@ def create_new_activity(user, data):
     notes = None
     if "notes" in data:
         notes = data.get("notes")
-    Activities(user=user, start_time=data.get('start_time'), end_time=data.get("end_time"), day=data.get('day'),
-               productive=data.get('productive'), activity_type=data.get("activity_type"), notes=notes).save()
-    print("DEBUG: Created activity, checking if creation was succesful.")
-    return Activities.objects.filter(user=user,
-                                  start_time=data.get('start_time'),
-                                  day=data.get('day'))[0]
+    activity = Activity(user=user, start_time=data.get('start_time'), end_time=data.get("end_time"), day=data.get('day'),
+               productive=data.get('productive'), activity_type=data.get("activity_type"), notes=notes)
+    activity.save()
+    return activity
 
 
 def get_site(url):
@@ -38,7 +36,7 @@ def get_site(url):
 
 
 def get_activities(user, date):
-    data = Activities.objects.select_related('site').filter(user=user, day=date).order_by("start_time")
+    data = Activity.objects.select_related('site').filter(user=user, day=date).order_by("start_time")
     print("DEBUG: Activities for " + str(date) + ": " + str(data))
     return data
 
@@ -50,7 +48,7 @@ def edit_site_activities(user, data):
     notes_list = data.notes
     id_list = data.id
     for i in range(len(id_list)):
-        activity = Activities.objects.get(id=id_list[i])
+        activity = Activity.objects.get(id=id_list[i])
         activity.start_time = start_time_list[i]
         activity.end_time = end_time_list[i]
         activity.productive = productive_list[i]

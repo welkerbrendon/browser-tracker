@@ -15,7 +15,7 @@ class ActivityType(models.Model):
     class Meta:
         unique_together = (("user", "type_name"),)
 
-class Activities(models.Model):
+class Activity(models.Model):
     id = models.BigAutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     activity_type = models.ForeignKey(ActivityType, on_delete=models.CASCADE, null=True)
@@ -26,8 +26,8 @@ class Activities(models.Model):
     notes = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
-    class Meta:
-        unique_together = (("user", "day", "start_time", "end_time"),)
+    # class Meta:
+    #     unique_together = (("user", "day", "start_time", "end_time"),)
 
 class SiteType(models.Model):
     id = models.AutoField(primary_key=True)
@@ -49,7 +49,7 @@ class SiteVisit(models.Model):
     id = models.BigAutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
-    activity = models.ForeignKey(Activities, on_delete=models.SET_NULL, null=True)
+    activity = models.ForeignKey(Activity, on_delete=models.SET_NULL, null=True)
     day = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
