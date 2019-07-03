@@ -113,5 +113,23 @@ function setMaxDate(element) {
 
 function setMinDate(element) {
     document.getElementById("end_date").min = element.value;
+}
 
+function combineWithLower(element) {
+    var tableRow = element.parentElement.parentElement;
+    var table = tableRow.parentElement;
+    for (var i = 1; i < table.children.length; i++) {
+        if (table.children[i - 1] == tableRow) {
+            mergeTableRows(tableRow, table.children[i]);
+            break;
+        }
+    }
+}
+
+function mergeTableRows(topRow, bottomRow) {
+    topRow.children[0].value += "," + bottomRow.children[0].value;
+    topRow.children[2].children[0].value = bottomRow.children[2].children[0].value;
+    topRow.children[2].children[1].value = bottomRow.children[2].children[1].value;
+    topRow.children[3].innerHTML = "<br>" + bottomrRow.children[3].innerHTML;
+    topRow.children[5].value += " " + topRow.children[5].value;
 }

@@ -27,6 +27,7 @@
             <th class="website">Activity</th>
             <th class="productive">Productive</th>
             <th class="notes">Notes</th>
+            <th></th>
         </tr>
         {% if edit %}
             {% for activity in activities %}
@@ -55,6 +56,7 @@
                         </select>
                     </td>
                     <td><textarea rows="4" cols="75" name="notes" style="width:99%; height:100%;">{{ activity.notes|default:"" }}</textarea></td>
+                    <td><button class="combine" onclick="combineWithLower(this)">Combine With Below</button></td>
                 </tr>
             {% endfor %}
         </table>

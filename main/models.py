@@ -41,6 +41,13 @@ class Activities(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
 
+class CombinedActivites(models.Model):
+    id = models.AutoField(primary_key=True)
+    first_activity = models.ForeignKey(Activities, on_delete=models.CASCADE)
+    second_activity = models.ForeignKey(Activities, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
+
 class PageVisited(models.Model):
     id = models.AutoField(primary_key=True)
     activity = models.ForeignKey(Activities, on_delete=models.CASCADE)
