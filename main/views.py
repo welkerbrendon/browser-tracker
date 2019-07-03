@@ -52,7 +52,7 @@ def site_activity(request):
         data = json.loads(request.body.decode('utf-8'))
         token = data.get('token')
         if token:
-            user = Token.objects.get(key=token)
+            user = Token.objects.get(key=token).user
             if user:
                 try:
                     controllers.post_site_visit(user, data)

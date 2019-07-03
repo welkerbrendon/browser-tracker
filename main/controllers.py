@@ -27,10 +27,11 @@ def create_new_activity(user, data):
 def get_site(url):
     result = Site.objects.filter(url=url)
     if result.count() == 1:
-        return result[0].id
+        return result[0]
     elif result.count() == 0:
-        Site(url=url).save()
-        return Site.objects.filter(url=url)[0]
+        new_site = Site(url=url)
+        new_site.save()
+        return new_site
     else:
         return -1
 
@@ -70,8 +71,8 @@ def format_time(time_values):
 
 
 def post_site_visit(user, data):
-    site = get_site(data.url)
-    site_visit = SiteVisit(user=user, site=site, day=data.get("date"), start_time=data.get("start_time"), end_time=data.get("end_time"))
+    site = get_site(data.get("url"))
+    site_visit = SiteVisit(user=user, site=site, day=data.get("day"), start_time=data.get("start_time"), end_time=data.get("end_time"))
     site_visit.save()
     post_page_extensions(user, data.get("extensions"), site_visit)
 
