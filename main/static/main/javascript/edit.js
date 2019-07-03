@@ -81,7 +81,7 @@ function changeDate() {
     form.appendChild(inputElement);
     form.appendChild(document.createTextNode(" to "));
     form.appendChild(secondInput);
-    form.appendChild(document.createTextNode("(Optional)"));
+    form.appendChild(document.createTextNode("(Optional)<br>"));
     form.appendChild(submitButton);
 
     buttonElement = document.createElement("button");
