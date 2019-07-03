@@ -76,6 +76,7 @@ function changeDate() {
 
     var submitButton = document.createElement("input");
     submitButton.setAttribute("type", "submit");
+    submitButton.setAttribute("id", "date_submit");
 
     form.appendChild(document.createTextNode("New Date: "));
     form.appendChild(inputElement);
