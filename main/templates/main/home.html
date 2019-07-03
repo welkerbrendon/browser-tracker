@@ -4,7 +4,11 @@
 {% endblock %}
 {% block content %}
     <h1>Habit Tracker</h1>
-    <h3 id="date-header"><span id="date">{{ date }}</span> <button onclick="changeDate()">Change Date</button></h3>
+    <p>
+        <h3 id="date-header">
+            <span id="date">{{ date }}</span> <button onclick="changeDate()">Change Date</button>
+        </h3>
+    </p>
     {% if not edit %}
     <form method="GET">
         <input type="hidden" name="date" value="{{ date }}">

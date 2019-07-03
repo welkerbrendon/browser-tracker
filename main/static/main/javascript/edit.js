@@ -61,8 +61,6 @@ function changeDate() {
     var form = document.createElement("form");
     form.setAttribute("method", "GET");
 
-    var text = document.createTextNode("New Date: ");
-
     var inputElement = document.createElement("input");
     inputElement.setAttribute("type", "date");
     inputElement.setAttribute("id", "start_date");
@@ -74,15 +72,16 @@ function changeDate() {
     secondInput.setAttribute("name", "end_date");
     secondInput.setAttribute("id", "end_date");
     secondInput.setAttribute("onchange", "setMaxDate(this)");
-    secondInput.setAttribute("placeholder", "--Optional End Date--");
     secondInput.value = "";
 
     var submitButton = document.createElement("input");
     submitButton.setAttribute("type", "submit");
 
-    form.appendChild(text);
+    form.appendChild(document.createTextNode("New Date: "));
     form.appendChild(inputElement);
+    form.appendChild(document.createTextNode(" to "));
     form.appendChild(secondInput);
+    form.appendChild(document.createTextNode("(Optional)"));
     form.appendChild(submitButton);
 
     buttonElement = document.createElement("button");
