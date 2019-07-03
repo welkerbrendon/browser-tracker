@@ -75,7 +75,7 @@ function changeDate() {
     secondInput.setAttribute("type", "text");
     secondInput.setAttribute("placeholder", "--Optional End Date--");
     secondInput.setAttribute("onmouseover", "this.type = 'date'");
-    secondInput.setAttribute("onblur", "endDateOnBlurHandler(this)");
+    secondInput.setAttribute("onmouseleave", "endDateOnBlurHandler(this)");
     secondInput.setAttribute("name", "end_date");
     secondInput.setAttribute("id", "end_date");
     secondInput.setAttribute("onchange", "setMaxDate(this)");
