@@ -43,8 +43,8 @@ class Activities(models.Model):
 
 class CombinedActivites(models.Model):
     id = models.AutoField(primary_key=True)
-    first_activity = models.ForeignKey(Activities, on_delete=models.CASCADE)
-    second_activity = models.ForeignKey(Activities, on_delete=models.CASCADE)
+    first_activity = models.ForeignKey(Activities, on_delete=models.CASCADE, related_name="first_activity")
+    second_activity = models.ForeignKey(Activities, on_delete=models.CASCADE, related_name="second_activity")
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
 
