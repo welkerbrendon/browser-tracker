@@ -12,6 +12,7 @@ class ActivityType(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     type_name = models.CharField(max_length=50)
+    universal = models.BooleanField()
     class Meta:
         unique_together = (("user", "type_name"),)
 

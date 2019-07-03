@@ -13,7 +13,6 @@ def get_activity(user, data):
     print("DEBUG: query_set count from get_activity: " + str(count))
     return None if query_set.count() == 0 else query_set[0]
 
-
 def create_new_activity(user, data):
     notes = None
     if "notes" in data:
@@ -22,7 +21,13 @@ def create_new_activity(user, data):
                productive=data.get('productive'), activity_type=data.get("activity_type"), notes=notes)
     activity.save()
     return activity
-
+# activity = {
+#                 "start_time": start_times[i],
+#                 "end_time": end_times[i],
+#                 "type": data.get("activity_type", [None]*count_of_activities)[i],
+#                 "productive": data.get("productive", [None]*count_of_activities)[i],
+#                 "notes": data.get("notes", [None]*count_of_activities)[i]
+#             };
 
 def get_site(url):
     result = Site.objects.filter(url=url)
@@ -42,32 +47,19 @@ def get_activities(user, date):
     return data
 
 
-def edit_site_activities(user, data):
-    start_time_list = format_time(data.start_time)
-    end_time_list = format_time(data.end_time)
-    productive_list = data.productive
-    notes_list = data.notes
-    id_list = data.id
-    for i in range(len(id_list)):
-        activity = Activity.objects.get(id=id_list[i])
-        activity.start_time = start_time_list[i]
-        activity.end_time = end_time_list[i]
-        activity.productive = productive_list[i]
-        activity.notes = notes_list[i]
-        activity.save()
-
-
-def format_time(time_values):
-    new_list = []
-    for time in time_values:
-        split_time = time.split()
-        hour_minutes = split_time[0].split(":")
-        if split_time[1] == "p.m." and int(hour_minutes[0]) != 12:
-            military_time = str(int(hour_minutes[0]) + 12) + hour_minutes[1]
-            new_list.append(military_time)
-        else:
-            new_list.append(split_time[0])
-    return new_list
+# def edit_site_activities(user, data):
+#     start_time_list = format_time(data.start_time)
+#     end_time_list = format_time(data.end_time)
+#     productive_list = data.productive
+#     notes_list = data.notes
+#     id_list = data.id
+#     for i in range(len(id_list)):
+#         activity = Activity.objects.get(id=id_list[i])
+#         activity.start_time = start_time_list[i]
+#         activity.end_time = end_time_list[i]
+#         activity.productive = productive_list[i]
+#         activity.notes = notes_list[i]
+#         activity.save()
 
 
 def post_site_visit(user, data):

@@ -12,36 +12,47 @@ import json
 def home(request):
     date = None
     if request.method == "POST":
-        controllers.edit_site_activities(request.user, request.POST)
-        date = request.POST.get("date", None)
-        edit = True
+        data = request.POST
+        start_times = format_time(data.get("start_time", None), data.get("start_time_am/pm", None))
+        end_times = format_time(data.get("end_time", None), data.get("end_time_am/pm", None))
+        count_of_activities = len(start_times)
+        for i in range(count_of_activities):
+            activity = {
+                "start_time": start_times[i],
+                "end_time": end_times[i],
+                "type": data.get("activity_type", [None]*count_of_activities)[i],
+                "productive": data.get("productive", [None]*count_of_activities)[i],
+                "notes": data.get("notes", [None]*count_of_activities)[i]
+            };
+            controllers.create_new_activity(request.user, activity)
 
-    else :
-        date = request.GET.get("date", None)
-        edit = request.GET.get("edit", None)
 
-    if not date:
-        activities = None
-        i = 0
-        date = datetime.today().date()
-        while not activities:
-            if i > 365:
-                break
-            date = (datetime.today().date()) - timedelta(days=i)
-            activities = controllers.get_activities(request.user, date)
-            i += 1
-        data = {
-            "activities": activities,
-            "date": date,
-            "edit": edit
-        }
-    else:
-        data = {
-            "activities": controllers.get_activities(request.user, date),
-            "edit": edit,
-            "date": datetime.strptime(date, "%Y-%m-%d").date()
-        }
-    return render(request, "main/home.html", data)
+    # else :
+    #     date = request.GET.get("date", None)
+    #     edit = request.GET.get("edit", None)
+    #
+    # if not date:
+    #     activities = None
+    #     i = 0
+    #     date = datetime.today().date()
+    #     while not activities:
+    #         if i > 365:
+    #             break
+    #         date = (datetime.today().date()) - timedelta(days=i)
+    #         activities = controllers.get_activities(request.user, date)
+    #         i += 1
+    #     data = {
+    #         "activities": activities,
+    #         "date": date,
+    #         "edit": edit
+    #     }
+    # else:
+    #     data = {
+    #         "activities": controllers.get_activities(request.user, date),
+    #         "edit": edit,
+    #         "date": datetime.strptime(date, "%Y-%m-%d").date()
+    #     }
+    # return render(request, "main/home.html", data)
 
 def activities(request):
     return
@@ -85,4 +96,14 @@ def site_activity(request):
             response.status_code = 401
 
         return response
-# Create your views here.
+
+def format_time(time_values, am_pm_values):
+    new_list = []
+    for time, am_pm in zip(time_values, am_pm_values):
+        hour_minutes = time[0].split(":")
+        if am_pm[1] == "PM" and int(hour_minutes[0]) != 12:
+            military_time = str(int(hour_minutes[0]) + 12) + hour_minutes[1]
+            new_list.append(military_time)
+        else:
+            new_list.append(time)
+    return new_list

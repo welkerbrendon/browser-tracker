@@ -4,4 +4,50 @@
 {% endblock %}
 {% block content %}
     <h1>Habit Tracker</h1>
+    <p>
+        <h3 id="date-header">
+            Date: <input type="date" name="date" value="{{ date }}" max="{{ max }}">
+        </h3>
+    </p>
+    <form method="POST">
+        <table id="day-input" class="input-table" border=1 style="width:100%">
+            <tr id="table-headers">
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Productive</th>
+                <th>Activity Type</th>
+                <th>Notes</th>
+            </tr>
+        {% for i in range(6) %}
+            <tr id="table-row">
+                <td id="start-time-column">
+                    <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="start-time">
+                    <select id="am/pm" name="start-time-am/pm">
+                        <option value='AM'>AM</option>
+                        <option value='PM'>PM</option>
+                    </select>
+                </td>
+                <td id="end-time-column">
+                    <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="end-time">
+                    <select id="am/pm" name="end-time-am/pm">
+                        <option value='AM'>AM</option>
+                        <option value='PM'>PM</option>
+                    </select>
+                </td>
+                <td id="productive-column">
+                    <input type="radio" name="productive" class="productive" value="True">True<br>
+                    <input type="radio" name="productive" class="productive" value="False">False
+                </td>
+                <td id="activity-type-column">
+                    <select id="activity-type" name="activity-type">
+                        <option value='' selected disabled hidden>--Choose Type--</option>
+                    </select>
+                </td>
+                <td id="notes-column">
+                    <textarea name="notes" rows="4" cols="75" style="width:99%; height:100%;" placeholder="--Optional--"></textarea>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+    </form>
 {% endblock %}
