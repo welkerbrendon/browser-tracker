@@ -18,7 +18,7 @@ class ActivityType(models.Model):
 class Activities(models.Model):
     id = models.BigAutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    activity_type = models.ForeignKey(ActivityType, on_delete=models.SET_NULL)
+    activity_type = models.ForeignKey(ActivityType, on_delete=models.CASCADE, null=True)
     day = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
@@ -47,6 +47,7 @@ class Site(models.Model):
 
 class SiteVisit(models.Model):
     id = models.BigAutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
     activity = models.ForeignKey(Activities, on_delete=models.SET_NULL, null=True)
     day = models.DateField()
