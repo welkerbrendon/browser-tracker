@@ -61,6 +61,9 @@ function changeDate() {
     var form = document.createElement("form");
     form.setAttribute("method", "GET");
 
+    var div = document.createElement("div");
+    div.setAttribute("id", "date_input");
+
     var inputElement = document.createElement("input");
     inputElement.setAttribute("type", "date");
     inputElement.setAttribute("id", "start_date");
@@ -68,7 +71,10 @@ function changeDate() {
     inputElement.setAttribute("onchange", "setMinDate(this)");
     inputElement.value = formatDay(document.getElementById("date").innerHTML);
 
-    var secondInput = inputElement.cloneNode(true);
+    var secondInput = document.createElement("input");
+    secondInput.setAttribute("type", "text");
+    secondInput.setAttribute("placeholder", "--Optional--");
+    secondInput.setAttribute("onfocus", "this.type = 'date'");
     secondInput.setAttribute("name", "end_date");
     secondInput.setAttribute("id", "end_date");
     secondInput.setAttribute("onchange", "setMaxDate(this)");
@@ -86,12 +92,14 @@ function changeDate() {
     form.appendChild(document.createElement("br"));
     form.appendChild(submitButton);
 
+    div.appendChild(form);
+
     buttonElement = document.createElement("button");
 
     var h3Element = document.getElementById("date-header");
     h3Element.innerHTML = "";
     
-    h3Element.appendChild(form);
+    h3Element.appendChild(div);
 }
 
 function setMaxDate(element) {
