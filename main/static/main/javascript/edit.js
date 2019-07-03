@@ -74,7 +74,7 @@ function changeDate() {
     var secondInput = document.createElement("input");
     secondInput.setAttribute("type", "text");
     secondInput.setAttribute("placeholder", "--Optional End Date--");
-    secondInput.setAttribute("onfocus", "this.type = 'date'");
+    secondInput.setAttribute("onmouseover", "this.type = 'date'");
     secondInput.setAttribute("onblur", "endDateOnBlurHandler(this)");
     secondInput.setAttribute("name", "end_date");
     secondInput.setAttribute("id", "end_date");
