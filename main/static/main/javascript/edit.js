@@ -74,6 +74,8 @@ function changeDate() {
     secondInput.setAttribute("name", "end_date");
     secondInput.setAttribute("id", "end_date");
     secondInput.setAttribute("onchange", "setMaxDate(this)");
+    secondInput.setAttribute("placeholder", "--Optional End Date--");
+    secondInput.value = "";
 
     var submitButton = document.createElement("input");
     submitButton.setAttribute("type", "submit");
