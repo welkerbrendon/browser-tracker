@@ -74,7 +74,7 @@ function changeDate() {
     var secondInput = document.createElement("input");
     secondInput.setAttribute("type", "text");
     secondInput.setAttribute("placeholder", "--Optional--");
-    secondInput.setAttribute("onfocus", "this.type = 'date'");
+    secondInput.setAttribute("onhover", "this.type = 'date'");
     secondInput.setAttribute("name", "end_date");
     secondInput.setAttribute("id", "end_date");
     secondInput.setAttribute("onchange", "setMaxDate(this)");
