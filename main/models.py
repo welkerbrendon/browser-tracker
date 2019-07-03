@@ -26,8 +26,8 @@ class Activity(models.Model):
     notes = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
-    # class Meta:
-    #     unique_together = (("user", "day", "start_time", "end_time"),)
+    class Meta:
+        unique_together = (("user", "day", "start_time", "end_time"),)
 
 class SiteType(models.Model):
     id = models.AutoField(primary_key=True)
