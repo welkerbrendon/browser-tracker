@@ -12,7 +12,22 @@ class ActivityType(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     type_name = models.CharField(max_length=50)
-    universal = models.BooleanField(default=True)
+    class Meta:
+        unique_together = (("user", "type_name"),)
+
+class Activities(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    activity_type = models.ForeignKey(ActivityType, on_delete=models.SET_NULL)
+    day = models.DateField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    productive = models.BooleanField()
+    notes = models.TextField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_updated = models.DateTimeField(auto_now=True)
+    class Meta:
+        unique_together = (("user", "day", "start_time", "end_time"),)
 
 class SiteType(models.Model):
     id = models.AutoField(primary_key=True)
@@ -20,6 +35,8 @@ class SiteType(models.Model):
     type_name = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
+    class Meta:
+        unique_together = (("user", "type_name"),)
 
 class Site(models.Model):
     id = models.AutoField(primary_key=True)
@@ -28,29 +45,22 @@ class Site(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
 
-class Activities(models.Model):
+class SiteVisit(models.Model):
     id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    activity_type = models.ForeignKey(ActivityType, on_delete=models.SET_NULL, null=True)
-    site = models.ForeignKey(Site, on_delete=models.SET_NULL, null=True)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE)
+    activity = models.ForeignKey(Activities, on_delete=models.SET_NULL, null=True)
     day = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
-    productive = models.BooleanField(null=True)
-    notes = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
+    class Meta:
+        unique_together = (("user", "day", "start_time", "end_time", "site"),)
 
-class CombinedActivites(models.Model):
+class Extension(models.Model):
     id = models.AutoField(primary_key=True)
-    first_activity = models.ForeignKey(Activities, on_delete=models.CASCADE, related_name="first_activity")
-    second_activity = models.ForeignKey(Activities, on_delete=models.CASCADE, related_name="second_activity")
-    created_at = models.DateTimeField(auto_now_add=True)
-    last_updated = models.DateTimeField(auto_now=True)
-
-class PageVisited(models.Model):
-    id = models.AutoField(primary_key=True)
-    activity = models.ForeignKey(Activities, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    site_visit = models.ForeignKey(SiteVisit, on_delete=models.CASCADE)
     page_extension = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)

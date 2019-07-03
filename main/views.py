@@ -53,93 +53,36 @@ def site_activity(request):
         token = data.get('token')
         if token:
             user = Token.objects.get(key=token)
-            if user.user_id:
-                print("DEBUG: Checking if activity already exists.")
-                activity = controllers.get_activity(user.user_id, data)
-                if activity:
-                    print("DEBUG Activity already exists.")
-                    if controllers.create_page_visits(activity, data.get('extensions')):
-                        print("DEBUG: Page_visits created.")
-                        response = JsonResponse(
-                            {"authorized": True,
-                             "token_received": True,
-                             "activity":
-                                 {"existed" : True, "added": False},
-                             "page_visits":
-                                 {"error": False}})
-                        response.status_code = 200
-                        return response
-                    else:
-                        print("DEBUG: Page_visits failed to create.")
-                        response = JsonResponse(
-                            {"authorized": True,
-                             "token_received": True,
-                             "activity":
-                                 {"existed": True, "added": False},
-                             "page_visits":
-                                 {"error": True}})
-                        response.status_code = 200
-                        return response
-                else:
-                    print("DEBUG: Activity did not already exist.")
-                    activity = controllers.create_new_activity(user.user_id, data)
-                    print("DEBUG: Checking if creation was successful.")
-                    if activity:
-                        print("DEBUG: Activity created successfully.")
-                        if controllers.create_page_visits(activity, data.get('extensions')):
-                            print("DEBUG: Page_visit also created successfully.")
-                            response = JsonResponse(
-                                {"authorized": True,
-                                 "token_received": True,
-                                 "activity":
-                                     {"existed": False, "added": True},
-                                 "page_visits":
-                                     {"error": False}})
-                            response.status_code = 201
-                            return response
-                        else:
-                            print("DEBUG Page_visit not created successfully.")
-                            response = JsonResponse(
-                                {"authorized": True,
-                                 "token_received": True,
-                                 "activity":
-                                     {"existed": False, "added": True},
-                                 "page_visits":
-                                     {"error": True}})
-                            response.status_code = 201
-                            return response
-                    else:
-                        print("DEBUG: Activity failed to create.")
-                        response = JsonResponse(
-                            {"authorized": True,
-                             "token_received": True,
-                             "activity":
-                                 {"existed": False, "added": False},
-                             "page_visits":
-                                 {"error": True}})
-                        response.status_code = 500
-                        return response
+            if user:
+                try:
+                    controllers.post_site_visit(user, data)
+                    response = JsonResponse(
+                        {"authorized": True,
+                         "token_received": True,
+                         "data_posted": True}
+                    )
+                    response.status_code = 201
+                except:
+                    response = JsonResponse(
+                        {"authorized": True,
+                         "token_received": True,
+                         "data_posted": False}
+                    )
+                    response.status_code = 500
             else:
                 print("DEBUG: Unauthorized request.")
                 response = JsonResponse(
                     {"authorized": False,
                      "token_received": True,
-                     "activity":
-                         {"existed": True, "added": False},
-                     "page_visits":
-                         {"error": True}})
+                     "data_posted": False})
                 response.status_code = 401
-                return response
         else:
             print("DEBUG: No token in request.")
             response = JsonResponse(
                 {"authorized": False,
                  "token_received": False,
-                 "activity":
-                     {"existed": True, "added": False},
-                 "page_visits":
-                     {"error": True}})
+                 "data_posted": False})
             response.status_code = 401
-            return response
 
+        return response
 # Create your views here.
