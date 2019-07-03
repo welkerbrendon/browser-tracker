@@ -74,7 +74,8 @@ function changeDate() {
     var secondInput = document.createElement("input");
     secondInput.setAttribute("type", "text");
     secondInput.setAttribute("placeholder", "--Optional End Date--");
-    secondInput.setAttribute("onmouseover", "this.type = 'date'");
+    secondInput.setAttribute("onfocus", "this.type = 'date'");
+    secondInput.setAttribute("onblur", "endDateOnBlurHandler(this)");
     secondInput.setAttribute("name", "end_date");
     secondInput.setAttribute("id", "end_date");
     secondInput.setAttribute("onchange", "setMaxDate(this)");
@@ -100,6 +101,12 @@ function changeDate() {
     h3Element.innerHTML = "";
     
     h3Element.appendChild(div);
+}
+
+function endDateOnBlurHandler(element) {
+    if (element.value == "") {
+        element.type = "text";
+    }
 }
 
 function setMaxDate(element) {
