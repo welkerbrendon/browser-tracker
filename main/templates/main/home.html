@@ -10,44 +10,86 @@
         </h3>
     </p>
     <form method="POST">
-        <table id="day-input" class="input-table" border=1 style="width:100%">
+        <table id="day-input" class="input-table" border=1>
             <tr id="table-headers">
-                <th>Start Time</th>
-                <th>End Time</th>
-                <th>Productive</th>
-                <th>Activity Type</th>
-                <th>Notes</th>
+                <th class="start_time">Start Time</th>
+                <th class="end_time">End Time</th>
+                <th class="productive">Productive</th>
+                <th class="activity_type">Activity Type</th>
+                <th class="notes">Notes</th>
             </tr>
-        {% for i in range(6) %}
-            <tr id="table-row">
-                <td id="start-time-column">
-                    <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="start-time">
-                    <select id="am/pm" name="start-time-am/pm">
-                        <option value='AM'>AM</option>
-                        <option value='PM'>PM</option>
-                    </select>
-                </td>
-                <td id="end-time-column">
-                    <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="end-time">
-                    <select id="am/pm" name="end-time-am/pm">
-                        <option value='AM'>AM</option>
-                        <option value='PM'>PM</option>
-                    </select>
-                </td>
-                <td id="productive-column">
-                    <input type="radio" name="productive" class="productive" value="True">True<br>
-                    <input type="radio" name="productive" class="productive" value="False">False
-                </td>
-                <td id="activity-type-column">
-                    <select id="activity-type" name="activity-type">
-                        <option value='' selected disabled hidden>--Choose Type--</option>
-                    </select>
-                </td>
-                <td id="notes-column">
-                    <textarea name="notes" rows="4" cols="75" style="width:99%; height:100%;" placeholder="--Optional--"></textarea>
-                </td>
-            </tr>
-        {% endfor %}
+            {% for activity in activities %}
+                <tr name="table-row">
+                    <td name="start-time-column" align="center">
+                        <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="start-time" value="{{ activities.i..start_time }}">
+                        <select class="am/pm" name="start-time-am/pm" value="{{ activities.i.start_time_am_pm }}">
+                            <option value='' selected disabled hidden>--AM/PM--</option>
+                            <option value='AM'>AM</option>
+                            <option value='PM'>PM</option>
+                        </select>
+                    </td>
+                    <td name="end-time-column" align="center">
+                        <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="end-time" value="{{ activities.i.end_time }}">
+                        <select class="am/pm" name="end-time-am/pm" value="{{ activities.i.end_time_am_pm }}">
+                            <option value='AM'>AM</option>
+                            <option value='PM'>PM</option>
+                        </select>
+                    </td>
+                    <td name="productive-column" align="center">
+                        <select class="productive" name="productive" value="{{ activities.i.productive }}">
+                            <option value='True'>True</option>
+                            <option value='False'>False</option>
+                        </select>
+                    </td>
+                    <td name="activity-type-column" align="center">
+                        <select class="activity-type" name="activity-type">
+                            <option value='' selected disabled hidden>--Choose Type--</option>
+                            {% for type in activity_types %}
+                            <option value="{{ type.type_name }}">{{ type.type_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td class="notes" name="notes-column" align="center">
+                        <textarea name="notes" rows="4" cols="75" style="width:99%; height:100%;" placeholder="--Optional--"></textarea>
+                    </td>
+                </tr>
+            {% endfor %}
+            {% for i in additional_rows %}
+                <tr name="table-row">
+                    <td name="start-time-column" align="center">
+                        <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="start-time">
+                        <select class="am/pm" name="start-time-am/pm">
+                            <option value='AM'>AM</option>
+                            <option value='PM'>PM</option>
+                        </select>
+                    </td>
+                    <td name="end-time-column" align="center">
+                        <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="end-time">
+                        <select class="am/pm" name="end-time-am/pm">
+                            <option value='AM'>AM</option>
+                            <option value='PM'>PM</option>
+                        </select>
+                    </td>
+                    <td name="productive-column" align="center">
+                        <select class="productive" name="productive" value="{{ activities.i.productive }}">
+                            <option value='' selected disabled hidden>--True/False--</option>
+                            <option value='True'>True</option>
+                            <option value='False'>False</option>
+                        </select>
+                    </td>
+                    <td name="activity-type-column" align="center">
+                        <select class="activity-type" name="activity-type">
+                            <option value='' selected disabled hidden>--Choose Type--</option>
+                            {% for type in activity_types %}
+                            <option value="{{ type.type_name }}">{{ type.type_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td class="notes" name="notes-column" align="center">
+                        <textarea name="notes" rows="4" cols="75" placeholder="--Optional--"></textarea>
+                    </td>
+                </tr>
+            {% endfor %}
         </table>
     </form>
 {% endblock %}

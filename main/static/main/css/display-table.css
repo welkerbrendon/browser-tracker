@@ -1,10 +1,26 @@
 table {
     width: 90%;
-    table-layout: fixed;
 }
 
-th.start-time, th.end-time, th.productive {
-    width: 10%;
+th.start_time, th.end_time {
+    width: 135px;
+}
+
+th.activity_type {
+    width: 150px;
+}
+
+th.productive {
+    width: 130px;
+}
+
+.notes {
+    min-width: 300px;
+}
+
+textarea {
+    width:99%;
+    height:100%;
 }
 
 th.website {

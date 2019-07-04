@@ -25,6 +25,27 @@ def home(request):
                 "notes": data.get("notes", [None]*count_of_activities)[i]
             };
             controllers.create_new_activity(request.user, activity)
+    else:
+        i = 0
+        date = datetime.today()
+        if date.hour < 12:
+            date = date - timedelta(days=1)
+
+        activities = controllers.get_activities(request.user, date)
+        if activities:
+            activities.start_time, activities["start_time_am_pm"] = reverse_format_time(activities.start_time)
+            activities.end_time, activities["end_time_am_pm"] = reverse_format_time(activities.end_time)
+
+        activity_types = controllers.get_activity_types(request.user)
+
+        data = {
+            "activities": activities,
+            "activity_types": activity_types,
+            "date": date.date().strftime("%Y-%m-%d"),
+            "max": datetime.today().date().strftime("%Y-%m-%d"),
+            "additional_rows": [" "]*4
+        }
+        return render(request, "main/home.html", data)
 
 
     # else :
@@ -96,6 +117,21 @@ def site_activity(request):
             response.status_code = 401
 
         return response
+
+
+def reverse_format_time(start_time_list):
+    new_time_list = []
+    new_am_pm_list = []
+    for start_time in start_time_list:
+        split_time_am_pm = start_time.split(" ")
+        new_time_list.append(split_time_am_pm[0])
+        if split_time_am_pm[1].contains("a"):
+            new_am_pm_list.append("AM")
+        else:
+            new_am_pm_list.append("PM")
+
+    return new_time_list, new_am_pm_list
+
 
 def format_time(time_values, am_pm_values):
     new_list = []

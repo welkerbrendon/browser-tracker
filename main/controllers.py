@@ -1,5 +1,6 @@
-from .models import Activity, Site, SiteVisit, Extension
+from .models import Activity, Site, SiteVisit, Extension, ActivityType
 from datetime import datetime
+from django.db.models import Q
 
 
 def get_activity(user, data):
@@ -42,9 +43,14 @@ def get_site(url):
 
 
 def get_activities(user, date):
-    data = Activity.objects.select_related('site').filter(user=user, day=date).order_by("start_time")
-    print("DEBUG: Activities for " + str(date) + ": " + str(data))
-    return data
+    if Activity.objects.filter(user=user, day=date).order_by("start_time"):
+        return Activity.objects.get(user=user, day=date)
+    else:
+        return None
+
+
+def get_activity_types(user):
+    return ActivityType.objects.filter(Q(user=user) | Q(universal=True)).order_by("type_name")
 
 
 # def edit_site_activities(user, data):
