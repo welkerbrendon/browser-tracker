@@ -14,27 +14,29 @@ def get_activity(user, data):
     print("DEBUG: query_set count from get_activity: " + str(count))
     return None if query_set.count() == 0 else query_set[0]
 
+
 def create_new_activity(user, data):
     notes = None
     if "notes" in data:
         notes = data.get("notes")
+    activity_type = ActivityType.objects.get(type_name=data.get("activity_type"))
     if not Activity.objects.filter(user=user, start_time=data.get('start_time'), end_time=data.get("end_time"), day=data.get('day'),
-               productive=data.get('productive'), activity_type=data.get("activity_type"), notes=notes):
+               productive=data.get('productive'), activity_type=activity_type, notes=notes):
         print("DEBUG: adding activity.")
         activity = Activity(user=user, start_time=data.get('start_time'), end_time=data.get("end_time"), day=data.get('day'),
-                   productive=data.get('productive'), activity_type=data.get("activity_type"), notes=notes)
+                   productive=data.get('productive'), activity_type=activity_type, notes=notes)
         activity.save()
-        updateSiteVisits(user, activity)
+        update_site_visits(user, activity)
         return activity
     else:
         print("DEBUG: activity already added")
         activity = Activity.objects.get(user=user, start_time=data.get('start_time'), end_time=data.get("end_time"), day=data.get('day'),
-               productive=data.get('productive'), activity_type=data.get("activity_type"), notes=notes)
-        updateSiteVisits(user, activity)
+               productive=data.get('productive'), activity_type=activity_type, notes=notes)
+        update_site_visits(user, activity)
         return activity
 
 
-def updateSiteVisits(user, activity):
+def update_site_visits(user, activity):
     print("DEBUG: updating site visits to match with activiy")
     query_set = F({"start_time_after": activity.start_time, "start_time_before": activity.end_time}).qs
     print("DEBUG: " + str(query_set.count()) + " different site visits within the given activity with id=" + str(activity.id))
