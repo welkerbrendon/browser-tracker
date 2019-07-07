@@ -20,18 +20,24 @@ def create_new_activity(user, data):
         notes = data.get("notes")
     if not Activity.objects.filter(user=user, start_time=data.get('start_time'), end_time=data.get("end_time"), day=data.get('day'),
                productive=data.get('productive'), activity_type=data.get("activity_type"), notes=notes):
+        print("DEBUG: adding activity.")
         activity = Activity(user=user, start_time=data.get('start_time'), end_time=data.get("end_time"), day=data.get('day'),
                    productive=data.get('productive'), activity_type=data.get("activity_type"), notes=notes)
         activity.save()
         updateSiteVisits(user, activity)
         return activity
     else:
-        return Activity.objects.get(user=user, start_time=data.get('start_time'), end_time=data.get("end_time"), day=data.get('day'),
+        print("DEBUG: activity already added")
+        activity = Activity.objects.get(user=user, start_time=data.get('start_time'), end_time=data.get("end_time"), day=data.get('day'),
                productive=data.get('productive'), activity_type=data.get("activity_type"), notes=notes)
+        updateSiteVisits(user, activity)
+        return activity
 
 
 def updateSiteVisits(user, activity):
+    print("DEBUG: updating site visits to match with activiy")
     query_set = F({"start_time_after": activity.start_time, "start_time_before": activity.end_time}).qs
+    print("DEBUG: " + query_set.count() + " different site visits within the given activity with id=" + activity.id)
     for site_visit in query_set:
         site_visit.activity=activity
         site_visit.save()
