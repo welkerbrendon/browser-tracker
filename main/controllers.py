@@ -19,7 +19,7 @@ def create_new_activity(user, data):
     notes = None
     if "notes" in data:
         notes = data.get("notes")
-    activity_type = ActivityType.objects.get(type_name=data.get("activity_type"))
+    activity_type = ActivityType.objects.get(type_name=data.get("type"))
     if not Activity.objects.filter(user=user, start_time=data.get('start_time'), end_time=data.get("end_time"), day=data.get('day'),
                productive=data.get('productive'), activity_type=activity_type, notes=notes):
         print("DEBUG: adding activity.")
