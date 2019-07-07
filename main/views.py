@@ -14,6 +14,7 @@ def home(request):
     activity_dict_list = []
     if request.method == "POST":
         data = request.POST
+        print("DEBUG: data received from post request: " + str(data))
         start_times = format_time(data.getlist("start_time"), data.getlist("start_time_am/pm"))
         end_times = format_time(data.getlist("end_time", None), data.getlist("end_time_am/pm", None))
         activity_types = data.getlist("activity_type")
@@ -139,7 +140,7 @@ def site_activity(request):
 def format_time(time_values, am_pm_values):
     new_list = []
     for i in range(len(time_values)):
-        if (time_values[i] != ""):
+        if time_values[i] != "":
             hour_minutes = time_values[0].split(":")
             if am_pm_values[i] == "PM" and int(hour_minutes[0]) != 12:
                 military_time = str(int(hour_minutes[0]) + 12) + ":" + hour_minutes[1]
