@@ -1,3 +1,12 @@
+function submitNewTime(date) {
+    $.get("/main?date=" + date, function (result, textStatus) {
+        if (textStatus == "success") {
+            document.write(result);
+            document.close();
+        }
+    });
+}
+
 function handleInput(element) {
     if (element.value.length > 2) {
         if (isNaN(element.value)) {

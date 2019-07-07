@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import django_filters
 
 class ViewAccess(models.Model):
     id = models.AutoField(primary_key=True)
@@ -19,7 +20,7 @@ class ActivityType(models.Model):
 class Activity(models.Model):
     id = models.BigAutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    activity_type = models.ForeignKey(ActivityType, on_delete=models.CASCADE, null=True)
+    activity_type = models.ForeignKey(ActivityType, on_delete=models.SET_NULL, null=True)
     day = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
@@ -58,6 +59,13 @@ class SiteVisit(models.Model):
     last_updated = models.DateTimeField(auto_now=True)
     class Meta:
         unique_together = (("user", "day", "start_time", "end_time", "site"),)
+
+class F(django_filters.FilterSet):
+    time = django_filters.TimeRangeFilter()
+
+    class Meta:
+        model = SiteVisit
+        fields = ['start_time', 'end_time']
 
 class Extension(models.Model):
     id = models.AutoField(primary_key=True)

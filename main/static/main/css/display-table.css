@@ -26,3 +26,7 @@ textarea {
 th.website {
     width: 15%;
 }
+
+th.websites {
+    width: 50px;
+}

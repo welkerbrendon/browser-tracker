@@ -1,4 +1,4 @@
-from .models import Activity, Site, SiteVisit, Extension, ActivityType
+from .models import Activity, Site, SiteVisit, Extension, ActivityType, F
 from datetime import datetime
 from django.db.models import Q
 
@@ -18,10 +18,23 @@ def create_new_activity(user, data):
     notes = None
     if "notes" in data:
         notes = data.get("notes")
-    activity = Activity(user=user, start_time=data.get('start_time'), end_time=data.get("end_time"), day=data.get('day'),
+    if not Activity.objects.filter(user=user, start_time=data.get('start_time'), end_time=data.get("end_time"), day=data.get('day'),
+               productive=data.get('productive'), activity_type=data.get("activity_type"), notes=notes):
+        activity = Activity(user=user, start_time=data.get('start_time'), end_time=data.get("end_time"), day=data.get('day'),
+                   productive=data.get('productive'), activity_type=data.get("activity_type"), notes=notes)
+        activity.save()
+        updateSiteVisits(user, activity)
+        return activity
+    else:
+        return Activity.objects.get(user=user, start_time=data.get('start_time'), end_time=data.get("end_time"), day=data.get('day'),
                productive=data.get('productive'), activity_type=data.get("activity_type"), notes=notes)
-    activity.save()
-    return activity
+
+
+def updateSiteVisits(user, activity):
+    query_set = F({"start_time_after": activity.start_time, "start_time_before": activity.end_time}).qs
+    for site_visit in query_set:
+        site_visit.activity=activity
+        site_visit.save()
 # activity = {
 #                 "start_time": start_times[i],
 #                 "end_time": end_times[i],
@@ -43,8 +56,8 @@ def get_site(url):
 
 
 def get_activities(user, date):
-    if Activity.objects.filter(user=user, day=date).order_by("start_time"):
-        return Activity.objects.get(user=user, day=date)
+    if Activity.objects.filter(user=user, day=date):
+        return Activity.objects.filter(user=user, day=date)
     else:
         return None
 
@@ -52,6 +65,12 @@ def get_activities(user, date):
 def get_activity_types(user):
     return ActivityType.objects.filter(Q(user=user) | Q(universal=True)).order_by("type_name")
 
+def get_activity_urls(user, activity):
+    urlList = []
+    query_set = SiteVisit.objects.filter(user=user, activity=activity).select_related("site")
+    for site_visit in query_set:
+        urlList.append(site_visit.site.url)
+    return list(dict.fromkeys(urlList))
 
 # def edit_site_activities(user, data):
 #     start_time_list = format_time(data.start_time)

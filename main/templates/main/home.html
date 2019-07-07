@@ -4,81 +4,64 @@
 {% endblock %}
 {% block content %}
     <h1>Habit Tracker</h1>
-    <p>
-        <h3 id="date-header">
-            Date: <input type="date" name="date" value="{{ date }}" max="{{ max }}">
-        </h3>
-    </p>
     <form method="POST">
+        <p>
+            <h3 id="date-header">
+                Date: <input type="date" name="date" value="{{ date }}" max="{{ max }}" oninput="submitNewTime(this.value)">
+            </h3>
+        </p>
+        {% csrf_token %}
+        <p><button type="button" class="add-row" onclick="addRow()">Add Row</button><button type="button" class="delete-row" onclick="deleteRow()">Delete Row</button></p>
+        <input hidden id="row-num" value="{{ row_count }}">
         <table id="day-input" class="input-table" border=1>
             <tr id="table-headers">
                 <th class="start_time">Start Time</th>
                 <th class="end_time">End Time</th>
+                {% if activities %}
+                <th class="websites">Websites Visited</th>
+                {% endif %}
                 <th class="productive">Productive</th>
                 <th class="activity_type">Activity Type</th>
                 <th class="notes">Notes</th>
             </tr>
             {% for activity in activities %}
                 <tr name="table-row">
-                    <td name="start-time-column" align="center">
-                        <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="start-time" value="{{ activities.i..start_time }}">
-                        <select class="am/pm" name="start-time-am/pm" value="{{ activities.i.start_time_am_pm }}">
-                            <option value='' selected disabled hidden>--AM/PM--</option>
-                            <option value='AM'>AM</option>
-                            <option value='PM'>PM</option>
-                        </select>
-                    </td>
-                    <td name="end-time-column" align="center">
-                        <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="end-time" value="{{ activities.i.end_time }}">
-                        <select class="am/pm" name="end-time-am/pm" value="{{ activities.i.end_time_am_pm }}">
-                            <option value='AM'>AM</option>
-                            <option value='PM'>PM</option>
-                        </select>
-                    </td>
-                    <td name="productive-column" align="center">
-                        <select class="productive" name="productive" value="{{ activities.i.productive }}">
-                            <option value='True'>True</option>
-                            <option value='False'>False</option>
-                        </select>
-                    </td>
-                    <td name="activity-type-column" align="center">
-                        <select class="activity-type" name="activity-type">
-                            <option value='' selected disabled hidden>--Choose Type--</option>
-                            {% for type in activity_types %}
-                            <option value="{{ type.type_name }}">{{ type.type_name }}</option>
-                            {% endfor %}
-                        </select>
-                    </td>
-                    <td class="notes" name="notes-column" align="center">
-                        <textarea name="notes" rows="4" cols="75" style="width:99%; height:100%;" placeholder="--Optional--"></textarea>
-                    </td>
+                    <td name="start-time-column" align="center">{{ activity.start_time }}</td>
+                    <td name="end-time-column" align="center">{{ activity.end_time }}</td>
+                    <td name="urls">{{ activity.urls }}</td>
+                    <td name="productive-column" align="center">{{ activity.productive }}</td>
+                    <td name="activity-type-column" align="center">{{ activity.activity_type }}</td>
+                    <td class="notes" name="notes-column" align="center">{{ activity.notes }}</td>
                 </tr>
             {% endfor %}
             {% for i in additional_rows %}
                 <tr name="table-row">
                     <td name="start-time-column" align="center">
-                        <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="start-time">
-                        <select class="am/pm" name="start-time-am/pm">
+                        <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="start_time">
+                        <select class="am/pm" name="start_time_am/pm">
                             <option value='AM'>AM</option>
                             <option value='PM'>PM</option>
                         </select>
                     </td>
                     <td name="end-time-column" align="center">
-                        <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="end-time">
-                        <select class="am/pm" name="end-time-am/pm">
+                        <input type="text" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="end_time">
+                        <select class="am/pm" name="end_time_am/pm">
                             <option value='AM'>AM</option>
                             <option value='PM'>PM</option>
                         </select>
                     </td>
+                    {% if activities %}
+                        <td></td>
+                    {% endif %}
                     <td name="productive-column" align="center">
-                        <select class="productive" name="productive" value="{{ activities.i.productive }}">
+                        <select class="productive" name="productive">
                             <option value='' selected disabled hidden>--True/False--</option>
                             <option value='True'>True</option>
                             <option value='False'>False</option>
                         </select>
                     </td>
                     <td name="activity-type-column" align="center">
-                        <select class="activity-type" name="activity-type">
+                        <select class="activity-type" name="activity_type">
                             <option value='' selected disabled hidden>--Choose Type--</option>
                             {% for type in activity_types %}
                             <option value="{{ type.type_name }}">{{ type.type_name }}</option>
@@ -90,6 +73,8 @@
                     </td>
                 </tr>
             {% endfor %}
-        </table>
+        </table><br>
+        <p><button type="button" class="add-row" onclick="addRow()">Add Row</button><button type="button" class="delete-row" onclick="deleteRow()">Delete Row</button></p>
+        <input type="submit">
     </form>
 {% endblock %}

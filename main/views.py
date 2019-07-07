@@ -11,41 +11,57 @@ import json
 @login_required
 def home(request):
     date = None
+    activity_dict_list = []
     if request.method == "POST":
         data = request.POST
-        start_times = format_time(data.get("start_time", None), data.get("start_time_am/pm", None))
-        end_times = format_time(data.get("end_time", None), data.get("end_time_am/pm", None))
+        start_times = format_time(data.getlist("start_time"), data.getlist("start_time_am/pm"))
+        end_times = format_time(data.getlist("end_time", None), data.getlist("end_time_am/pm", None))
+        activity_types = data.getlist("activity_type")
+        productive_list = data.getlist("productive")
+        notes_list = data.getlist("notes")
+        date = data.get("date", None)
         count_of_activities = len(start_times)
         for i in range(count_of_activities):
             activity = {
                 "start_time": start_times[i],
                 "end_time": end_times[i],
-                "type": data.get("activity_type", [None]*count_of_activities)[i],
-                "productive": data.get("productive", [None]*count_of_activities)[i],
-                "notes": data.get("notes", [None]*count_of_activities)[i]
+                "type": activity_types[i],
+                "productive": productive_list[i],
+                "notes": notes_list[i],
+                "day": date
             };
             controllers.create_new_activity(request.user, activity)
     else:
-        i = 0
-        date = datetime.today()
-        if date.hour < 12:
-            date = date - timedelta(days=1)
+        date = request.GET.get("date") if request.GET.get("date") else (datetime.today() - timedelta(days=1)).date().strftime("%Y-%m-%d")
 
-        activities = controllers.get_activities(request.user, date)
-        if activities:
-            activities.start_time, activities["start_time_am_pm"] = reverse_format_time(activities.start_time)
-            activities.end_time, activities["end_time_am_pm"] = reverse_format_time(activities.end_time)
+    activities = controllers.get_activities(request.user, date)
+    if activities:
+        for activity in activities:
+            urlList = controllers.get_activity_urls(request.user, activity)
+            urlString = ""
+            for i in range(len(urlList) - 1):
+                urlString += urlList[i] + ", "
+            urlString += urlList[len(urlList) - 1]
+            activity_dict_list.append({
+                "start_time": activity.start_time,
+                "end_time": activity.end_time,
+                "activity_type": activity.activity_type.type_name,
+                "productive": activity.productive,
+                "notes": activity.notes,
+                "urls": urlString,
+            });
 
-        activity_types = controllers.get_activity_types(request.user)
+    activity_types = controllers.get_activity_types(request.user)
 
-        data = {
-            "activities": activities,
-            "activity_types": activity_types,
-            "date": date.date().strftime("%Y-%m-%d"),
-            "max": datetime.today().date().strftime("%Y-%m-%d"),
-            "additional_rows": [" "]*4
-        }
-        return render(request, "main/home.html", data)
+    data = {
+        "activities": activity_dict_list,
+        "activity_types": activity_types,
+        "date": date,
+        "max": datetime.today().date().strftime("%Y-%m-%d"),
+        "additional_rows": [" "]*4,
+        "row_count": len(activity_dict_list) + 2
+    }
+    return render(request, "main/home.html", data)
 
 
     # else :
@@ -119,27 +135,14 @@ def site_activity(request):
         return response
 
 
-def reverse_format_time(start_time_list):
-    new_time_list = []
-    new_am_pm_list = []
-    for start_time in start_time_list:
-        split_time_am_pm = start_time.split(" ")
-        new_time_list.append(split_time_am_pm[0])
-        if split_time_am_pm[1].contains("a"):
-            new_am_pm_list.append("AM")
-        else:
-            new_am_pm_list.append("PM")
-
-    return new_time_list, new_am_pm_list
-
-
 def format_time(time_values, am_pm_values):
     new_list = []
-    for time, am_pm in zip(time_values, am_pm_values):
-        hour_minutes = time[0].split(":")
-        if am_pm[1] == "PM" and int(hour_minutes[0]) != 12:
-            military_time = str(int(hour_minutes[0]) + 12) + hour_minutes[1]
-            new_list.append(military_time)
-        else:
-            new_list.append(time)
+    for i in range(len(time_values)):
+        if (time_values[i] != ""):
+            hour_minutes = time_values[0].split(":")
+            if am_pm_values[i] == "PM" and int(hour_minutes[0]) != 12:
+                military_time = str(int(hour_minutes[0]) + 12) + ":" + hour_minutes[1]
+                new_list.append(military_time)
+            else:
+                new_list.append(time_values[i])
     return new_list
