@@ -37,7 +37,7 @@ def create_new_activity(user, data):
 def updateSiteVisits(user, activity):
     print("DEBUG: updating site visits to match with activiy")
     query_set = F({"start_time_after": activity.start_time, "start_time_before": activity.end_time}).qs
-    print("DEBUG: " + query_set.count() + " different site visits within the given activity with id=" + activity.id)
+    print("DEBUG: " + str(query_set.count()) + " different site visits within the given activity with id=" + str(activity.id))
     for site_visit in query_set:
         site_visit.activity=activity
         site_visit.save()
