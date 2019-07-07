@@ -37,18 +37,19 @@ def home(request):
     activities = controllers.get_activities(request.user, date)
     if activities:
         for activity in activities:
-            urlList = controllers.get_activity_urls(request.user, activity)
-            urlString = ""
-            for i in range(len(urlList) - 1):
-                urlString += urlList[i] + ", "
-            urlString += urlList[len(urlList) - 1]
+            url_list = controllers.get_activity_urls(request.user, activity)
+            url_string = ""
+            for i in range(len(url_list)):
+                url_string += url_list[i] + ", "
+            if len(url_string) > 2:
+                url_string = url_string[:-2]
             activity_dict_list.append({
                 "start_time": activity.start_time,
                 "end_time": activity.end_time,
                 "activity_type": activity.activity_type.type_name,
                 "productive": activity.productive,
                 "notes": activity.notes,
-                "urls": urlString,
+                "urls": url_string,
             });
 
     activity_types = controllers.get_activity_types(request.user)
