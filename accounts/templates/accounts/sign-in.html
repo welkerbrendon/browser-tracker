@@ -9,6 +9,7 @@
     <form method="POST">
         {% csrf_token %}
         {% if extension and id %}
+            <input type="hidden" name="id" value="{{ id }}">
             <h2>Browser extension needs authentication.</h2>
         {% endif %}
         <fieldset>
