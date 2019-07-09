@@ -8,7 +8,7 @@
 {% block content %}
     <form method="POST">
         {% csrf_token %}
-        {% if extension %}
+        {% if extension and id %}
             <h2>Browser extension needs authentication.</h2>
         {% endif %}
         <fieldset>
@@ -19,8 +19,8 @@
     </form>
     <br>
     <p>
-        {% if extension %}
-        <a href="/accounts/create-account?extension=True"><button>Create New Account</button></a>
+        {% if extension and id %}
+        <a href="/accounts/create-account?extension=True&id={{ id }}" {{><button>Create New Account</button></a>
         {% else %}
         <a href="/accounts/create-account/"><button>Create New Account</button></a>
         {% endif %}
