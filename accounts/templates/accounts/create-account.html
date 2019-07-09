@@ -10,6 +10,9 @@
         <legend>Create Account</legend>
         {{ form|crispy }}
     </fieldset>
+    {% if extension %}
+    <input type="hidden" name="extension" value="True">
+    {% endif %}
     <button type="submit">Create Account</button>
 </form>
 {% endblock content %}

@@ -8,6 +8,9 @@
 {% block content %}
     <form method="POST">
         {% csrf_token %}
+        {% if extension %}
+            <h2>Browser extension needs authentication.</h2>
+        {% endif %}
         <fieldset>
             <legend>Sign In</legend>
             {{ form|crispy }}
@@ -16,6 +19,10 @@
     </form>
     <br>
     <p>
+        {% if extension %}
+        <a href="/accounts/create-account?extension=True"><button>Create New Account</button></a>
+        {% else %}
         <a href="/accounts/create-account/"><button>Create New Account</button></a>
+        {% endif %}
     </p>
 {% endblock content %}

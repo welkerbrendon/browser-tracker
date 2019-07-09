@@ -21,6 +21,7 @@
 <body>
     <div class="custom-navbar">
         <a class="custom-logo" href="../home.html"><img class="custom-navbar" src="{% static 'main/images/BMW-Emblem.jpg' %}"></a>
+        <button class="custom-navbar"><a class="custom-navbar" href="{% url 'edit-site-visits' %}">Edit Site Visits</a></button>
         {% if user.is_authenticated %}
             <button class="custom-navbar"><a class="custom-navbar" href="{% url 'sign-out' %}">Sign Out</a></button>
         {% else %}

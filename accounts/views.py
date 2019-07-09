@@ -11,22 +11,30 @@ import json
 
 logger = logging.getLogger(__name__)
 
+
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             messages.success(request, "Account succesfully created! Please sign in now.")
             form.save()
-            return redirect('/sign-in')
+            if (request.POST.get("extension")):
+                return redirect('/extension-authentication')
+            else :
+                return redirect('/sign-in')
     else:
         form = CustomUserCreationForm()
-        return render(request, 'accounts/create-account.html', {'form': form})
+        if (request.GET.get("extension")):
+            return render(request, 'accounts/create-account.html', {'form': form, 'extension': True})
+        else :
+            return render(request, 'accounts/create-account.html', {'form': form})
 
-def extensionAuthentication(request):
+
+def extension_authentication(request):
     form = AuthenticationForm()
     if request.method == "GET":
         print("Get request")
-        return render(request, "accounts/sign-in.html", {'form': form})
+        return render(request, "accounts/sign-in.html", {'form': form, 'extension': True})
     elif request.method == "POST":
         print("Post request received")
         username = request.POST.get("username", None)
@@ -42,8 +50,9 @@ def extensionAuthentication(request):
             print("ERROR: Missing username and password")
             return render(request, 'accounts/sign-in.html', {'form': form})
 
+
 @csrf_exempt
-def tokenAuthentication(request):
+def token_authentication(request):
     data = json.loads(request.body.decode('utf-8'))
     token = data.get('token')
     if token:

@@ -6,8 +6,8 @@ from . import views
 urlpatterns = [
     path('create-account/', views.register, name='register'),
     path('sign-in/', auth_views.LoginView.as_view(template_name='accounts/sign-in.html'), name='sign-in'),
-    path('extension-authentication/', views.extensionAuthentication, name="extension-authentication"),
+    path('extension-authentication/', views.extension_authentication, name="extension-authentication"),
     path('sign-out/', auth_views.LogoutView.as_view(template_name="accounts/sign-out.html"), name='sign-out'),
     path('api-token-auth/', rest_framework_views.obtain_auth_token, name='api-token-auth'),
-    path('token-authentication/', views.tokenAuthentication, name="token-authentication")
+    path('token-authentication/', views.token_authentication, name="token-authentication")
 ]
