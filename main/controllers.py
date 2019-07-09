@@ -52,15 +52,12 @@ def update_site_visits(user, activity):
 #             };
 
 def get_site(url):
-    result = Site.objects.filter(url=url)
-    if result.count() == 1:
-        return result[0]
-    elif result.count() == 0:
+    if Site.objects.filter(url=url):
+        return Site.objects.get(url=url)
+    else:
         new_site = Site(url=url)
         new_site.save()
         return new_site
-    else:
-        return -1
 
 
 def get_activities(user, date):
