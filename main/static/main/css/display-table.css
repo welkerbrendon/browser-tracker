@@ -45,6 +45,6 @@ th.websites {
     width: 50px;
 }
 
-td {
+td, th {
     text-align: center;
 }
