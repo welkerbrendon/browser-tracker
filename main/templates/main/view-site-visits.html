@@ -22,7 +22,7 @@
                     <td>{{ visit.start_time }}</td>
                     <td>{{ visit.end_time }}</td>
                     <td>{{ visit.url }}</td>
-                    <td>{{ visit.extensions|linebreaks }}</td>
+                    <td><textarea readonly cols="75">{{ visit.extensions }}</textarea></td>
                 </tr>
             {% endfor %}
         </table>
