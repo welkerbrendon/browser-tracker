@@ -95,6 +95,7 @@ def get_site_visits(user, start_date, end_date):
         for visit in visits:
             extension_list = get_extension_list(user, visit)
             visit_dict_list.append({
+                "id": visit.id,
                 "start_time": visit.start_time,
                 "end_time": visit.end_time,
                 "url": visit.site.url,

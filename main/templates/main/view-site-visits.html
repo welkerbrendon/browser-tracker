@@ -4,10 +4,13 @@
 {% endblock %}
 {% block content %}
     <h1>Data received from extension on sites visited.</h1>
-    <label for="start_date">Start Date</label>
-    <input type="date" id="start_date" value="{{ start_date }}" max="{{ end_date }}">
-    <label for="end_date">End Date</label>
-    <input type="date" id="end_date" value="{{ end_date }}" min="{{ start_date }}">
+    <form method="GET">
+        <label for="start_date">Start Date</label>
+        <input type="date" id="start_date" name="start_date" value="{{ start_date }}" max="{{ end_date }}">
+        <label for="end_date">End Date</label>
+        <input type="date" id="end_date" name="end_date" value="{{ end_date }}" min="{{ start_date }}">
+        <input type="submit" value="Submit Dates">
+    </form>
     {% for site_visit in site_visits %}
         <h2>{{ site_visit.day }}</h2>
         <table border="1" id="{{ site_visit.day }}">
@@ -18,7 +21,7 @@
                 <th class="extensions">Website Extensions</th>
             </tr>
             {% for visit in site_visit.visits %}
-                <tr>
+                <tr id="{{ visit.id }}">
                     <td>{{ visit.start_time }}</td>
                     <td>{{ visit.end_time }}</td>
                     <td>{{ visit.url }}</td>
@@ -27,6 +30,7 @@
                     {% else %}
                     <td></td>
                     {% endif %}
+                    <td><button onclick="editSiteVisit({{ visit.id }})">Edit</button></td>
                 </tr>
             {% endfor %}
         </table>
