@@ -51,6 +51,7 @@ def update_site_visits(user, activity):
 #                 "notes": data.get("notes", [None]*count_of_activities)[i]
 #             };
 
+
 def get_site(url):
     if Site.objects.filter(url=url):
         return Site.objects.get(url=url)
@@ -69,6 +70,7 @@ def get_activities(user, date):
 
 def get_activity_types(user):
     return ActivityType.objects.filter(Q(user=user) | Q(universal=True)).order_by("type_name")
+
 
 def get_activity_urls(user, activity):
     urlList = []
@@ -104,5 +106,6 @@ def post_page_extensions(user, extensions, site_visit):
         new_extension = Extension(user=user, site_visit=site_visit, page_extension=extension)
         new_extension.save()
 
-def get_site_visits(user, start_date, end_date):
-    return SiteVisit.objects.filter(day_range=(start_date, end_date))
+
+def get_site_visits(user, date):
+    return SiteVisit.objects.filter(user=user, day=date)
