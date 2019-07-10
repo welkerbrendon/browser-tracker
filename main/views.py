@@ -86,9 +86,6 @@ def view_site_visits(request):
         }
         return render(request, "main/view-site-visits.html", data)
 
-def activities(request):
-    return
-
 @csrf_exempt
 def site_activity(request):
     if request.method == 'POST':
