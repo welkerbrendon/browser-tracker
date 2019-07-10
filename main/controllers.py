@@ -101,15 +101,15 @@ def post_site_visit(user, data):
     post_page_extensions(user, data.get("extensions"), site_visit)
 
 
+def get_site_visits(user, date):
+    return SiteVisit.objects.filter(user=user, day=date).order_by("start_time")
+
+
 def get_extensions(user, visit):
-    return Extension.objects.filter(user=user, site_visit=visit).order_by("start_time")
+    return Extension.objects.filter(user=user, site_visit=visit)
 
 
 def post_page_extensions(user, extensions, site_visit):
     for extension in extensions:
         new_extension = Extension(user=user, site_visit=site_visit, page_extension=extension)
         new_extension.save()
-
-
-def get_site_visits(user, date):
-    return SiteVisit.objects.filter(user=user, day=date)
