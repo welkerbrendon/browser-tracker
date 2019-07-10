@@ -1,0 +1,29 @@
+{% extends "main/navbar.html" %}
+{% block title %}
+    <title>View Site Visit Data</title>
+{% endblock %}
+{% block content %}
+    <h1>Edit site visit data received from browser extension.</h1>
+    <label for="start_date">Start Date</label>
+    <input type="date" id="start_date" value="{{ start_date }}" max="{{ end_date }}">
+    <label for="end_date">End Date</label>
+    <input type="date" id="end_date" value="{{ end_date }}" min="{{ start_date }}">
+    {% for site_visit in site_visits %}
+        <h2>{{ site_visit.day }}</h2>
+        <table id="{{ site_visit.day }}">
+            <tr>
+                <th class="start_time">Start Time</th>
+                <th class="end_time">End Time</th>
+                <th class="website">Website</th>
+            </tr>
+            {% for visit in site_visit.visits %}
+                <tr>
+                    <td>{{ visit.start_time }}</td>
+                    <td>{{ visit.end_time }}</td>
+                    <td>{{ visit.site.url }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <button onclick="makeEditable({{ site_visit.day }})">Edit</button>
+    {% endfor %}
+{% endblock %}

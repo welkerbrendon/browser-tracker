@@ -103,3 +103,6 @@ def post_page_extensions(user, extensions, site_visit):
     for extension in extensions:
         new_extension = Extension(user=user, site_visit=site_visit, page_extension=extension)
         new_extension.save()
+
+def get_site_visits(user, start_date, end_date):
+    return SiteVisit.objects.filter(day_range=(start_date, end_date))

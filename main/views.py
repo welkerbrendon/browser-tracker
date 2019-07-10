@@ -66,32 +66,25 @@ def home(request):
     return render(request, "main/home.html", data)
 
 
-    # else :
-    #     date = request.GET.get("date", None)
-    #     edit = request.GET.get("edit", None)
-    #
-    # if not date:
-    #     activities = None
-    #     i = 0
-    #     date = datetime.today().date()
-    #     while not activities:
-    #         if i > 365:
-    #             break
-    #         date = (datetime.today().date()) - timedelta(days=i)
-    #         activities = controllers.get_activities(request.user, date)
-    #         i += 1
-    #     data = {
-    #         "activities": activities,
-    #         "date": date,
-    #         "edit": edit
-    #     }
-    # else:
-    #     data = {
-    #         "activities": controllers.get_activities(request.user, date),
-    #         "edit": edit,
-    #         "date": datetime.strptime(date, "%Y-%m-%d").date()
-    #     }
-    # return render(request, "main/home.html", data)
+def view_site_visits(request):
+    if request.method == "GET":
+        start_date = request.GET.get("start_date", (datetime.today() - timedelta(days=1)).date().strftime("%Y-%m-%d"))
+        end_date = request.GET.get("end_date", (datetime.today() - timedelta(days=1)).date().strftime("%Y-%m-%d"))
+        site_visits = []
+        for n in range(int((end_date - start_date).days)):
+            date = start_date + timedelta(n)
+            visits = controllers.get_site_visits(request.user, date)
+            visit_data = {
+                "date": date,
+                "visits": visits
+            }
+            site_visits.append(visit_data)
+        data = {
+            "site_visits": site_visits,
+            "start_date": start_date,
+            "end_date": end_date
+        }
+        return render(request, "main/view-site-visits.html", data)
 
 def activities(request):
     return
