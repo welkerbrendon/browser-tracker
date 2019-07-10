@@ -1,5 +1,6 @@
 table {
     width: 90%;
+    max-width: 90%;
 }
 
 th.start_time, th.end_time {
@@ -16,7 +17,6 @@ th.productive {
 
 .notes, th.extensions {
     min-width: 300px;
-    max-width: 50%;
 }
 textarea {
     width:99%;
