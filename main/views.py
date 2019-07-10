@@ -115,8 +115,8 @@ def get_extension_list(user, visit):
     extension_list = ""
     for extension in extensions:
         print("DEBUG: get_extension_list extension=" + str(extension))
-        extension_list += extension.page_extension + ", "
-    return extension_list[:-2]
+        extension_list += extension.page_extension + ",<br>"
+    return extension_list[:-5]
 
 
 @csrf_exempt
