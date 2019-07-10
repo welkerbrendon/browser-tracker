@@ -16,7 +16,7 @@ th.productive {
 
 .notes, th.extensions {
     min-width: 300px;
-    max-width: 100%;
+    max-width: 50%;
 }
 textarea {
     width:99%;
