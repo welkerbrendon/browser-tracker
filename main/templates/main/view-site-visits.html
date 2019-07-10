@@ -16,10 +16,10 @@
         <table border="1" id="{{ site_visit.day }}">
             <tr id="table-headers">
                 <th></th>
-                <th class="start_time">Start Time</th>
-                <th class="end_time">End Time</th>
-                <th class="websites">Website</th>
-                <th class="extensions">Website Extensions</th>
+                <th align="center" class="start_time">Start Time</th>
+                <th align="center" class="end_time">End Time</th>
+                <th align="center" class="websites">Website</th>
+                <th align="center" class="extensions">Website Extensions</th>
             </tr>
             {% for visit in site_visit.visits %}
                 <tr id="{{ visit.id }}">
