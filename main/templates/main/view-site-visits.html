@@ -15,6 +15,7 @@
         <h2>{{ site_visit.day }}</h2>
         <table border="1" id="{{ site_visit.day }}">
             <tr id="table-headers">
+                <th></th>
                 <th class="start_time">Start Time</th>
                 <th class="end_time">End Time</th>
                 <th class="websites">Website</th>
@@ -22,6 +23,7 @@
             </tr>
             {% for visit in site_visit.visits %}
                 <tr id="{{ visit.id }}">
+                    <td><button id="edit_site_visit" onclick="editSiteVisit({{ visit.id }})">Edit</button></td>
                     <td>{{ visit.start_time }}</td>
                     <td>{{ visit.end_time }}</td>
                     <td>{{ visit.url }}</td>
@@ -30,7 +32,6 @@
                     {% else %}
                     <td></td>
                     {% endif %}
-                    <td><button id="edit_site_visit" onclick="editSiteVisit({{ visit.id }})">Edit</button></td>
                 </tr>
             {% endfor %}
         </table>
