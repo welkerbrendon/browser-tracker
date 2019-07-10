@@ -79,8 +79,8 @@ def view_site_visits(request):
         print("DEBUG: end_date=" + str(end_date))
         data = {
             "site_visits": get_site_visits(request.user, start_date, end_date),
-            "start_date": start_date,
-            "end_date": end_date
+            "start_date": str(start_date),
+            "end_date": str(end_date)
         }
         return render(request, "main/view-site-visits.html", data)
 
