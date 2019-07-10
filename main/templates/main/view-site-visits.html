@@ -11,10 +11,10 @@
     {% for site_visit in site_visits %}
         <h2>{{ site_visit.day }}</h2>
         <table border="1" id="{{ site_visit.day }}">
-            <tr>
+            <tr id="table-headers">
                 <th class="start_time">Start Time</th>
                 <th class="end_time">End Time</th>
-                <th class="website">Website</th>
+                <th class="websites">Website</th>
             </tr>
             {% for visit in site_visit.visits %}
                 <tr>

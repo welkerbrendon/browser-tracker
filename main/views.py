@@ -75,13 +75,14 @@ def view_site_visits(request):
         end_date = datetime.strptime(
             request.GET.get("end_date", (datetime.today() - timedelta(days=1)).date().strftime("%Y-%m-%d")),
             "%Y-%m-%d").date()
-        print("DEBUG: start_date=" + str(start_date))
-        print("DEBUG: end_date=" + str(end_date))
+        print("DEBUG: view_site_visits start_date=" + str(start_date))
+        print("DEBUG: view_site_visits end_date=" + str(end_date))
         data = {
             "site_visits": get_site_visits(request.user, start_date, end_date),
             "start_date": str(start_date),
             "end_date": str(end_date)
         }
+        print("DEBUG: view_site_visits date=" + str(data))
         return render(request, "main/view-site-visits.html", data)
 
 

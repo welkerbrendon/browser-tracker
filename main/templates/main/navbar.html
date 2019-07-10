@@ -23,6 +23,7 @@
         <a class="custom-logo" href="../home.html"><img class="custom-navbar" src="{% static 'main/images/BMW-Emblem.jpg' %}"></a>
         {% if user.is_authenticated %}
             <button class="custom-navbar"><a class="custom-navbar" href="{% url 'sign-out' %}">Sign Out</a></button>
+            <button class="custom-navbar"><a class="custom-navbar" href="{% url 'home' %}">Home</a></button>
             <button class="custom-navbar"><a class="custom-navbar" href="{% url 'view-site-visits' %}">View Site Visits</a></button>
         {% else %}
             <button class="custom-navbar"><a class="custom-navbar" href="{% url 'sign-in' %}">Sign In</a></button>
