@@ -18,6 +18,15 @@ th.productive {
 .notes, th.extensions {
     min-width: 300px;
 }
+
+.notes {
+    word-break: break-word;
+}
+
+th.extensions {
+    word-break: break-all;
+}
+
 textarea {
     width:99%;
     height:100%;
