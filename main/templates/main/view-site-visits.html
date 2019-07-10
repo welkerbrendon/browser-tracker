@@ -22,7 +22,11 @@
                     <td>{{ visit.start_time }}</td>
                     <td>{{ visit.end_time }}</td>
                     <td>{{ visit.url }}</td>
-                    <td><textarea readonly  rows="3" cols="75">{{ visit.extensions }}</textarea></td>
+                    {% if visit.extensions %}
+                    <td><textarea readonly cols="75">{{ visit.extensions }}</textarea></td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </table>
