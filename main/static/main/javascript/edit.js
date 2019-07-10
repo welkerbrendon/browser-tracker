@@ -46,6 +46,7 @@ function makeEditable(id, button) {
                             <option value='PM'>PM</option>
                         </select>`;
     button.setAttribute("onclick", `submitEditedSiteVisit(${id}, this)`);
+    button.innerHTML = "Submit";
 }
 
 function extractTime(timeString) {
