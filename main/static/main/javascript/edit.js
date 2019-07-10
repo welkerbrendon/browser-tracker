@@ -29,7 +29,7 @@ function deleteRow() {
     }
 }
 
-function makeEditable(id, this) {
+function makeEditable(id, button) {
     var tableRow = document.getElementById(id);
     var startTimeString = tableRow.children[1].innerHTML;
     var endTimeString = tableRow.children[2].innerHTML;
@@ -45,7 +45,7 @@ function makeEditable(id, this) {
                             <option value='AM'>AM</option>
                             <option value='PM'>PM</option>
                         </select>`;
-    this.setAttribute("onclick", `submitEditedSiteVisit(${id}, this)`);
+    button.setAttribute("onclick", `submitEditedSiteVisit(${id}, this)`);
 }
 
 function extractTime(timeString) {
