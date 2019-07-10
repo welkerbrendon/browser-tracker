@@ -30,7 +30,7 @@
                     {% else %}
                     <td></td>
                     {% endif %}
-                    <td><button onclick="editSiteVisit({{ visit.id }})">Edit</button></td>
+                    <td><button id="edit_site_visit" onclick="editSiteVisit({{ visit.id }})">Edit</button></td>
                 </tr>
             {% endfor %}
         </table>

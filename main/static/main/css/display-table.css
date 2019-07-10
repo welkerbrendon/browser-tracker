@@ -27,6 +27,11 @@ th.extensions {
     word-break: break-all;
 }
 
+button#edit_site_visit {
+    width: 100%;
+    height 100%;
+}
+
 textarea {
     width:99%;
     height:100%;
