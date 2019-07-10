@@ -102,7 +102,7 @@ def get_site_visits(user, start_date, end_date):
             })
 
         visit_data = {
-            "date": date,
+            "day": date,
             "visits": visit_dict_list
         }
         site_visits.append(visit_data)
