@@ -15,12 +15,14 @@
                 <th class="start_time">Start Time</th>
                 <th class="end_time">End Time</th>
                 <th class="websites">Website</th>
+                <th class="extensions">Website Extensions</th>
             </tr>
             {% for visit in site_visit.visits %}
                 <tr>
                     <td>{{ visit.start_time }}</td>
                     <td>{{ visit.end_time }}</td>
-                    <td>{{ visit.site.url }}</td>
+                    <td>{{ visit.url }}</td>
+                    <td>{{ visit.extension_list }}</td>
                 </tr>
             {% endfor %}
         </table>

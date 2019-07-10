@@ -90,14 +90,31 @@ def get_site_visits(user, start_date, end_date):
     site_visits = []
     for n in range(int((end_date - start_date).days) + 1):
         date = start_date + timedelta(n)
+        visit_dict_list = []
         visits = controllers.get_site_visits(user, date)
+        for visit in visits:
+            extension_list = get_extension_list(user, visit)
+            visit_dict_list.append({
+                "start_time": visit.start_time,
+                "end_time": visit.end_time,
+                "url": visit.site.url,
+                "extensions": extension_list
+            })
+
         visit_data = {
             "date": date,
-            "visits": visits
+            "visits": visit_dict_list
         }
         site_visits.append(visit_data)
     return site_visits
 
+
+def get_extension_list(user, visit):
+    extensions = controllers.get_extensions(user, visit)
+    extension_list = ""
+    for extension in extensions:
+        extension_list += extension.page_extension + ", "
+    return extension_list[:-2]
 
 @csrf_exempt
 def site_activity(request):
