@@ -90,6 +90,7 @@ REST_FRAMEWORK = {
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
     "https://gajdbphcphelbmmcmbmokangbcleabcc.chromiumapp.org",
+    "https://hmcckkfagepelkdlbfkjogfoimlpobde.chromiumapp.org",
     "chrome-extension://gajdbphcphelbmmcmbmokangbcleabcc",
 )
 
