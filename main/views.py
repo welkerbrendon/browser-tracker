@@ -68,8 +68,8 @@ def home(request):
 
 def view_site_visits(request):
     if request.method == "GET":
-        start_date = request.GET.get("start_date", (datetime.today() - timedelta(days=1)).date().strftime("%Y-%m-%d"))
-        end_date = request.GET.get("end_date", (datetime.today() - timedelta(days=1)).date().strftime("%Y-%m-%d"))
+        start_date = datetime.strptime(request.GET.get("start_date", (datetime.today() - timedelta(days=1)).date().strftime("%Y-%m-%d")), "%Y-%m-%d").date()
+        end_date = datetime.strptime(request.GET.get("end_date", (datetime.today() - timedelta(days=1)).date().strftime("%Y-%m-%d")), "%Y-%m-%d").date()
         site_visits = []
         for n in range(int((end_date - start_date).days)):
             date = start_date + timedelta(n)
