@@ -15,20 +15,20 @@
         <h2>{{ site_visit.day }}</h2>
         <table border="1" id="{{ site_visit.day }}">
             <tr id="table-headers">
-                <th align="center"></th>
-                <th align="center" class="start_time">Start Time</th>
-                <th align="center" class="end_time">End Time</th>
-                <th align="center" class="websites">Website</th>
-                <th align="center" class="extensions">Website Extensions</th>
+                <th></th>
+                <th class="start_time text-center">Start Time</th>
+                <th class="end_time text-center">End Time</th>
+                <th class="websites text-center">Website</th>
+                <th class="extensions text-center">Website Extensions</th>
             </tr>
             {% for visit in site_visit.visits %}
                 <tr id="{{ visit.id }}">
-                    <td><button id="edit_site_visit" onclick="editSiteVisit({{ visit.id }})">Edit</button></td>
-                    <td>{{ visit.start_time }}</td>
-                    <td>{{ visit.end_time }}</td>
-                    <td>{{ visit.url }}</td>
+                    <td class="text-center"><button id="edit_site_visit" onclick="editSiteVisit({{ visit.id }})">Edit</button></td>
+                    <td class="text-center">{{ visit.start_time }}</td>
+                    <td class="text-center">{{ visit.end_time }}</td>
+                    <td class="text-center">{{ visit.url }}</td>
                     {% if visit.extensions %}
-                    <td><textarea readonly cols="75">{{ visit.extensions }}</textarea></td>
+                    <td class="text-center"><textarea readonly cols="75">{{ visit.extensions }}</textarea></td>
                     {% else %}
                     <td></td>
                     {% endif %}
