@@ -33,7 +33,8 @@ def home(request):
             };
             controllers.create_new_activity(request.user, activity)
     else:
-        date = request.GET.get("date") if request.GET.get("date") else (datetime.today() - timedelta(days=1)).date().strftime("%Y-%m-%d")
+        date = request.GET.get("date") if request.GET.get("date") else (
+                    datetime.today() - timedelta(days=1)).date().strftime("%Y-%m-%d")
 
     activities = controllers.get_activities(request.user, date)
     if activities:
@@ -60,7 +61,7 @@ def home(request):
         "activity_types": activity_types,
         "date": date,
         "max": datetime.today().date().strftime("%Y-%m-%d"),
-        "additional_rows": [" "]*4,
+        "additional_rows": [" "] * 4,
         "row_count": len(activity_dict_list) + 2
     }
     return render(request, "main/home.html", data)
@@ -68,23 +69,34 @@ def home(request):
 
 def view_site_visits(request):
     if request.method == "GET":
-        start_date = datetime.strptime(request.GET.get("start_date", (datetime.today() - timedelta(days=1)).date().strftime("%Y-%m-%d")), "%Y-%m-%d").date()
-        end_date = datetime.strptime(request.GET.get("end_date", (datetime.today() - timedelta(days=1)).date().strftime("%Y-%m-%d")), "%Y-%m-%d").date()
-        site_visits = []
-        for n in range(int((end_date - start_date).days)):
-            date = start_date + timedelta(n)
-            visits = controllers.get_site_visits(request.user, date)
-            visit_data = {
-                "date": date,
-                "visits": visits
-            }
-            site_visits.append(visit_data)
+        start_date = datetime.strptime(
+            request.GET.get("start_date", (datetime.today() - timedelta(days=1)).date().strftime("%Y-%m-%d")),
+            "%Y-%m-%d").date()
+        end_date = datetime.strptime(
+            request.GET.get("end_date", (datetime.today() - timedelta(days=1)).date().strftime("%Y-%m-%d")),
+            "%Y-%m-%d").date()
+        print("DEBUG: start_date=" + str(start_date))
+        print("DEBUG: end_date=" + str(end_date))
         data = {
-            "site_visits": site_visits,
+            "site_visits": get_site_visits(request.user, start_date, end_date),
             "start_date": start_date,
             "end_date": end_date
         }
         return render(request, "main/view-site-visits.html", data)
+
+
+def get_site_visits(user, start_date, end_date):
+    site_visits = []
+    for n in range(int((end_date - start_date).days) + 1):
+        date = start_date + timedelta(n)
+        visits = controllers.get_site_visits(user, date)
+        visit_data = {
+            "date": date,
+            "visits": visits
+        }
+        site_visits.append(visit_data)
+    return site_visits
+
 
 @csrf_exempt
 def site_activity(request):
