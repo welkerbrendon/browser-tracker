@@ -92,6 +92,7 @@ CORS_ORIGIN_WHITELIST = (
     "https://gajdbphcphelbmmcmbmokangbcleabcc.chromiumapp.org",
     "https://hmcckkfagepelkdlbfkjogfoimlpobde.chromiumapp.org",
     "chrome-extension://gajdbphcphelbmmcmbmokangbcleabcc",
+    "chrome-extension://hmcckkfagepelkdlbfkjogfoimlpobde",
 )
 
 # Database
