@@ -17,6 +17,8 @@ th.productive {
 
 .notes, th.extensions {
     min-width: 300px;
+    max-width: 50%;
+    
 }
 
 .notes {
