@@ -102,8 +102,7 @@ def post_site_visit(user, data):
 
 
 def get_extensions(user, visit):
-    return Extension.objects.filter(user=user, site_visit=visit)
-
+    return Extension.objects.filter(user=user, site_visit=visit).order_by("start_time")
 
 
 def post_page_extensions(user, extensions, site_visit):

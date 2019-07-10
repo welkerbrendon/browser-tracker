@@ -110,11 +110,14 @@ def get_site_visits(user, start_date, end_date):
 
 
 def get_extension_list(user, visit):
+    print("DEBUG: get_extension_list visit=" + str(visit))
     extensions = controllers.get_extensions(user, visit)
     extension_list = ""
     for extension in extensions:
+        print("DEBUG: get_extension_list extension=" + str(extension))
         extension_list += extension.page_extension + ", "
     return extension_list[:-2]
+
 
 @csrf_exempt
 def site_activity(request):

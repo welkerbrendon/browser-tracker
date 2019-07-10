@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import django_filters
 
+
 class ViewAccess(models.Model):
     id = models.AutoField(primary_key=True)
     viewing_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="viewing_user")
@@ -9,13 +10,16 @@ class ViewAccess(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
 
+
 class ActivityType(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     type_name = models.CharField(max_length=50)
     universal = models.BooleanField()
+
     class Meta:
         unique_together = (("user", "type_name"),)
+
 
 class Activity(models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -28,8 +32,10 @@ class Activity(models.Model):
     notes = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
+
     class Meta:
         unique_together = (("user", "day", "start_time", "end_time"),)
+
 
 class SiteType(models.Model):
     id = models.AutoField(primary_key=True)
@@ -37,8 +43,10 @@ class SiteType(models.Model):
     type_name = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
+
     class Meta:
         unique_together = (("user", "type_name"),)
+
 
 class Site(models.Model):
     id = models.AutoField(primary_key=True)
@@ -46,6 +54,7 @@ class Site(models.Model):
     url = models.CharField(max_length=255, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
+
 
 class SiteVisit(models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -57,8 +66,10 @@ class SiteVisit(models.Model):
     end_time = models.TimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
+
     class Meta:
         unique_together = (("user", "day", "start_time", "end_time", "site"),)
+
 
 class F(django_filters.FilterSet):
     time = django_filters.TimeRangeFilter()
@@ -66,6 +77,7 @@ class F(django_filters.FilterSet):
     class Meta:
         model = SiteVisit
         fields = ['start_time', 'end_time']
+
 
 class Extension(models.Model):
     id = models.AutoField(primary_key=True)
