@@ -87,8 +87,8 @@ def view_site_visits(request):
     else:
         print("DEBUG: view_site_visits POST=" + str(request.POST))
         id = request.POST.get("id", None)
-        start_time = request.POST.get("id", None)
-        end_time = request.POST.get("id", None)
+        start_time = request.POST.get("start_time", None)
+        end_time = request.POST.get("end_time", None)
         print("DEBUG: view_site_visits id=" + str(id))
         print("DEBUG: view_site_visits start_time=" + str(start_time))
         print("DEBUG: view_site_visits end_time=" + str(end_time))
