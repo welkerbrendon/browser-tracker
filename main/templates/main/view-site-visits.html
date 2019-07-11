@@ -3,6 +3,7 @@
     <title>View Site Visit Data</title>
 {% endblock %}
 {% block content %}
+    {% csrf_token %}
     <h1>Data received from extension on sites visited.</h1>
     <form method="GET">
         <label for="start_date">Start Date</label>

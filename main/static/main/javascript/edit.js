@@ -80,7 +80,8 @@ function submitEditedSiteVisit(id, button) {
     const jsonPostData = {
         start_time: startTimeMilitary,
         end_time: endTimeMilitary,
-        id: id
+        id: id,
+        csrfmiddlewaretoken: document.getElementsByName("csrfmiddlewaretoken")[0].value
     };
     $.post("site-visits/", jsonPostData, function (response, textStatus) {
         console.log(`Response: ${JSON.stringify(response)}`);
