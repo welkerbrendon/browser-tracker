@@ -83,7 +83,7 @@ function submitEditedSiteVisit(id, button) {
         id: id,
         csrfmiddlewaretoken: document.getElementsByName("csrfmiddlewaretoken")[0].value
     };
-    $.post("site-visits/", jsonPostData, function (response, textStatus) {
+    $.post("", jsonPostData, function (response, textStatus) {
         console.log(`Response: ${JSON.stringify(response)}`);
         if (textStatus == "success") {
             resetTableRow(id, startTime, endTime);
