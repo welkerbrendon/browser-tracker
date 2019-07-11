@@ -68,7 +68,7 @@ def home(request):
 
 
 def view_site_visits(request):
-    if request.method == "POST":
+    if request.method == "GET":
         start_date = datetime.strptime(
             request.GET.get("start_date", (datetime.today() - timedelta(days=1)).date().strftime("%Y-%m-%d")),
             "%Y-%m-%d").date()
