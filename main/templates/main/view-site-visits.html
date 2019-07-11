@@ -23,7 +23,7 @@
             </tr>
             {% for visit in site_visit.visits %}
                 <tr id="{{ visit.id }}">
-                    <td class="text-center"><button id="edit_site_visit" onclick="makeEditable({{ visit.id }})">Edit</button></td>
+                    <td class="text-center"><button id="edit_site_visit" onclick="makeEditable({{ visit.id }}, this)">Edit</button></td>
                     <td class="text-center">{{ visit.start_time }}</td>
                     <td class="text-center">{{ visit.end_time }}</td>
                     <td class="text-center">{{ visit.url }}</td>
