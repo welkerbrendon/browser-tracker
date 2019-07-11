@@ -97,7 +97,8 @@ def view_site_visits(request):
             response = JsonResponse({"edited": "successful"});
             response.status_code = 200;
             return response;
-        except:
+        except Exception as e:
+            print("DEBUG: view_site_visits exception=" + str(e))
             response = JsonResponse({"edited": "failed"})
             response.status_code = 500;
             return response;
