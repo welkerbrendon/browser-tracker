@@ -1,3 +1,7 @@
+button {
+    cursor: pointer;
+}
+
 .custom-navbar {
     visibility: visible;
     background-color: deepskyblue;
@@ -16,14 +20,19 @@ button.custom-navbar {
     font-size: 120%;
     background-color: inherit;
     padding: 20px 30px;
-    background-color: inherit;
-    border: none;
     outline: none;
+    border: solid;
+    border-width: 2px;
+    border-color: #007399;
 }
 
 a.custom-navbar {
     color: black;
     text-decoration: none;
+}
+
+a.custom-navbar:hover {
+    background-color: #cc5229;
 }
 
 a.custom-logo {
