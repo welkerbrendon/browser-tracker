@@ -105,6 +105,13 @@ def get_site_visits(user, date):
     return SiteVisit.objects.filter(user=user, day=date).order_by("start_time")
 
 
+def edit_site_visits(user, id, start_time, end_time):
+    site_visit = SiteVisit.objects.get(user=user, id=id)
+    site_visit.start_time = start_time
+    site_visit.end_time = end_time
+    site_visit.save()
+
+
 def get_extensions(user, visit):
     return Extension.objects.filter(user=user, site_visit=visit)
 

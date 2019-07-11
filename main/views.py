@@ -68,7 +68,7 @@ def home(request):
 
 
 def view_site_visits(request):
-    if request.method == "GET":
+    if request.method == "POST":
         start_date = datetime.strptime(
             request.GET.get("start_date", (datetime.today() - timedelta(days=1)).date().strftime("%Y-%m-%d")),
             "%Y-%m-%d").date()
@@ -84,6 +84,20 @@ def view_site_visits(request):
         }
         print("DEBUG: view_site_visits date=" + str(data))
         return render(request, "main/view-site-visits.html", data)
+    else:
+        id = request.POST.get("id", None)
+        start_time = request.POST.get("id", None)
+        end_time = request.POST.get("id", None)
+        try:
+            controllers.edit_site_visits(request.user, id, start_time, end_time)
+            response = JsonResponse({"edited": "successful"});
+            response.status_code = 200;
+            return response;
+        except:
+            response = JsonResponse({"edited": "failed"})
+            response.status_code = 500;
+            return response;
+
 
 
 def get_site_visits(user, start_date, end_date):
