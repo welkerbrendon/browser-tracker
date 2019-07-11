@@ -102,7 +102,7 @@ function resetTableRow(id, startTime, endTime) {
 function extractTime(timeString) {
     var time_am_pm = timeString.split(" ");
     var military_time = "";
-    if (time_am_pm.includes(":")) {
+    if (time_am_pm[0].includes(":")) {
         var hour_min = time.split(":");
         military_time = time_am_pm[1].toUpperCase().includes("A") || parseInt(hour_min[0]) == 12 ? time_am_pm[0] :
         (parseInt(hour_min[0]) + 12).toString() + ":" + hour_min[1];
