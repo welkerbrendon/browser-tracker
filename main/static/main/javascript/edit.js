@@ -115,3 +115,11 @@ function extractTime(timeString) {
     }
     return military_time;
 }
+
+function changeEndDateMin(value) {
+    document.getElementById("end_date").min = value;
+}
+
+function changeStartDateMax(value) {
+    document.getElementById("start_date").max = value;
+}

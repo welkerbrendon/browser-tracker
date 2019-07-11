@@ -7,9 +7,9 @@
     <h1>Data received from extension on sites visited.</h1>
     <form method="GET">
         <label for="start_date">Start Date</label>
-        <input type="date" id="start_date" name="start_date" value="{{ start_date }}" max="{{ end_date }}">
+        <input type="date" id="start_date" onchange="changeEndDateMin(this.value)" name="start_date" value="{{ start_date }}" max="{{ end_date }}">
         <label for="end_date">End Date</label>
-        <input type="date" id="end_date" name="end_date" value="{{ end_date }}" min="{{ start_date }}">
+        <input type="date" id="end_date" onchange="changeStartDateMax(this.value)" name="end_date" value="{{ end_date }}" min="{{ start_date }}">
         <input type="submit" value="Submit Dates">
     </form>
     {% for site_visit in site_visits %}
