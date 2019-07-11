@@ -106,10 +106,14 @@ def get_site_visits(user, date):
 
 
 def edit_site_visits(user, id, start_time, end_time):
-    site_visit = SiteVisit.objects.get(user=user, id=id)
-    site_visit.start_time = start_time
-    site_visit.end_time = end_time
-    site_visit.save()
+    if SiteVisit.objects.filter(user=user, id=id):
+        site_visit = SiteVisit.objects.get(user=user, id=id)
+        print("DEBUG: edit_site_visits site_visit=" + str(site_visit))
+        site_visit.start_time = start_time
+        site_visit.end_time = end_time
+        site_visit.save()
+    else:
+        print("DEBUG: edit_site_visits failed to find site_visit")
 
 
 def get_extensions(user, visit):

@@ -85,9 +85,13 @@ def view_site_visits(request):
         print("DEBUG: view_site_visits date=" + str(data))
         return render(request, "main/view-site-visits.html", data)
     else:
+        print("DEBUG: view_site_visits POST=" + str(request.POST))
         id = request.POST.get("id", None)
         start_time = request.POST.get("id", None)
         end_time = request.POST.get("id", None)
+        print("DEBUG: view_site_visits id=" + str(id))
+        print("DEBUG: view_site_visits start_time=" + str(start_time))
+        print("DEBUG: view_site_visits end_time=" + str(end_time))
         try:
             controllers.edit_site_visits(request.user, id, start_time, end_time)
             response = JsonResponse({"edited": "successful"});
