@@ -13,7 +13,7 @@
         <input type="submit" value="Submit Dates">
     </form>
     {% for site_visit in site_visits %}
-        <h2>{{ site_visit.day }}</h2>
+        <p><h2>{{ site_visit.day }}</h2></p>
         <table border="1" id="{{ site_visit.day }}">
             <tr id="table-headers">
                 <th></th>
