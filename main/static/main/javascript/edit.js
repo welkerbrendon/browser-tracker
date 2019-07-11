@@ -34,7 +34,7 @@ function makeEditable(id, button) {
     var startTimeString = tableRow.children[1].innerHTML;
     var endTimeString = tableRow.children[2].innerHTML;
     var startTime = extractTime(startTimeString);
-    var endTime = extractTime(endTimeString)
+    var endTime = extractTime(endTimeString);
     tableRow.children[1].innerHTML = `<input type="text" value="${startTime}" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="start_time">
                         <select class="am/pm" name="start_time_am/pm">
                             <option value='AM'>AM</option>
@@ -47,6 +47,44 @@ function makeEditable(id, button) {
                         </select>`;
     button.setAttribute("onclick", `submitEditedSiteVisit(${id}, this)`);
     button.innerHTML = "Submit";
+}
+
+function submitEditedSiteVisit(id, button) {
+    var tableRow = document.getElementById(id);
+
+    const startTime = tableRow.children[1].children[0].value + " " + tableRow.children[1].children[1].value;
+    const startAmPm = startTime.split(" ")[1];
+    const startHour = parseInt(startTime.split(":")[0]);
+    const startMinutes = startTime.split(" ")[0].split(":")[1];
+    const startTimeMilitary = startAmPm.toUpperCase().includes("A") || startHour == 12 ? startHour.toString() + ":" + startMinutes : 
+                              startHour.toString() + ":" + startMinutes;
+
+    const endTime = tableRow.children[2].children[0].value + " " + tableRow.children[2].children[1].value;
+    const endAmPm = endTime.split(" ")[1];
+    const endHour = parseInt(endTime.split(":")[0]);
+    const endMinutes = endTime.split(" ")[0].split(":")[1];
+    const endTimeMilitary = endAmPm.toUpperCase().includes("A") || endHour == 12 ? endHour.toString() + ":" + endMinutes : 
+                            endHour.toString() + ":" + endMinutes;
+    const jsonPostData = {
+        start_time: startTimeMilitary,
+        end_time: endTimeMilitary,
+        id: id
+    };
+    $.post("site-visits/", jsonPostData, function (response, textStatus) {
+        console.log(`Response: ${JSON.stringify(response)}`);
+        if (textStatus == "success") {
+            resetTableRow(id, startTime, endTime);
+            button.innerHTML = Edit;
+            button.setAttribute("onclick", `makeEditable(${id}, this)`);
+        }
+    });
+}
+
+function resetTableRow(id, startTime, endTime) {
+    var tableRow = document.getElementById(id);
+
+    tableRow.children[1].innerHTML = startTime;
+    tableRow.children[2].innerHTML = endTime;
 }
 
 function extractTime(timeString) {
