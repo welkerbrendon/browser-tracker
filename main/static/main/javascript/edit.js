@@ -87,7 +87,7 @@ function submitEditedSiteVisit(id, button) {
         console.log(`Response: ${JSON.stringify(response)}`);
         if (textStatus == "success") {
             resetTableRow(id, startTime, endTime);
-            button.innerHTML = Edit;
+            button.innerHTML = "Edit";
             button.setAttribute("onclick", `makeEditable(${id}, this)`);
         }
     });
