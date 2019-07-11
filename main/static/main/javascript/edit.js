@@ -36,7 +36,7 @@ function makeEditable(id, button) {
     var startTime = extractTime(startTimeString);
     var endTime = extractTime(endTimeString);
     var startAm = startTimeString.includes("a");
-    var startAm = endTimeString.includes("a");
+    var endAm = endTimeString.includes("a");
     tableRow.children[1].innerHTML = startAm ? `<input type="text" value="${startTime}" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="start_time">
                         <select class="am/pm" name="start_time_am/pm">
                             <option value='AM' selected>AM</option>
