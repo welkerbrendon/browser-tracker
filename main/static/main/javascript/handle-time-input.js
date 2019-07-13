@@ -52,7 +52,7 @@ function handlePreFormatted(element) {
 function handleNumOnly(element) {
     const valueAsInt = parseInt(element.value);
     if (valueAsInt < 100 || valueAsInt > 1300 || (valueAsInt % 100 > 59) || (parseInt(valueAsInt / 100) > 12)) {
-        document.getElementById("error").innerHTML = "ERROR: Invalid time. Please input at least 3 numbers representing the hours (1-12) and minutes (00-59).";
+        document.getElementById("error").innerHTML = "ERROR: Invalid time. Please follow format of (1-12):(00-59)";
         var button = document.getElementById("submit-button");
         button.type = "hidden";
         button.style.display = "none";
