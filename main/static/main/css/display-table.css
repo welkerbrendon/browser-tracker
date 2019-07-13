@@ -27,7 +27,7 @@ th.extensions {
     word-break: break-all;
 }
 
-button#edit_site_visit {
+button.edit_site_visit {
     width: 100%;
     height: 100%;
 }
