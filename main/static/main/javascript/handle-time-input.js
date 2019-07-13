@@ -18,7 +18,13 @@ function handleInput(element) {
     }
     else {
         document.getElementById("error").innerHTML = "ERROR: invalid time. Too few numbers given.";
-        document.getElementById("submit-button").type = "hidden";
+        var button = document.getElementById("submit-button");
+        if (button.type == "submit") {
+            button.type = "hidden";
+        }
+        else {
+            button.style.display = "none";
+        }
     }
 }
 
@@ -41,7 +47,13 @@ function handlePreFormatted(element) {
 
     if (hours > 12 || minutes > 59 || hours < 1 || minutes < 0) {
         document.getElementById("error").innerHTML = "ERROR: Invalid time. Please follow format of (1-12):(00-59)";
-        document.getElementById("submit-button").type = "hidden";
+        var button = document.getElementById("submit-button");
+        if (button.type == "submit") {
+            button.type = "hidden";
+        }
+        else {
+            button.style.display = "none";
+        }
     }
 }
 
@@ -49,18 +61,36 @@ function handleNumOnly(element) {
     const valueAsInt = parseInt(element.value);
     if (valueAsInt < 100 || valueAsInt > 1300 || (valueAsInt % 100 > 59) || (parseInt(valueAsInt / 100) > 12)) {
         document.getElementById("error").innerHTML = "ERROR: Invalid time. Please input at least 3 numbers representing the hours (1-12) and minutes (00-59).";
-        document.getElementById("submit-button").type = "hidden";
+        var button = document.getElementById("submit-button");
+        if (button.type == "submit") {
+            button.type = "hidden";
+        }
+        else {
+            button.style.display = "none";
+        }
     }
     else {
         if (element.value.length == 3) {
             element.value = `0${element.value[0]}:${element.value[1]}${element.value[2]}`;
             document.getElementById("error").innerHTML = "";
-            document.getElementById("submit-button").type = "submit";
+            var button = document.getElementById("submit-button");
+            if (button.type == "hidden") {
+                button.type = "submit";
+            }
+            else {
+                button.style.display = "";
+            }
         }
         else {
             element.value = `${element.value[0]}${element.value[1]}:${element.value[2]}${element.value[3]}`;
             document.getElementById("error").innerHTML = "";
-            document.getElementById("submit-button").type = "submit";
+            var button = document.getElementById("submit-button");
+            if (button.type == "hidden") {
+                button.type = "submit";
+            }
+            else {
+                button.style.display = "";
+            }
         }
     }
 }

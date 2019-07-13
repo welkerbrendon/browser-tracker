@@ -57,7 +57,13 @@ function makeEditable(id, button) {
                             <option value='AM'>AM</option>
                             <option value='PM' selected>PM</option>
                         </select>`;
+    
+    var errorDiv = document.createElement("div");
+    errorDiv.setAttribute("id", "error");
+    tableRow.children[0].appendChild(errorDiv);
+
     button.setAttribute("onclick", `submitEditedSiteVisit(${id}, this)`);
+    button.setAttribute("id", "submit-button");
     button.innerHTML = "Submit";
 }
 
