@@ -44,3 +44,7 @@ th.website {
 th.websites {
     width: 50px;
 }
+
+th.edit-button-column {
+    width: 100px;
+}
