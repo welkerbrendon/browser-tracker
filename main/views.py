@@ -197,9 +197,13 @@ def site_visit_raw_data(request):
     site_visits = controllers.get_all_site_visits(request.user)
     site_visits_dict = []
     for visit in site_visits:
+        activity = None
+        if visit.activity:
+            activity = visit.activity.as_dict()
+            activity["type"] = visit.activity.activity_type.type_name
         data = {
             "site_visit": visit.as_dict(),
-            "activity": visit.activity.as_dict() if visit.activity else None,
+            "activity": activity,
             "url": visit.site.url
         }
         site_visits_dict.append(data)
