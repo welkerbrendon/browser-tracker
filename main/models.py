@@ -47,7 +47,6 @@ class Activity(models.Model):
             "start_time": self.start_time,
             "end_time": self.end_time,
             "productive": self.productive,
-            "notes": self.notes,
         }
 
     class Meta:
@@ -96,6 +95,7 @@ class SiteVisit(models.Model):
             "day": self.day,
             "start_time": self.start_time,
             "end_time": self.end_time,
+            "visit_length": self.end_time - self.start_time
         }
 
     class Meta:
