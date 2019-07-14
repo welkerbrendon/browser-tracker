@@ -191,3 +191,7 @@ def format_time(time_values, am_pm_values):
             else:
                 new_list.append(time_values[i])
     return new_list
+
+
+def site_visit_raw_data(request):
+    return JsonResponse(controllers.get_all_site_visits(request.user))

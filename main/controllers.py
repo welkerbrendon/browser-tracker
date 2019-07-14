@@ -105,6 +105,10 @@ def get_site_visits(user, date):
     return SiteVisit.objects.filter(user=user, day=date).order_by("start_time")
 
 
+def get_all_site_visits(user):
+    return SiteVisit.objects.filter(user=user)
+
+
 def edit_site_visits(user, id, start_time, end_time):
     if SiteVisit.objects.filter(user=user, id=id):
         site_visit = SiteVisit.objects.get(user=user, id=id)
