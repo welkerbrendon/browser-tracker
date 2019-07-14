@@ -22,7 +22,6 @@ class ActivityType(models.Model):
     def as_dict(self):
         return {
             "id": self.id,
-            "user": self.user,
             "type_name": self.type_name,
             "universal": self.universal,
             "created_at": self.created_at,
@@ -48,7 +47,6 @@ class Activity(models.Model):
     def as_dict(self):
         return {
             "id": self.id,
-            "user": self.user,
             "activity_type": self.activity_type,
             "day": self.day,
             "start_time": self.start_time,
@@ -73,7 +71,6 @@ class SiteType(models.Model):
     def as_dict(self):
         return {
             "id": self.id,
-            "user": self.user,
             "type_name": self.type_name,
             "created_at": self.created_at,
             "last_updated": self .last_updated
@@ -114,7 +111,6 @@ class SiteVisit(models.Model):
     def as_dict(self):
         return {
             "id": self.id,
-            "user": self.user,
             "site": self.site,
             "activity": self.activity,
             "day": self.day,
