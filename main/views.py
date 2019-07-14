@@ -194,4 +194,4 @@ def format_time(time_values, am_pm_values):
 
 
 def site_visit_raw_data(request):
-    return JsonResponse(controllers.get_all_site_visits(request.user))
+    return JsonResponse(controllers.get_all_site_visits(request.user), safe=False)
