@@ -195,5 +195,11 @@ def format_time(time_values, am_pm_values):
 
 def site_visit_raw_data(request):
     site_visits = controllers.get_all_site_visits(request.user)
-    site_visits = [visit.as_dict() for visit in site_visits]
+    site_visits = []
+    for visit in site_visits:
+        data = {
+            "site_visit": visit.as_dict(),
+            "activity": visit.activity.as_dict() if visit.activity else None,
+            "site": visit.site.as_dict() if visit.site else None
+        }
     return JsonResponse(site_visits, safe=False)

@@ -24,8 +24,6 @@ class ActivityType(models.Model):
             "id": self.id,
             "type_name": self.type_name,
             "universal": self.universal,
-            "created_at": self.created_at,
-            "last_updated": self .last_updated
         }
 
     class Meta:
@@ -52,8 +50,6 @@ class Activity(models.Model):
             "end_time": self.end_time,
             "productive": self.productive,
             "notes": self.notes,
-            "created_at": self.created_at,
-            "last_updated": self .last_updated
         }
 
     class Meta:
@@ -91,8 +87,6 @@ class Site(models.Model):
             "id": self.id,
             "site_time": self.site_type,
             "url": self.url,
-            "created_at": self.created_at,
-            "last_updated": self .last_updated
         }
 
 
@@ -113,8 +107,6 @@ class SiteVisit(models.Model):
             "day": self.day,
             "start_time": self.start_time,
             "end_time": self.end_time,
-            "created_at": self.created_at,
-            "last_updated": self .last_updated
         }
 
     class Meta:
