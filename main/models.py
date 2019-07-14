@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import django_filters
+from datetime import datetime, date
 
 
 class ViewAccess(models.Model):
@@ -95,7 +96,7 @@ class SiteVisit(models.Model):
             "day": self.day,
             "start_time": self.start_time,
             "end_time": self.end_time,
-            "visit_length": self.end_time - self.start_time
+            "visit_length": datetime.combine(date.today(), self.end_time) - datetime.combine(date.today(), self.start_time)
         }
 
     class Meta:
