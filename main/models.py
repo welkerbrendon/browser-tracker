@@ -82,13 +82,6 @@ class Site(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
 
-    def as_dict(self):
-        return {
-            "id": self.id,
-            "site_time": self.site_type,
-            "url": self.url,
-        }
-
 
 class SiteVisit(models.Model):
     id = models.BigAutoField(primary_key=True)

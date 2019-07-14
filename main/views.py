@@ -200,7 +200,7 @@ def site_visit_raw_data(request):
         data = {
             "site_visit": visit.as_dict(),
             "activity": visit.activity.as_dict() if visit.activity else None,
-            "site": visit.site.as_dict() if visit.site else None
+            "url": visit.site.url
         }
         site_visits_dict.append(data)
     return JsonResponse(site_visits_dict, safe=False)
