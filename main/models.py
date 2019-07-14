@@ -47,7 +47,7 @@ class Activity(models.Model):
     def as_dict(self):
         return {
             "id": self.id,
-            "activity_type": self.activity_type,
+            "activity_type": self.activity_type.as_dict(),
             "day": self.day,
             "start_time": self.start_time,
             "end_time": self.end_time,
@@ -111,8 +111,8 @@ class SiteVisit(models.Model):
     def as_dict(self):
         return {
             "id": self.id,
-            "site": self.site,
-            "activity": self.activity,
+            "site": self.site.as_dict(),
+            "activity": self.activity.as_dict(),
             "day": self.day,
             "start_time": self.start_time,
             "end_time": self.end_time,
