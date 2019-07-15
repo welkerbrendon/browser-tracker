@@ -289,12 +289,12 @@ def get_line_graph_data(site_visits):
     data = {}
     for visit in site_visits:
         visit_dict = visit.as_dict()
-        start_time_hour = visit_dict.start_time.hour
+        start_time_hour = visit_dict["start_time"].hour
         time = 0
-        if start_time_hour == visit_dict.end_time.hour:
-            time += ((visit_dict.end_time.minute - visit_dict.start_time.minute) * 60) + (visit_dict.end_time.second - visit_dict.start_time.second)
+        if start_time_hour == visit_dict["end_time"].hour:
+            time += ((visit_dict["end_time"].minute - visit_dict["start_time"].minute) * 60) + (visit_dict["end_time"].second - visit_dict["start_time"].second)
         else:
-            time += ((60 - visit_dict.start_time.minute) * 60) + (60 - visit_dict.start_time.second)
+            time += ((60 - visit_dict["start_time"].minute) * 60) + (60 - visit_dict["start_time"].second)
         if start_time_hour in data:
             data[start_time_hour] += time
         else:
