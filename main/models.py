@@ -92,8 +92,8 @@ class SiteVisit(models.Model):
     last_updated = models.DateTimeField(auto_now=True)
 
     def as_dict(self):
-        end_time_seconds = (((self.end_time.hour * 60) + self.end_time.minute) * 60) + self.end_time.seconds
-        start_time_seconds = (((self.start_time.hour * 60) + self.start_time.minute) * 60) + self.start_time.seconds
+        end_time_seconds = (((self.end_time.hour * 60) + self.end_time.minute) * 60) + self.end_time.second
+        start_time_seconds = (((self.start_time.hour * 60) + self.start_time.minute) * 60) + self.start_time.second
         return {
             "day": self.day,
             "start_time": self.start_time,
