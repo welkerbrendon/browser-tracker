@@ -232,11 +232,11 @@ def get_site_visit_pie_data(site_visits):
     total_time = 0
     for visit in site_visits:
         visit_dict = visit.as_dict()
-        total_time += visit_dict.visit_length
+        total_time += visit_dict["visit_length"]
         if visit.site.url in pie_data_raw:
-            pie_data_raw[visit.site.url] += visit_dict.visit_length
+            pie_data_raw[visit.site.url] += visit_dict["visit_length"]
         else:
-            pie_data_raw[visit.site.url] = visit_dict.visit_length
+            pie_data_raw[visit.site.url] = visit_dict["visit_length"]
 
     other_percent = 0
     for site in pie_data_raw:
@@ -262,8 +262,8 @@ def get_bar_graph_data(site_visits):
     }
     for visit in site_visits:
         visit_dict = visit.as_dict()
-        day_of_week = visit_dict.day_of_week
-        visit_length = visit_dict.visit_length
+        day_of_week = visit_dict["day_of_week"]
+        visit_length = visit_dict["visit_length"]
         if day_of_week == 0:
             data["Monday"] += visit_length
         elif day_of_week == 1:
