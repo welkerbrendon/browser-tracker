@@ -306,7 +306,7 @@ def get_productive_unproductive_pie_chart_data(site_visits):
     productive_site_visits = []
     unproductive_site_visits = []
     for visit in site_visits:
-        if visit.activity.productive:
+        if visit.activity and visit.activity.productive:
             productive_site_visits.append(visit)
         else:
             unproductive_site_visits.append(visit)
