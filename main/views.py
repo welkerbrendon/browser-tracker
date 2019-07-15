@@ -193,8 +193,7 @@ def format_time(time_values, am_pm_values):
     return new_list
 
 
-def site_visit_raw_data(request):
-    site_visits = controllers.get_all_site_visits(request.user)
+def get_site_visit_dict(site_visits):
     site_visits_dict = []
     for visit in site_visits:
         activity = None
@@ -207,4 +206,109 @@ def site_visit_raw_data(request):
             "url": visit.site.url
         }
         site_visits_dict.append(data)
-    return JsonResponse(site_visits_dict, safe=False)
+    return site_visits_dict
+
+
+def site_visit_raw_data(request):
+    site_visits = controllers.get_all_site_visits(request.user)
+    # site_visits_dict = get_site_visit_dict(site_visits)
+    pie_chart_data = get_site_visit_pie_data(site_visits)
+    bar_graph_data = get_bar_graph_data(site_visits)
+    line_graph_data = get_line_graph_data(site_visits)
+    productive_pie_chart_data, unproductive_pie_chart_data = get_productive_unproductive_pie_chart_data(site_visits)
+    data = {
+        "pie_chart_data": pie_chart_data,
+        "bar_graph_data": bar_graph_data,
+        "line_graph_data": line_graph_data,
+        "productive_pie_chart_data": productive_pie_chart_data,
+        "unproductive_pie_chart_data": unproductive_pie_chart_data
+    }
+    return JsonResponse(data, safe=False)
+
+
+def get_site_visit_pie_data(site_visits):
+    pie_data_raw = {}
+    pie_data = {}
+    total_time = 0
+    for visit in site_visits:
+        visit_dict = visit.as_dict()
+        total_time += visit_dict.visit_length
+        if visit.site.url in pie_data_raw:
+            pie_data_raw[visit.site.url] += visit_dict.visit_length
+        else:
+            pie_data_raw[visit.site.url] = visit_dict.visit_length
+
+    other_percent = 0
+    for site in pie_data_raw:
+        percent = pie_data_raw[site] / total_time
+        if percent > .05:
+            pie_data[site] = percent
+        else:
+            other_percent += percent
+    pie_data["Other"] = other_percent
+
+    return pie_data
+
+
+def get_bar_graph_data(site_visits):
+    data = {
+        "Monday": 0,
+        "Tuesday": 0,
+        "Wednesday": 0,
+        "Thursday": 0,
+        "Friday": 0,
+        "Saturday": 0,
+        "Sunday": 0
+    }
+    for visit in site_visits:
+        visit_dict = visit.as_dict()
+        day_of_week = visit_dict.day_of_week
+        visit_length = visit_dict.visit_length
+        if day_of_week == 0:
+            data["Monday"] += visit_length
+        elif day_of_week == 1:
+            data["Tuesday"] += visit_length
+        elif day_of_week == 2:
+            data["Wednesday"] += visit_length
+        elif day_of_week == 2:
+            data["Thursday"] += visit_length
+        elif day_of_week == 2:
+            data["Friday"] += visit_length
+        elif day_of_week == 2:
+            data["Saturday"] += visit_length
+        else:
+            data["Sunday"] += visit_length
+
+    for day in data:
+        data[day] = float(int(float(data[day] / 3600) * 100) / 100)
+
+    return data
+
+
+def get_line_graph_data(site_visits):
+    data = {}
+    for visit in site_visits:
+        visit_dict = visit.as_dict()
+        start_time_hour = visit_dict.start_time.hour
+        time = 0
+        if start_time_hour == visit_dict.end_time.hour:
+            time += ((visit_dict.end_time.minute - visit_dict.start_time.minute) * 60) + (visit_dict.end_time.second - visit_dict.start_time.second)
+        else:
+            time += ((60 - visit_dict.start_time.minute) * 60) + (60 - visit_dict.start_time.second)
+        if start_time_hour in data:
+            data[start_time_hour] += time
+        else:
+            data[start_time_hour] = time
+    return data
+
+
+def get_productive_unproductive_pie_chart_data(site_visits):
+    productive_site_visits = []
+    unproductive_site_visits = []
+    for visit in site_visits:
+        if visit.activity.productive:
+            productive_site_visits.append(visit)
+        else:
+            unproductive_site_visits.append(visit)
+    return get_site_visit_pie_data(productive_site_visits), get_site_visit_pie_data(unproductive_site_visits)
+

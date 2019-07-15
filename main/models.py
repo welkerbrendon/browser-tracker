@@ -96,6 +96,7 @@ class SiteVisit(models.Model):
         start_time_seconds = (((self.start_time.hour * 60) + self.start_time.minute) * 60) + self.start_time.second
         return {
             "day": self.day,
+            "day_of_week": self.day.weekday(),
             "start_time": self.start_time,
             "end_time": self.end_time,
             "visit_length": end_time_seconds - start_time_seconds
