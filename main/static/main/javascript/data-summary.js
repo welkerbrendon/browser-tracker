@@ -27,16 +27,25 @@ function getGraphs() {
             var unproductivePidChartDataset = getData(unproductivePieChartDataJSON);
 
             const ligtBackgroundColors = [
-                "#7293cb",
-                "#e1974c",
-                "#84ba5b",
-                "#d35e60",
-                "#808585",
-                "#9067a7",
-                "#396ab1",
-                "#da7c30",
-                "#3e9651",
-                "#cc2529"
+                "rgb(114, 147, 203)",
+                "rgb(225, 151, 76)",
+                "rgb(132, 186, 91)",
+                "rgb(211, 94, 96)",
+                "rgb(128, 133, 133)",
+                "rgb(144, 103, 167)",
+                "rgb(171, 104, 87)",
+                "rgb(204, 194, 16)"
+            ];
+
+            const darkerBackgroundColors = [
+                "rgb(57, 106, 177)",
+                "rgb(218, 124, 48)",
+                "rgb(62, 150, 81)",
+                "rgb(204, 37, 41)",
+                "rgb(83, 81, 84)",
+                "rgb(107, 76, 154)",
+                "rgb(146, 36, 40)",
+                "rgb(148, 139, 61)"
             ];
 
             var overallPieChart = new Chart(pieChartOverallCanvasContext, {
