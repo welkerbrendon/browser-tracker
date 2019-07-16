@@ -106,6 +106,7 @@ function getGraphs() {
                     labels: Object.keys(lineGraphDataJSON),
                     datasets: [ {
                         data: lineGraphDataset,
+                        fill: false,
                         backgroundColor: "rgb(57, 106, 177)"
                     }],
                 },
