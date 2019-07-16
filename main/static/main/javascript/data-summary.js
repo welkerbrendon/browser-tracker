@@ -78,7 +78,8 @@ function getGraphs() {
                 data: {
                     labels: Object.keys(barGraphDataJSON),
                     datasets: [ {
-                        data: barGraphDataset
+                        data: barGraphDataset,
+                        backgroundColor: darkerBackgroundColors
                     }],
                 },
                 options: {
@@ -86,10 +87,8 @@ function getGraphs() {
                         display: true,
                         text: "Daily Internet Usage"
                     },
-                    plugins: {
-                        colorschemes: {
-                            scheme: 'brewer.SetOne7'
-                        }
+                    legend: {
+                        display: false
                     },
                     scales: {
                         yAxes: [{
