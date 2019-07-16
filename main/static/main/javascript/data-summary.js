@@ -7,7 +7,7 @@ function getGraphs() {
     var barGraphCanvasContext = document.getElementById("bar-graph").getContext("2d");
     var lineGraphCanvasContext = document.getElementById("line-graph").getContext("2d");
 
-    $.get("/raw-data", {}, function (result, status) {
+    $.get("/main/data-summary/raw-data", {}, function (result, status) {
         if (status == "success") {
             const pieChartDataJSON = result.pie_chart_data;
             const barGraphDataJSON = result.bar_graph;
