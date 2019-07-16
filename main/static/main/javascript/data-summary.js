@@ -102,80 +102,80 @@ function getGraphs() {
                 }
             });
 
-            new Chart(pieChartOverallCanvasContext, {
-                type: 'pie',
-                data: {
-                    labels: Object.keys(pieChartDataJSON),
-                    datasets: [ {
-                        data: pieChartDataset
-                    }],
-                },
-                options: {
-                    title: {
-                        display: true,
-                        text: "Websites Visted"
-                    },
-                    legend: {
-                        display: true,
-                        position: 'right'
-                    },
-                    plugins: {
-                        colorschemes: {
-                            scheme: 'tableau.Classic20'
-                        }
-                    }
-                }
-            });
+            // new Chart(pieChartOverallCanvasContext, {
+            //     type: 'pie',
+            //     data: {
+            //         labels: Object.keys(pieChartDataJSON),
+            //         datasets: [ {
+            //             data: pieChartDataset
+            //         }],
+            //     },
+            //     options: {
+            //         title: {
+            //             display: true,
+            //             text: "Websites Visted"
+            //         },
+            //         legend: {
+            //             display: true,
+            //             position: 'right'
+            //         },
+            //         plugins: {
+            //             colorschemes: {
+            //                 scheme: 'tableau.Classic20'
+            //             }
+            //         }
+            //     }
+            // });
 
-            new Chart(pieChartOverallCanvasContext, {
-                type: 'pie',
-                data: {
-                    labels: Object.keys(pieChartDataJSON),
-                    datasets: [ {
-                        data: pieChartDataset
-                    }],
-                },
-                options: {
-                    title: {
-                        display: true,
-                        text: "Websites Visted"
-                    },
-                    legend: {
-                        display: true,
-                        position: 'right'
-                    },
-                    plugins: {
-                        colorschemes: {
-                            scheme: 'tableau.Classic20'
-                        }
-                    }
-                }
-            });
+            // new Chart(pieChartOverallCanvasContext, {
+            //     type: 'pie',
+            //     data: {
+            //         labels: Object.keys(pieChartDataJSON),
+            //         datasets: [ {
+            //             data: pieChartDataset
+            //         }],
+            //     },
+            //     options: {
+            //         title: {
+            //             display: true,
+            //             text: "Websites Visted"
+            //         },
+            //         legend: {
+            //             display: true,
+            //             position: 'right'
+            //         },
+            //         plugins: {
+            //             colorschemes: {
+            //                 scheme: 'tableau.Classic20'
+            //             }
+            //         }
+            //     }
+            // });
 
-            new Chart(pieChartOverallCanvasContext, {
-                type: 'pie',
-                data: {
-                    labels: Object.keys(pieChartDataJSON),
-                    datasets: [ {
-                        data: pieChartDataset
-                    }],
-                },
-                options: {
-                    title: {
-                        display: true,
-                        text: "Websites Visted"
-                    },
-                    legend: {
-                        display: true,
-                        position: 'right'
-                    },
-                    plugins: {
-                        colorschemes: {
-                            scheme: 'tableau.Classic20'
-                        }
-                    }
-                }
-            });
+            // new Chart(pieChartOverallCanvasContext, {
+            //     type: 'pie',
+            //     data: {
+            //         labels: Object.keys(pieChartDataJSON),
+            //         datasets: [ {
+            //             data: pieChartDataset
+            //         }],
+            //     },
+            //     options: {
+            //         title: {
+            //             display: true,
+            //             text: "Websites Visted"
+            //         },
+            //         legend: {
+            //             display: true,
+            //             position: 'right'
+            //         },
+            //         plugins: {
+            //             colorschemes: {
+            //                 scheme: 'tableau.Classic20'
+            //             }
+            //         }
+            //     }
+            // });
         }
         else {
             console.log(status);
