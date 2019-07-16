@@ -147,7 +147,7 @@ function getGraphs() {
                     },
                     plugins: {
                         colorschemes: {
-                            scheme: 'tableau.Classic20'
+                            scheme: 'office.Excel16'
                         }
                     }
                 }
@@ -172,7 +172,7 @@ function getGraphs() {
                     },
                     plugins: {
                         colorschemes: {
-                            scheme: 'tableau.Classic20'
+                            scheme: 'brewer.SetOne9'
                         }
                     }
                 }
