@@ -263,9 +263,9 @@ def get_bar_graph_data(site_visits):
     for visit in site_visits:
         visit_dict = visit.as_dict()
         day = get_day_string(visit_dict["day_of_week"])
-        if visit_dict["end_day"]:
+        if visit_dict["end_day_of_week"]:
             data[day] += visit_dict["visit_length_first_day"]
-            data[get_day_string(visit_dict["end_day"])] += visit_dict["visit_length_second_day"]
+            data[get_day_string(visit_dict["end_day_of_week"])] += visit_dict["visit_length_second_day"]
         else:
             data[day] += visit_dict["total_visit_length"]
 
