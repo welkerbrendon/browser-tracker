@@ -53,10 +53,7 @@ function getGraphs() {
                 data: {
                     labels: Object.keys(pieChartDataJSON),
                     datasets: [ {
-                        data: pieChartDataset,
-                        backgroundColor: palette('tol', pieChartDataset.length).map(function(hex) {
-                            return '#' + hex;
-                          })
+                        data: pieChartDataset
                     }],
                 },
                 options: {
@@ -67,6 +64,11 @@ function getGraphs() {
                     legend: {
                         display: true,
                         position: 'right'
+                    },
+                    plugins: {
+                        colorschemes: {
+                            scheme: 'tableau.Classic20'
+                        }
                     }
                 }
             });
