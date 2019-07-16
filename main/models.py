@@ -101,12 +101,12 @@ class SiteVisit(models.Model):
             visit_length_first_day = (24 * 3600) - start_time_seconds
             visit_length_second_day = end_time_seconds
             end_time_seconds = end_time_seconds + (24 * 3600)
-            end_day = self.day + timedelta(days=1)
+            end_day = self.day.weekday() + 1
         else:
             visit_length = end_time_seconds - start_time_seconds
         return {
             "day": self.day,
-            "end_day": end_day,
+            "end_day_of_week": end_day,
             "day_of_week": self.day.weekday(),
             "start_time": self.start_time,
             "end_time": self.end_time,
