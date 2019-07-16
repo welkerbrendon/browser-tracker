@@ -1,4 +1,4 @@
-from .models import Activity, Site, SiteVisit, Extension, ActivityType, F
+from .models import Activity, Site, SiteVisit, Extension, ActivityType, SiteVisitToActivity
 from datetime import datetime
 from django.db.models import Q
 
@@ -26,30 +26,27 @@ def create_new_activity(user, data):
         activity = Activity(user=user, start_time=data.get('start_time'), end_time=data.get("end_time"), day=data.get('day'),
                    productive=data.get('productive'), activity_type=activity_type, notes=notes)
         activity.save()
-        update_site_visits(user, activity)
+        map_activity_and_site_visits(activity)
         return activity
     else:
         print("DEBUG: activity already added")
         activity = Activity.objects.get(user=user, start_time=data.get('start_time'), end_time=data.get("end_time"), day=data.get('day'),
                productive=data.get('productive'), activity_type=activity_type, notes=notes)
-        update_site_visits(user, activity)
+        map_activity_and_site_visits(activity)
         return activity
 
 
-def update_site_visits(user, activity):
-    print("DEBUG: updating site visits to match with activiy")
-    query_set = F({"start_time_after": activity.start_time, "start_time_before": activity.end_time}).qs
-    print("DEBUG: " + str(query_set.count()) + " different site visits within the given activity with id=" + str(activity.id))
-    for site_visit in query_set:
-        site_visit.activity=activity
-        site_visit.save()
-# activity = {
-#                 "start_time": start_times[i],
-#                 "end_time": end_times[i],
-#                 "type": data.get("activity_type", [None]*count_of_activities)[i],
-#                 "productive": data.get("productive", [None]*count_of_activities)[i],
-#                 "notes": data.get("notes", [None]*count_of_activities)[i]
-#             };
+def map_activity_and_site_visits(activity):
+    print("DEBUG: maping site visits with activiy=" + str(activity))
+    site_visit = SiteVisit.objects.all()
+    filtered_site_visits = []
+    for visit in site_visit:
+        if activity.start_time <= visit.start_time < activity.end_time or activity.end_time >= visit.end_time > activity.start_time:
+            filtered_site_visits.append(visit)
+    for visit in filtered_site_visits:
+        SiteVisitToActivity(activity=activity, visit=visit).save()
+
+
 
 
 def get_site(url):
@@ -72,26 +69,12 @@ def get_activity_types(user):
     return ActivityType.objects.filter(Q(user=user) | Q(universal=True)).order_by("type_name")
 
 
-def get_activity_urls(user, activity):
-    urlList = []
-    query_set = SiteVisit.objects.filter(user=user, activity=activity).select_related("site")
-    for site_visit in query_set:
-        urlList.append(site_visit.site.url)
-    return list(dict.fromkeys(urlList))
-
-# def edit_site_activities(user, data):
-#     start_time_list = format_time(data.start_time)
-#     end_time_list = format_time(data.end_time)
-#     productive_list = data.productive
-#     notes_list = data.notes
-#     id_list = data.id
-#     for i in range(len(id_list)):
-#         activity = Activity.objects.get(id=id_list[i])
-#         activity.start_time = start_time_list[i]
-#         activity.end_time = end_time_list[i]
-#         activity.productive = productive_list[i]
-#         activity.notes = notes_list[i]
-#         activity.save()
+def get_activity_urls(activity):
+    url_list = []
+    query_set = SiteVisitToActivity.objects.filter(activity=activity)
+    for map in query_set:
+        url_list.append(map.site_visit.site.url)
+    return list(dict.fromkeys(url_list))
 
 
 def post_site_visit(user, data):

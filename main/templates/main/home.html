@@ -16,14 +16,14 @@
         <div id="error"></div>
         <table id="day-input" class="input-table" border=1>
             <tr id="table-headers">
-                <th class="start_time">Start Time</th>
-                <th class="end_time">End Time</th>
+                <th class="start_time text-center">Start Time</th>
+                <th class="end_time text-center">End Time</th>
                 {% if activities %}
-                <th class="websites">Websites Visited</th>
+                <th class="websites text-center">Websites Visited</th>
                 {% endif %}
-                <th class="productive">Productive</th>
-                <th class="activity_type">Activity Type</th>
-                <th class="notes">Notes</th>
+                <th class="productive text-center">Productive</th>
+                <th class="activity_type text-center">Activity Type</th>
+                <th class="notes text-center">Notes</th>
             </tr>
             {% for activity in activities %}
                 <tr name="table-row">

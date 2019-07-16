@@ -40,7 +40,7 @@ def home(request):
     activities = controllers.get_activities(request.user, date)
     if activities:
         for activity in activities:
-            url_list = controllers.get_activity_urls(request.user, activity)
+            url_list = controllers.get_activity_urls(activity)
             url_string = ""
             for i in range(len(url_list)):
                 url_string += url_list[i] + ", "
@@ -62,7 +62,7 @@ def home(request):
         "activity_types": activity_types,
         "date": date,
         "max": datetime.today().date().strftime("%Y-%m-%d"),
-        "additional_rows": [" "] * 4,
+        "additional_rows": [" "] * (4 - len(activity_dict_list)),
         "row_count": len(activity_dict_list) + 2
     }
     return render(request, "main/home.html", data)
@@ -183,14 +183,17 @@ def site_activity(request):
 
 def format_time(time_values, am_pm_values):
     new_list = []
-    for i in range(len(time_values)):
-        if time_values[i] != "":
-            hour_minutes = time_values[0].split(":")
-            if am_pm_values[i] == "PM" and int(hour_minutes[0]) != 12:
-                military_time = str(int(hour_minutes[0]) + 12) + ":" + hour_minutes[1]
-                new_list.append(military_time)
-            else:
-                new_list.append(time_values[i])
+    for time, am_pm in zip(time_values, am_pm_values):
+        hour_minutes = time.split(":")
+        if am_pm == "PM":
+            if int(hour_minutes[0]) != 12:
+                hour_minutes[0] = str(int(hour_minutes[0]) + 12)
+                time = hour_minutes[0] + ":" + hour_minutes[1]
+        else:
+            if int(hour_minutes[0]) == 12:
+                time = "00:" + hour_minutes[1]
+        new_list.append(time)
+
     return new_list
 
 

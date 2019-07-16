@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 import django_filters
-from datetime import timedelta
 
 
 class ViewAccess(models.Model):
@@ -33,7 +32,7 @@ class ActivityType(models.Model):
 class Activity(models.Model):
     id = models.BigAutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    activity_type = models.ForeignKey(ActivityType, on_delete=models.SET_NULL, null=True)
+    activity_type = models.ForeignKey(ActivityType, on_delete=models.CASCADE)
     day = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
@@ -84,7 +83,6 @@ class SiteVisit(models.Model):
     id = models.BigAutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
-    activity = models.ForeignKey(Activity, on_delete=models.SET_NULL, null=True)
     day = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
@@ -102,8 +100,7 @@ class SiteVisit(models.Model):
             visit_length_second_day = end_time_seconds
             end_time_seconds = end_time_seconds + (24 * 3600)
             end_day = (self.day.weekday() + 1) % 6
-        else:
-            visit_length = end_time_seconds - start_time_seconds
+
         return {
             "day": self.day,
             "end_day_of_week": end_day,
@@ -119,14 +116,6 @@ class SiteVisit(models.Model):
         unique_together = (("user", "day", "start_time", "end_time", "site"),)
 
 
-class F(django_filters.FilterSet):
-    time = django_filters.TimeRangeFilter()
-
-    class Meta:
-        model = SiteVisit
-        fields = ['start_time', 'end_time']
-
-
 class Extension(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -134,3 +123,12 @@ class Extension(models.Model):
     page_extension = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
+
+
+class SiteVisitToActivity(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
+    site_visit = models.ForeignKey(SiteVisit, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = (("activity", "site_visit"),)
