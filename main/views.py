@@ -220,7 +220,7 @@ def site_visit_raw_data(request):
 
     start_date = site_visits[0].day
     end_date = site_visits[site_visits.count() - 1].day
-    days = (start_date.date() - end_date.date()).days
+    days = (start_date - end_date).days
 
     pie_chart_data = get_site_visit_pie_data(site_visits, site_visits_dict)
     bar_graph_data, day_count = get_bar_graph_data(site_visits, site_visits_dict, get_day_count_dict(start_date, days))
