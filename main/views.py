@@ -238,13 +238,13 @@ def get_site_visit_pie_data(site_visits):
         else:
             pie_data_raw[visit.site.url] = visit_dict["total_visit_length"]
 
-    other_percent = 0
+    other_percent = 1
     for site in pie_data_raw:
-        percent = pie_data_raw[site] / total_time
+        percent = float(int(pie_data_raw[site] / total_time * 10000) / 10000)
         if percent > .01:
-            pie_data[site] = float(int(percent * 10000) / 10000)
+            pie_data[site] = percent
         else:
-            other_percent += percent
+            other_percent -= percent
     pie_data["Other"] = other_percent
 
     return pie_data
