@@ -245,7 +245,7 @@ def get_site_visit_pie_data(site_visits):
             pie_data[site] = percent
         else:
             other_percent -= percent
-    pie_data["Other"] = other_percent
+    pie_data["Other"] = float(int(other_percent * 10000) / 10000)
 
     return pie_data
 
