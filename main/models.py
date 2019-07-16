@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import django_filters
-from datetime import datetime, date
+from datetime import timedelta
 
 
 class ViewAccess(models.Model):
@@ -94,12 +94,25 @@ class SiteVisit(models.Model):
     def as_dict(self):
         end_time_seconds = (((self.end_time.hour * 60) + self.end_time.minute) * 60) + self.end_time.second
         start_time_seconds = (((self.start_time.hour * 60) + self.start_time.minute) * 60) + self.start_time.second
+        end_day = None
+        visit_length_second_day = None
+        visit_length_first_day = None
+        if end_time_seconds < start_time_seconds:
+            visit_length_first_day = (24 * 3600) - start_time_seconds
+            visit_length_second_day = end_time_seconds
+            end_time_seconds = end_time_seconds + (24 * 3600)
+            end_day = self.day + timedelta(days=1)
+        else:
+            visit_length = end_time_seconds - start_time_seconds
         return {
             "day": self.day,
+            "end_day": end_day,
             "day_of_week": self.day.weekday(),
             "start_time": self.start_time,
             "end_time": self.end_time,
-            "visit_length": end_time_seconds - start_time_seconds
+            "total_visit_length": end_time_seconds - start_time_seconds,
+            "visit_length_first_day": visit_length_first_day,
+            "visit_length_second_day": visit_length_second_day
         }
 
     class Meta:

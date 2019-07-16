@@ -232,15 +232,17 @@ def get_site_visit_pie_data(site_visits):
     total_time = 0
     for visit in site_visits:
         visit_dict = visit.as_dict()
-        total_time += visit_dict["visit_length"]
+        total_time += visit_dict["total_visit_length"]
         if visit.site.url in pie_data_raw:
-            pie_data_raw[visit.site.url] += visit_dict["visit_length"]
+            pie_data_raw[visit.site.url] += visit_dict["total_visit_length"]
         else:
-            pie_data_raw[visit.site.url] = visit_dict["visit_length"]
+            pie_data_raw[visit.site.url] = visit_dict["total_visit_length"]
 
     other_percent = 0
     for site in pie_data_raw:
+        print("DEBUG: get_site_visit_pie_data percent = " + pie_data_raw[site] + " / " + total_time + " for " + site)
         percent = pie_data_raw[site] / total_time
+        print("DEBUG: get_site_visit_pie_data percent = " + percent)
         if percent > .05:
             pie_data[site] = percent
         else:
@@ -262,28 +264,22 @@ def get_bar_graph_data(site_visits):
     }
     for visit in site_visits:
         visit_dict = visit.as_dict()
-        day_of_week = visit_dict["day_of_week"]
-        visit_length = visit_dict["visit_length"]
-        if day_of_week == 0:
-            data["Monday"] += visit_length
-        elif day_of_week == 1:
-            data["Tuesday"] += visit_length
-        elif day_of_week == 2:
-            data["Wednesday"] += visit_length
-        elif day_of_week == 2:
-            data["Thursday"] += visit_length
-        elif day_of_week == 2:
-            data["Friday"] += visit_length
-        elif day_of_week == 2:
-            data["Saturday"] += visit_length
+        day = get_day_string(visit_dict["day_of_week"])
+        if visit_dict["end_day"]:
+            data[day] += visit_dict["visit_length_first_day"]
+            data[get_day_string(visit_dict["end_day"])] += visit_dict["visit_length_second_day"]
         else:
-            data["Sunday"] += visit_length
+            data[day] += visit_dict["total_visit_length"]
 
     for day in data:
         data[day] = float(int(float(data[day] / 3600) * 100) / 100)
 
     return data
 
+
+def get_day_string(day_num):
+    days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    return days[day_num]
 
 def get_line_graph_data(site_visits):
     data = {}
@@ -299,6 +295,9 @@ def get_line_graph_data(site_visits):
             data[start_time_hour] += time
         else:
             data[start_time_hour] = time
+
+    for hour in data:
+        data[hour] = float(int(float(data[hour] / 60) * 100) / 100)
     return data
 
 
