@@ -51,7 +51,7 @@ function getGraphs() {
 function getData(dataJSON) {
     dataset = []
     for (var key in dataJSON) {
-        dataset.append(dataJSON[key]);
+        dataset.push(dataJSON[key]);
     }
     return dataset;
 }
