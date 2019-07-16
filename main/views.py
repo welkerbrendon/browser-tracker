@@ -256,7 +256,8 @@ def get_site_visit_pie_data(site_visits, site_visits_dict):
     other_percent = 1
 
     ordered = sorted(pie_data_raw.items(), key=itemgetter(1), reverse=True)
-    for site in ordered:
+    top_eight = ordered[:8]
+    for site in top_eight:
         percent = float(int(site[1]/ total_time * 10000) / 10000)
         pie_data[site[0]] = percent
         other_percent -= percent
