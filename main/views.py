@@ -196,26 +196,20 @@ def format_time(time_values, am_pm_values):
 def get_site_visit_dict(site_visits):
     site_visits_dict = []
     for visit in site_visits:
-        activity = None
-        if visit.activity:
-            activity = visit.activity.as_dict()
-            activity["type"] = visit.activity.activity_type.type_name
-        data = {
-            "site_visit": visit.as_dict(),
-            "activity": activity,
-            "url": visit.site.url
-        }
-        site_visits_dict.append(data)
+        site_visits_dict.append(visit.as_dict())
     return site_visits_dict
 
 
 def site_visit_raw_data(request):
     site_visits = controllers.get_all_site_visits(request.user)
-    # site_visits_dict = get_site_visit_dict(site_visits)
-    pie_chart_data = get_site_visit_pie_data(site_visits)
-    bar_graph_data = get_bar_graph_data(site_visits)
-    line_graph_data = get_line_graph_data(site_visits)
-    productive_pie_chart_data, unproductive_pie_chart_data = get_productive_unproductive_pie_chart_data(site_visits)
+    site_visits_dict = get_site_visit_dict(site_visits)
+    pie_chart_data = get_site_visit_pie_data(site_visits, site_visits_dict)
+    bar_graph_data, day_count = get_bar_graph_data(site_visits, site_visits_dict)
+    count = 0
+    for day in day_count:
+        count += day_count[day]
+    line_graph_data = get_line_graph_data(site_visits_dict, count)
+    productive_pie_chart_data, unproductive_pie_chart_data = get_productive_unproductive_pie_chart_data(site_visits, site_visits_dict)
     data = {
         "pie_chart_data": pie_chart_data,
         "bar_graph_data": bar_graph_data,
@@ -226,12 +220,11 @@ def site_visit_raw_data(request):
     return JsonResponse(data, safe=False)
 
 
-def get_site_visit_pie_data(site_visits):
+def get_site_visit_pie_data(site_visits, site_visits_dict):
     pie_data_raw = {}
     pie_data = {}
     total_time = 0
-    for visit in site_visits:
-        visit_dict = visit.as_dict()
+    for visit, visit_dict in zip(site_visits, site_visits_dict):
         total_time += visit_dict["total_visit_length"]
         if visit.site.url in pie_data_raw:
             pie_data_raw[visit.site.url] += visit_dict["total_visit_length"]
@@ -250,7 +243,7 @@ def get_site_visit_pie_data(site_visits):
     return pie_data
 
 
-def get_bar_graph_data(site_visits):
+def get_bar_graph_data(site_visits, site_visit_dict):
     data = {
         "Monday": 0,
         "Tuesday": 0,
@@ -270,8 +263,7 @@ def get_bar_graph_data(site_visits):
         "Sunday": 0
     }
     date = None
-    for visit in site_visits:
-        visit_dict = visit.as_dict()
+    for visit, visit_dict in zip(site_visits, site_visit_dict):
         day = get_day_string(visit_dict["day_of_week"])
         if visit_dict["end_day_of_week"]:
             data[day] += visit_dict["visit_length_first_day"]
@@ -287,17 +279,16 @@ def get_bar_graph_data(site_visits):
         data[day] = data[day] / day_count[day]
         data[day] = float(int(float(data[day] / 3600) * 100) / 100)
 
-    return data
+    return data, day_count
 
 
 def get_day_string(day_num):
     days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     return days[day_num]
 
-def get_line_graph_data(site_visits):
+def get_line_graph_data(site_visits_dict, count):
     data = {}
-    for visit in site_visits:
-        visit_dict = visit.as_dict()
+    for visit_dict in site_visits_dict:
         start_time_hour = visit_dict["start_time"].hour
         time = 0
         if start_time_hour == visit_dict["end_time"].hour:
@@ -310,18 +301,24 @@ def get_line_graph_data(site_visits):
             data[start_time_hour] = time
 
     for hour in data:
+        data[hour] = data[hour] / count
         data[hour] = float(int(float(data[hour] / 60) * 100) / 100)
     return data
 
 
-def get_productive_unproductive_pie_chart_data(site_visits):
+def get_productive_unproductive_pie_chart_data(site_visits, site_visits_dict):
     productive_site_visits = []
+    productive_site_visits_dict = []
     unproductive_site_visits = []
-    for visit in site_visits:
+    unproductive_site_visits_dict = []
+    for visit, visit_dict in zip(site_visits, site_visits_dict):
         if visit.activity:
             if visit.activity.productive:
                 productive_site_visits.append(visit)
+                productive_site_visits_dict.append(visit_dict)
             else:
                 unproductive_site_visits.append(visit)
-    return get_site_visit_pie_data(productive_site_visits), get_site_visit_pie_data(unproductive_site_visits)
+                unproductive_site_visits_dict.append(visit_dict)
+    return get_site_visit_pie_data(productive_site_visits, productive_site_visits_dict), \
+           get_site_visit_pie_data(unproductive_site_visits, unproductive_site_visits_dict)
 
