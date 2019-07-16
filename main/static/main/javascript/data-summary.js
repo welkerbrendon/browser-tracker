@@ -1,14 +1,5 @@
 window.onload = getGraphs;
 
-const ligtBackgroundColors = [
-    rgb(144, 147, 203),
-    rgb(225, 151, 76),
-    rgb(132, 186, 91),
-    rgb(211, 94, 96),
-    rgb(128, 133, 133),
-    rgb(144, 103, 167)
-];
-
 // const darkerBackgroundColors = [
     
 // ]
@@ -34,6 +25,15 @@ function getGraphs() {
             var lineGraphDataset = getData(lineGraphDataJSON);
             var productivePieChartDataset = getData(productivePieChartDataJSON);
             var unproductivePidChartDataset = getData(unproductivePieChartDataJSON);
+
+            const ligtBackgroundColors = [
+                rgb(144, 147, 203),
+                rgb(225, 151, 76),
+                rgb(132, 186, 91),
+                rgb(211, 94, 96),
+                rgb(128, 133, 133),
+                rgb(144, 103, 167)
+            ];
 
             var overallPieChart = new Chart(pieChartOverallCanvasContext, {
                 type: 'pie',
