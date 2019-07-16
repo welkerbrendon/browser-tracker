@@ -200,15 +200,32 @@ def get_site_visit_dict(site_visits):
     return site_visits_dict
 
 
+def get_day_count_dict(start_date, days):
+    base_days = int(days / 7)
+    additional_days_list = [i % 6 for i in range(start_date.weekday(), start_date.weekday() + (days % 7))]
+    return {
+        "Monday": base_days + 1 if 0 in additional_days_list else base_days,
+        "Tuesday": base_days + 1 if 1 in additional_days_list else base_days,
+        "Wednesday": base_days + 1 if 2 in additional_days_list else base_days,
+        "Thursday": base_days + 1 if 3 in additional_days_list else base_days,
+        "Friday": base_days + 1 if 4 in additional_days_list else base_days,
+        "Saturday": base_days + 1 if 5 in additional_days_list else base_days,
+        "Sunday": base_days + 1 if 6 in additional_days_list else base_days
+    }
+
+
 def site_visit_raw_data(request):
     site_visits = controllers.get_all_site_visits(request.user)
     site_visits_dict = get_site_visit_dict(site_visits)
+
+    start_date = site_visits[0].day
+    end_date = site_visits[site_visits.count() - 1].day
+    days = (start_date.date() - end_date.date()).days
+
     pie_chart_data = get_site_visit_pie_data(site_visits, site_visits_dict)
-    bar_graph_data, day_count = get_bar_graph_data(site_visits, site_visits_dict)
-    count = 0
-    for day in day_count:
-        count += day_count[day]
-    line_graph_data = get_line_graph_data(site_visits_dict, count)
+    bar_graph_data, day_count = get_bar_graph_data(site_visits, site_visits_dict, get_day_count_dict(start_date, days))
+
+    line_graph_data = get_line_graph_data(site_visits_dict, days)
     productive_pie_chart_data, unproductive_pie_chart_data = get_productive_unproductive_pie_chart_data(site_visits, site_visits_dict)
     data = {
         "pie_chart_data": pie_chart_data,
@@ -243,7 +260,7 @@ def get_site_visit_pie_data(site_visits, site_visits_dict):
     return pie_data
 
 
-def get_bar_graph_data(site_visits, site_visit_dict):
+def get_bar_graph_data(site_visits, site_visit_dict, day_count):
     data = {
         "Monday": 0,
         "Tuesday": 0,
@@ -253,16 +270,7 @@ def get_bar_graph_data(site_visits, site_visit_dict):
         "Saturday": 0,
         "Sunday": 0
     }
-    day_count = {
-        "Monday": 0,
-        "Tuesday": 0,
-        "Wednesday": 0,
-        "Thursday": 0,
-        "Friday": 0,
-        "Saturday": 0,
-        "Sunday": 0
-    }
-    date = None
+
     for visit, visit_dict in zip(site_visits, site_visit_dict):
         day = get_day_string(visit_dict["day_of_week"])
         if visit_dict["end_day_of_week"]:
@@ -270,10 +278,6 @@ def get_bar_graph_data(site_visits, site_visit_dict):
             data[get_day_string(visit_dict["end_day_of_week"])] += visit_dict["visit_length_second_day"]
         else:
             data[day] += visit_dict["total_visit_length"]
-
-        if date != visit.day:
-            date = visit.day
-            day_count[get_day_string(visit_dict["day_of_week"])] += 1
 
     for day in data:
         data[day] = data[day] / day_count[day]
