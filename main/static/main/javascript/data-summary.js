@@ -84,8 +84,7 @@ function getGraphs() {
                 },
                 options: {
                     title: {
-                        display: true,
-                        text: "Daily Internet Usage"
+                        display: false
                     },
                     legend: {
                         display: false
@@ -101,80 +100,82 @@ function getGraphs() {
                 }
             });
 
-            // new Chart(pieChartOverallCanvasContext, {
-            //     type: 'pie',
-            //     data: {
-            //         labels: Object.keys(pieChartDataJSON),
-            //         datasets: [ {
-            //             data: pieChartDataset
-            //         }],
-            //     },
-            //     options: {
-            //         title: {
-            //             display: true,
-            //             text: "Websites Visted"
-            //         },
-            //         legend: {
-            //             display: true,
-            //             position: 'right'
-            //         },
-            //         plugins: {
-            //             colorschemes: {
-            //                 scheme: 'tableau.Classic20'
-            //             }
-            //         }
-            //     }
-            // });
+            new Chart(lineGraphCanvasContext, {
+                type: 'line',
+                data: {
+                    labels: Object.keys(lineGraphDataJSON),
+                    datasets: [ {
+                        data: lineGraphDataset,
+                        backgroundColor: "rgb(57, 106, 177)"
+                    }],
+                },
+                options: {
+                    title: {
+                        display: false
+                    },
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        yAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: "Average Minutes"
+                            }
+                        }]
+                    }
+                }
+            });
 
-            // new Chart(pieChartOverallCanvasContext, {
-            //     type: 'pie',
-            //     data: {
-            //         labels: Object.keys(pieChartDataJSON),
-            //         datasets: [ {
-            //             data: pieChartDataset
-            //         }],
-            //     },
-            //     options: {
-            //         title: {
-            //             display: true,
-            //             text: "Websites Visted"
-            //         },
-            //         legend: {
-            //             display: true,
-            //             position: 'right'
-            //         },
-            //         plugins: {
-            //             colorschemes: {
-            //                 scheme: 'tableau.Classic20'
-            //             }
-            //         }
-            //     }
-            // });
+            new Chart(pieChartProductiveCanvasContext, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(productivePieChartDataJSON),
+                    datasets: [ {
+                        data: productivePieChartDataset
+                    }],
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "Websites Visted"
+                    },
+                    legend: {
+                        display: true,
+                        position: 'right'
+                    },
+                    plugins: {
+                        colorschemes: {
+                            scheme: 'tableau.Classic20'
+                        }
+                    }
+                }
+            });
 
-            // new Chart(pieChartOverallCanvasContext, {
-            //     type: 'pie',
-            //     data: {
-            //         labels: Object.keys(pieChartDataJSON),
-            //         datasets: [ {
-            //             data: pieChartDataset
-            //         }],
-            //     },
-            //     options: {
-            //         title: {
-            //             display: true,
-            //             text: "Websites Visted"
-            //         },
-            //         legend: {
-            //             display: true,
-            //             position: 'right'
-            //         },
-            //         plugins: {
-            //             colorschemes: {
-            //                 scheme: 'tableau.Classic20'
-            //             }
-            //         }
-            //     }
-            // });
+            new Chart(pieChartUnproductiveCanvasContext, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(unproductivePieChartDataJSON),
+                    datasets: [ {
+                        data: unproductivePidChartDataset
+                    }],
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "Websites Visted"
+                    },
+                    legend: {
+                        display: true,
+                        position: 'right'
+                    },
+                    plugins: {
+                        colorschemes: {
+                            scheme: 'tableau.Classic20'
+                        }
+                    }
+                }
+            });
         }
         else {
             console.log(status);
