@@ -6,7 +6,6 @@ from django.http import JsonResponse
 from datetime import datetime, timedelta
 from . import controllers
 import json
-from collections import OrderedDict
 from operator import itemgetter
 
 
@@ -256,7 +255,7 @@ def get_site_visit_pie_data(site_visits, site_visits_dict):
 
     other_percent = 1
 
-    ordered = OrderedDict(sorted(pie_data_raw.items(), key=itemgetter(1), reverse=True))
+    ordered = sorted(pie_data_raw.items(), key=itemgetter(1), reverse=True)
     top_eight = dict(ordered.items()[:8])
     for site in top_eight:
         percent = float(int(pie_data_raw[site] / total_time * 10000) / 10000)
