@@ -260,6 +260,16 @@ def get_bar_graph_data(site_visits):
         "Saturday": 0,
         "Sunday": 0
     }
+    day_count = {
+        "Monday": 0,
+        "Tuesday": 0,
+        "Wednesday": 0,
+        "Thursday": 0,
+        "Friday": 0,
+        "Saturday": 0,
+        "Sunday": 0
+    }
+    date = None
     for visit in site_visits:
         visit_dict = visit.as_dict()
         day = get_day_string(visit_dict["day_of_week"])
@@ -269,7 +279,12 @@ def get_bar_graph_data(site_visits):
         else:
             data[day] += visit_dict["total_visit_length"]
 
+        if date != visit.day:
+            date = visit.day
+            day_count[get_day_string(visit_dict["day_of_week"])] += 1
+
     for day in data:
+        data[day] = data[day] / day_count[day]
         data[day] = float(int(float(data[day] / 3600) * 100) / 100)
 
     return data
