@@ -220,26 +220,20 @@ def site_visit_raw_data(request):
 
     start_date = site_visits[0].day
     end_date = site_visits[site_visits.count() - 1].day
-    days = (start_date - end_date).days
+    days = (end_date - start_date).days
 
+    pie_chart_data = get_site_visit_pie_data(site_visits, site_visits_dict)
+    bar_graph_data, day_count = get_bar_graph_data(site_visits, site_visits_dict, get_day_count_dict(start_date, days))
+
+    line_graph_data = get_line_graph_data(site_visits_dict, days)
+    productive_pie_chart_data, unproductive_pie_chart_data = get_productive_unproductive_pie_chart_data(site_visits, site_visits_dict)
     data = {
-        "start_date": start_date,
-        "end_date": end_date,
-        "days": days
+        "pie_chart_data": pie_chart_data,
+        "bar_graph_data": bar_graph_data,
+        "line_graph_data": line_graph_data,
+        "productive_pie_chart_data": productive_pie_chart_data,
+        "unproductive_pie_chart_data": unproductive_pie_chart_data
     }
-
-    # pie_chart_data = get_site_visit_pie_data(site_visits, site_visits_dict)
-    # bar_graph_data, day_count = get_bar_graph_data(site_visits, site_visits_dict, get_day_count_dict(start_date, days))
-    #
-    # line_graph_data = get_line_graph_data(site_visits_dict, days)
-    # productive_pie_chart_data, unproductive_pie_chart_data = get_productive_unproductive_pie_chart_data(site_visits, site_visits_dict)
-    # data = {
-    #     "pie_chart_data": pie_chart_data,
-    #     "bar_graph_data": bar_graph_data,
-    #     "line_graph_data": line_graph_data,
-    #     "productive_pie_chart_data": productive_pie_chart_data,
-    #     "unproductive_pie_chart_data": unproductive_pie_chart_data
-    # }
     return JsonResponse(data, safe=False)
 
 
