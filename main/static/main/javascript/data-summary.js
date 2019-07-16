@@ -15,8 +15,8 @@ function getGraphs() {
         if (status == "success") {
             console.log(JSON.stringify(result));
             const pieChartDataJSON = result.pie_chart_data;
-            const barGraphDataJSON = result.bar_graph;
-            const lineGraphDataJSON = result.line_graph;
+            const barGraphDataJSON = result.bar_graph_data;
+            const lineGraphDataJSON = result.line_graph_data;
             const productivePieChartDataJSON = result.productive_pie_chart_data;
             const unproductivePieChartDataJSON = result.unproductive_pie_chart_data;
 
