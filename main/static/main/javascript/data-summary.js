@@ -54,7 +54,9 @@ function getGraphs() {
                     labels: Object.keys(pieChartDataJSON),
                     datasets: [ {
                         data: pieChartDataset,
-                        backgroundColor: ligtBackgroundColors
+                        backgroundColor: palette('tol', pieChartDataset.length).map(function(hex) {
+                            return '#' + hex;
+                          })
                     }],
                 },
                 options: {
