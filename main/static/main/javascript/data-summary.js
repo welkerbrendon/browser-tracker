@@ -44,9 +44,9 @@ function getGraphs() {
                 data: {
                     labels: Object.keys(pieChartDataJSON),
                     datasets: [ {
-                        data: pieChartDataset
+                        data: pieChartDataset,
+                        backgroundColor: ligtBackgroundColors
                     }],
-                    backgroundColor: ligtBackgroundColors
                 },
                 options: {
                     title: {
