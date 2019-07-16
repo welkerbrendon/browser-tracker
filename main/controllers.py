@@ -38,9 +38,9 @@ def create_new_activity(user, data):
 
 def map_activity_and_site_visits(activity):
     print("DEBUG: maping site visits with activiy=" + str(activity))
-    site_visit = SiteVisit.objects.all()
+    site_visits = SiteVisit.objects.all()
     filtered_site_visits = []
-    for visit in site_visit:
+    for visit in site_visits:
         if activity.start_time <= visit.start_time < activity.end_time or activity.end_time >= visit.end_time > activity.start_time:
             filtered_site_visits.append(visit)
     for visit in filtered_site_visits:
