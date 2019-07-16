@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from datetime import datetime, timedelta
 from . import controllers
 import json
+import collections
 
 
 @login_required
@@ -253,12 +254,13 @@ def get_site_visit_pie_data(site_visits, site_visits_dict):
             pie_data_raw[visit.site.url] = visit_dict["total_visit_length"]
 
     other_percent = 1
+    pie_data_raw = collections.OrderedDict(pie_data_raw)
+    pie_data_raw = pie_data_raw[:8]
     for site in pie_data_raw:
         percent = float(int(pie_data_raw[site] / total_time * 10000) / 10000)
-        if percent > .01:
-            pie_data[site] = percent
-            other_percent -= percent
-
+        pie_data[site] = percent
+        other_percent -= percent
+            
     pie_data["Other"] = float(int(other_percent * 10000) / 10000)
 
     return pie_data
