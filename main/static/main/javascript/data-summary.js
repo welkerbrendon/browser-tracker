@@ -9,6 +9,7 @@ function getGraphs() {
 
     $.get("/main/data-summary/raw-data", {}, function (result, status) {
         if (status == "success") {
+            console.log(JSON.stringify(result));
             const pieChartDataJSON = result.pie_chart_data;
             const barGraphDataJSON = result.bar_graph;
             const lineGraphDataJSON = result.line_graph;
@@ -39,7 +40,10 @@ function getGraphs() {
                         position: 'right'
                     }
                 }
-            })
+            });
+        }
+        else {
+            console.log(status);
         }
     });
 }
