@@ -241,7 +241,7 @@ def get_site_visit_pie_data(site_visits):
     other_percent = 0
     for site in pie_data_raw:
         percent = pie_data_raw[site] / total_time
-        if percent > .05:
+        if percent > .01:
             pie_data[site] = percent
         else:
             other_percent += percent
