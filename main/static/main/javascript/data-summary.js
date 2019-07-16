@@ -48,7 +48,111 @@ function getGraphs() {
                 "rgb(148, 139, 61)"
             ];
 
-            var overallPieChart = new Chart(pieChartOverallCanvasContext, {
+            new Chart(pieChartOverallCanvasContext, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(pieChartDataJSON),
+                    datasets: [ {
+                        data: pieChartDataset
+                    }],
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "Websites Visted"
+                    },
+                    legend: {
+                        display: true,
+                        position: 'right'
+                    },
+                    plugins: {
+                        colorschemes: {
+                            scheme: 'tableau.Classic20'
+                        }
+                    }
+                }
+            });
+
+            new Chart(barGraphCanvasContext, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(barGraphDataJSON),
+                    datasets: [ {
+                        data: barGraphDataset
+                    }],
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "Daily Internet Usage"
+                    },
+                    plugins: {
+                        colorschemes: {
+                            scheme: 'brewer.SetOne7'
+                        }
+                    },
+                    scales: {
+                        yAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: "Average Hours"
+                            }
+                        }]
+                    }
+                }
+            });
+
+            new Chart(pieChartOverallCanvasContext, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(pieChartDataJSON),
+                    datasets: [ {
+                        data: pieChartDataset
+                    }],
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "Websites Visted"
+                    },
+                    legend: {
+                        display: true,
+                        position: 'right'
+                    },
+                    plugins: {
+                        colorschemes: {
+                            scheme: 'tableau.Classic20'
+                        }
+                    }
+                }
+            });
+
+            new Chart(pieChartOverallCanvasContext, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(pieChartDataJSON),
+                    datasets: [ {
+                        data: pieChartDataset
+                    }],
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "Websites Visted"
+                    },
+                    legend: {
+                        display: true,
+                        position: 'right'
+                    },
+                    plugins: {
+                        colorschemes: {
+                            scheme: 'tableau.Classic20'
+                        }
+                    }
+                }
+            });
+
+            new Chart(pieChartOverallCanvasContext, {
                 type: 'pie',
                 data: {
                     labels: Object.keys(pieChartDataJSON),
