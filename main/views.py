@@ -214,6 +214,10 @@ def get_day_count_dict(start_date, days):
     }
 
 
+def data_summary(request):
+    return render(request, "main/data-summary.html")
+
+
 def site_visit_raw_data(request):
     site_visits = controllers.get_all_site_visits(request.user)
     site_visits_dict = get_site_visit_dict(site_visits)
