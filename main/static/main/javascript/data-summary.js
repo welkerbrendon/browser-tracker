@@ -32,7 +32,11 @@ function getGraphs() {
                 "#84ba5b",
                 "#d35e60",
                 "#808585",
-                "#9067a7"
+                "#9067a7",
+                "#396ab1",
+                "#da7c30",
+                "#3e9651",
+                "#cc2529"
             ];
 
             var overallPieChart = new Chart(pieChartOverallCanvasContext, {
