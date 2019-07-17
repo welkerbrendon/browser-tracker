@@ -326,13 +326,13 @@ def get_productive_unproductive_pie_chart_data(site_visits, site_visits_dict):
     unproductive_site_visits = []
     unproductive_site_visits_dict = []
     for visit, visit_dict in zip(site_visits, site_visits_dict):
-        if visit.activity:
-            if visit.activity.productive:
-                productive_site_visits.append(visit)
-                productive_site_visits_dict.append(visit_dict)
-            else:
-                unproductive_site_visits.append(visit)
-                unproductive_site_visits_dict.append(visit_dict)
+        if controllers.is_productive_visit(visit):
+            productive_site_visits.append(visit)
+            productive_site_visits_dict.append(visit_dict)
+        else:
+            unproductive_site_visits.append(visit)
+            unproductive_site_visits_dict.append(visit_dict)
+            
     return get_site_visit_pie_data(productive_site_visits, productive_site_visits_dict), \
            get_site_visit_pie_data(unproductive_site_visits, unproductive_site_visits_dict)
 

@@ -47,8 +47,6 @@ def map_activity_and_site_visits(activity):
         SiteVisitToActivity(activity=activity, visit=visit).save()
 
 
-
-
 def get_site(url):
     if Site.objects.filter(url=url):
         return Site.objects.get(url=url)
@@ -101,6 +99,20 @@ def edit_site_visits(user, id, start_time, end_time):
         site_visit.save()
     else:
         print("DEBUG: edit_site_visits failed to find site_visit")
+
+
+def is_productive_visit(visit):
+    mapped_list = SiteVisitToActivity.objects.filter(site_visit=visit)
+    productive_time = 0
+    unproductive_time = 0
+    for map in mapped_list:
+        if map.activity.productive:
+            productive_time += map.activity.get_total_time()
+        else:
+            unproductive_time += map.activity.get_total_time()
+
+    return productive_time > unproductive_time
+
 
 
 def get_extensions(user, visit):

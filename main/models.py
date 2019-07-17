@@ -41,12 +41,17 @@ class Activity(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
 
+    def get_total_time(self):
+        end_time_seconds = (((self.end_time.hour * 60) + self.end_time.minute) * 60) + self.end_time.second
+        start_time_seconds = (((self.start_time.hour * 60) + self.start_time.minute) * 60) + self.start_time.second
+        return end_time_seconds - start_time_seconds
+
     def as_dict(self):
         return {
             "day": self.day,
             "start_time": self.start_time,
             "end_time": self.end_time,
-            "productive": self.productive,
+            "productive": self.productive
         }
 
     class Meta:
