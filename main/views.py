@@ -31,11 +31,11 @@ def home(request):
                 "productive": productive_list[i],
                 "notes": notes_list[i],
                 "day": date
-            };
+            }
             controllers.create_new_activity(request.user, activity)
     else:
         date = request.GET.get("date") if request.GET.get("date") else (
-                    datetime.today() - timedelta(days=1)).date().strftime("%Y-%m-%d")
+                datetime.today() - timedelta(days=1)).date().strftime("%Y-%m-%d")
 
     activities = controllers.get_activities(request.user, date)
     if activities:
@@ -53,7 +53,7 @@ def home(request):
                 "productive": activity.productive,
                 "notes": activity.notes,
                 "urls": url_string,
-            });
+            })
 
     activity_types = controllers.get_activity_types(request.user)
 
@@ -62,7 +62,7 @@ def home(request):
         "activity_types": activity_types,
         "date": date,
         "max": datetime.today().date().strftime("%Y-%m-%d"),
-        "additional_rows": [" "] * (4 - len(activity_dict_list)),
+        "additional_rows": [" "] * (4 - len(activity_dict_list)) if len(activity_dict_list) < 4 else [" "],
         "row_count": len(activity_dict_list) + 2
     }
     return render(request, "main/home.html", data)
@@ -95,15 +95,14 @@ def view_site_visits(request):
         print("DEBUG: view_site_visits end_time=" + str(end_time))
         try:
             controllers.edit_site_visits(request.user, id, start_time, end_time)
-            response = JsonResponse({"edited": "successful"});
-            response.status_code = 200;
-            return response;
+            response = JsonResponse({"edited": "successful"})
+            response.status_code = 200
+            return response
         except Exception as e:
             print("DEBUG: view_site_visits exception=" + str(e))
             response = JsonResponse({"edited": "failed"})
-            response.status_code = 500;
-            return response;
-
+            response.status_code = 500
+            return response
 
 
 def get_site_visits(user, start_date, end_date):
@@ -234,7 +233,8 @@ def site_visit_raw_data(request):
     bar_graph_data, day_count = get_bar_graph_data(site_visits, site_visits_dict, get_day_count_dict(start_date, days))
 
     line_graph_data = get_line_graph_data(site_visits_dict, days)
-    productive_pie_chart_data, unproductive_pie_chart_data = get_productive_unproductive_pie_chart_data(site_visits, site_visits_dict)
+    productive_pie_chart_data, unproductive_pie_chart_data = get_productive_unproductive_pie_chart_data(site_visits,
+                                                                                                        site_visits_dict)
     data = {
         "pie_chart_data": pie_chart_data,
         "bar_graph_data": bar_graph_data,
@@ -261,7 +261,7 @@ def get_site_visit_pie_data(site_visits, site_visits_dict):
     ordered = sorted(pie_data_raw.items(), key=itemgetter(1), reverse=True)
     top_eight = ordered[:8]
     for site in top_eight:
-        percent = float(int(site[1]/ total_time * 10000) / 10000)
+        percent = float(int(site[1] / total_time * 10000) / 10000)
         pie_data[site[0]] = percent
         other_percent -= percent
 
@@ -300,13 +300,15 @@ def get_day_string(day_num):
     days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     return days[day_num]
 
+
 def get_line_graph_data(site_visits_dict, count):
     data = {}
     for visit_dict in site_visits_dict:
         start_time_hour = visit_dict["start_time"].hour
         time = 0
         if start_time_hour == visit_dict["end_time"].hour:
-            time += ((visit_dict["end_time"].minute - visit_dict["start_time"].minute) * 60) + (visit_dict["end_time"].second - visit_dict["start_time"].second)
+            time += ((visit_dict["end_time"].minute - visit_dict["start_time"].minute) * 60) + \
+                    (visit_dict["end_time"].second - visit_dict["start_time"].second)
         else:
             time += ((60 - visit_dict["start_time"].minute) * 60) + (60 - visit_dict["start_time"].second)
         if start_time_hour in data:
@@ -335,4 +337,3 @@ def get_productive_unproductive_pie_chart_data(site_visits, site_visits_dict):
 
     return get_site_visit_pie_data(productive_site_visits, productive_site_visits_dict), \
            get_site_visit_pie_data(unproductive_site_visits, unproductive_site_visits_dict)
-
