@@ -26,25 +26,24 @@ def create_new_activity(user, data):
         activity = Activity(user=user, start_time=data.get('start_time'), end_time=data.get("end_time"), day=data.get('day'),
                    productive=data.get('productive'), activity_type=activity_type, notes=notes)
         activity.save()
-        map_activity_and_site_visits(activity)
+        map_activity_and_site_visits(user, activity)
         return activity
     else:
         print("DEBUG: activity already added")
         activity = Activity.objects.get(user=user, start_time=data.get('start_time'), end_time=data.get("end_time"), day=data.get('day'),
                productive=data.get('productive'), activity_type=activity_type, notes=notes)
-        map_activity_and_site_visits(activity)
+        map_activity_and_site_visits(user, activity)
         return activity
 
 
-def map_activity_and_site_visits(activity):
+def map_activity_and_site_visits(user, activity):
     print("DEBUG: maping site visits with activiy=" + str(activity))
-    site_visits = SiteVisit.objects.all()
-    filtered_site_visits = []
+    site_visits = SiteVisit.objects.filter(user=user)
     for visit in site_visits:
-        if activity.start_time <= visit.start_time < activity.end_time or activity.end_time >= visit.end_time > activity.start_time:
-            filtered_site_visits.append(visit)
-    for visit in filtered_site_visits:
-        SiteVisitToActivity(activity=activity, visit=visit).save()
+        if activity.day == visit.day:
+            if activity.start_time <= visit.start_time < activity.end_time or activity.end_time >= visit.end_time > activity.start_time:
+                SiteVisitToActivity(activity=activity, visit=visit).save()
+
 
 
 def get_site(url):
