@@ -8,14 +8,15 @@
     <script>
         function getDateInputs(button) {
             button.setAttribute("display", "none");
-            document.getElementById("date_input").setAttribute("display: initial");
+            var div = document.getElementById("date_input")
+            div.setAttribute("display: initial");
         }
     </script>
     <title>Summary</title>
 {% endblock %}
 {% block content %}
     <h1 style="text-align: center">Internet Usage Summary</h1>
-    <button onclick="getDateInputs(this)">Custom Date</button>
+    <button onclick="getDateInputs(this)">Custom Time Period</button>
     <div id="date_input" style="display: none">
         <form method="GET">
             <label for="start_date">Start Date</label>
