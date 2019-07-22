@@ -90,7 +90,7 @@ def get_all_site_visits(user):
 
 
 def get_custom_time_site_visits(user, start_date, end_date):
-    return SiteVisit.objects.raw("SELECT * FROM main_sitevisit WHERE day BETWEEN " + start_date + " AND " +end_date);
+    return SiteVisit.objects.raw("SELECT * FROM main_sitevisit WHERE user.id=" + user.id + " AND day BETWEEN " + start_date + " AND " + end_date);
 
 
 def edit_site_visits(user, id, start_time, end_time):
