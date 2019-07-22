@@ -1,8 +1,10 @@
 window.onload = getGraphs;
 
-// const darkerBackgroundColors = [
-    
-// ]
+function getDateInputs(button) {
+    button.setAttribute("display", "none");
+    var div = document.getElementById("date_input");
+    div.setAttribute("display: initial");
+}
 
 function getGraphs() {
     var pieChartOverallCanvasContext = document.getElementById("pie-chart-overall").getContext("2d");
