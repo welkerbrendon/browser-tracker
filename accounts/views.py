@@ -18,7 +18,7 @@ def register(request):
             if request.POST.get("extension"):
                 return redirect('/extension-authentication?id=' + request.POST.get("id", None))
             else :
-                return redirect('/sign-in')
+                return redirect('sign-in')
     else:
         form = CustomUserCreationForm()
         if request.GET.get("extension"):
