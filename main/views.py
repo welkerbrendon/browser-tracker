@@ -223,7 +223,7 @@ def data_summary(request):
 
 def site_visit_raw_data(request):
     if request.GET.get("start_date"):
-        controllers.get_custom_time_site_visits(request.user, request.GET.get("start_date"), request.GET.get("end_date"))
+        site_visits = controllers.get_custom_time_site_visits(request.user, request.GET.get("start_date"), request.GET.get("end_date"))
     else :
         site_visits = controllers.get_all_site_visits(request.user)
 
