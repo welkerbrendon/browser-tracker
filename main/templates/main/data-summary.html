@@ -5,10 +5,26 @@
     <script src="/static/main/javascript/data-summary.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
     <script src="https://github.com/nagix/chartjs-plugin-colorschemes/releases/download/v0.4.0/chartjs-plugin-colorschemes.min.js"></script>
+    <script>
+        function getDateInputs(button) {
+            button.setAttribute("display", "none");
+            document.getElementById("date_input").setAttribute("display: initial");
+        }
+    </script>
     <title>Summary</title>
 {% endblock %}
 {% block content %}
     <h1 style="text-align: center">Internet Usage Summary</h1>
+    <button onclick="getDateInputs(this)"></button>
+    <div id="date_input" style="display: none">
+        <form method="GET">
+            <label for="start_date">Start Date</label>
+            <input type="date" id="start_date" name="end_date">
+            <label for="end_date">End Date</label>
+            <input type="date" id="end_date" name="end_date">
+            <input type="submit">
+        </form>
+    </div>
     <h2>Time Spent on Websites</h2>
     <div class="card">
         <div class="card-body">
