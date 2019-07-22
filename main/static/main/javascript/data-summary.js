@@ -3,7 +3,7 @@ window.onload = getGraphs;
 function getDateInputs(button) {
     button.setAttribute("display", "none");
     var div = document.getElementById("date_input");
-    div.setAttribute("display: initial");
+    div.setAttribute("display", "initial");
 }
 
 function getGraphs() {
