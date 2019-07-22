@@ -1,7 +1,7 @@
 window.onload = getGraphs;
 
 function getDateInputs(button) {
-    button.setAttribute("display", "none");
+    button.style.display = "none";
     document.getElementById("date_input").style.display = "initial";
 }
 
