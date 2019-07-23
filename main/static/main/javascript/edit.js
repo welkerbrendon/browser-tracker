@@ -29,6 +29,12 @@ function deleteRow() {
     }
 }
 
+function formatTime(time) {
+    time = time.split(" ")[0];
+    time = (parseInt(time.split(":")[0]) - 12).toString() + ":" + time.split(":")[1];
+    return time;
+}
+
 function makeEditable(id, button) {
     var tableRow = document.getElementById(id);
     var startTimeString = tableRow.children[1].innerHTML;
@@ -42,7 +48,7 @@ function makeEditable(id, button) {
                             <option value='AM' selected>AM</option>
                             <option value='PM'>PM</option>
                         </select>`:
-                        `<input type="text" value="${startTime}" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="start_time">
+                        `<input type="text" value="${formatTime(startTime)}" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="start_time">
                         <select class="am/pm" name="start_time_am/pm">
                             <option value='AM'>AM</option>
                             <option value='PM' selected>PM</option>
@@ -52,7 +58,7 @@ function makeEditable(id, button) {
                             <option value='AM' selected>AM</option>
                             <option value='PM'>PM</option>
                         </select>`:
-                        `<input type="text" value="${endTime}" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="end_time">
+                        `<input type="text" value="${formatTime(endTime)}" style="text-align: center" maxlength="5" size="5" oninput="handleCharacter(this)" onchange="handleInput(this)" placeholder="- - : - -" name="end_time">
                         <select class="am/pm" name="end_time_am/pm">
                             <option value='AM'>AM</option>
                             <option value='PM' selected>PM</option>
