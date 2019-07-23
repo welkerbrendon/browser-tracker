@@ -20,7 +20,7 @@
 </head>
 <body>
     <div class="custom-navbar">
-        <a class="custom-logo" href="../home.html"><img class="custom-navbar" src="{% static 'main/images/BMW-Emblem.jpg' %}"></a>
+        <a class="custom-logo" href="{% url 'main-home; %}"><img class="custom-navbar" src="{% static 'main/images/BMW-Emblem.jpg' %}"></a>
         {% if user.is_authenticated %}
             <a class="custom-navbar" href="{% url 'sign-out' %}"><button class="custom-navbar">Sign Out</button></a>
             <a class="custom-navbar" href="{% url 'main-home' %}"><button class="custom-navbar">Home</button></a>
