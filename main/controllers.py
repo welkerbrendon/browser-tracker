@@ -40,9 +40,10 @@ def map_activity_and_site_visits(user, activity):
     print("DEBUG: maping site visits with activiy=" + str(activity))
     site_visits = SiteVisit.objects.filter(user=user)
     for visit in site_visits:
-        if activity.day == visit.day:
-            if activity.start_time <= visit.start_time < activity.end_time or activity.end_time >= visit.end_time > activity.start_time:
-                SiteVisitToActivity(activity=activity, visit=visit).save()
+        if datetime.strptime(activity.day, "%Y-%m-%d").date() == visit.day:
+            if datetime.strptime(activity.start_time, "%H:%M").time() <= visit.start_time < datetime.strptime(activity.end_time, "%H:%M").time() \
+                    or datetime.strptime(activity.end_time, "%H:%M").time() >= visit.end_time > datetime.strptime(activity.start_time, "%H:%M").time():
+                SiteVisitToActivity(activity=activity, site_visit=visit).save()
 
 
 
@@ -71,7 +72,7 @@ def get_activity_urls(activity):
     query_set = SiteVisitToActivity.objects.filter(activity=activity)
     for map in query_set:
         url_list.append(map.site_visit.site.url)
-    return list(dict.fromkeys(url_list))
+    return list(url_list)
 
 
 def post_site_visit(user, data):
