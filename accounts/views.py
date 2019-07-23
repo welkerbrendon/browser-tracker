@@ -43,7 +43,7 @@ def extension_authentication(request):
         if username and password:
             data = {'username': username, 'password': password}
             print("making post request")
-            authToken = requests.post("http://localhost:8000/accounts/api-token-auth/", data).json().get("token")
+            authToken = requests.post("https://daily-habbit-tracker.herokuapp.com/accounts/api-token-auth/", data).json().get("token")
             return redirect("https://" + id + ".chromiumapp.org/provider_cb#authToken=" + authToken)
         else:
             print("ERROR: Missing username, password, and/or the extension id")

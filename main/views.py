@@ -183,6 +183,8 @@ def site_activity(request):
 def format_time(time_values, am_pm_values):
     new_list = []
     for time, am_pm in zip(time_values, am_pm_values):
+        if time == "":
+            break
         hour_minutes = time.split(":")
         if am_pm == "PM":
             if int(hour_minutes[0]) != 12:
